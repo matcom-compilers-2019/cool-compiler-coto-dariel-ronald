@@ -84,11 +84,15 @@ class Case(Expression):
 
 class NewType(Expression):
     def __init__(self):
-        self.id = None
+        # self.id = None
         self.type = None
 
 
 class BinaryExpression(Expression):
+    '''
+     Esta clase es para las operaciones aritméticas
+     y para las comparaciones.
+    '''
     def __init__(self):
         self.operator = None
         self.left_expression = None
@@ -96,6 +100,12 @@ class BinaryExpression(Expression):
 
 
 class UnaryExpression(Expression):
+    '''
+        Esta clase es para las operaciones de:
+        - Not
+        - Bcomlement
+        - isvoid
+    '''
     def __init__(self):
         self.operator = None
         self.expression = None
@@ -107,12 +117,18 @@ class Variable(Expression):
 
 
 class Atom(Expression):
+    '''
+        Aqui entrarían:
+        - integer
+        - string
+        - true and false
+    '''
     def __init__(self):
-        self.type = None
         self.value = None
 
 
 class Implication(Expression):
     def _init_(self):
+        self.id = None
         self.id_type = None
         self.expression = None
