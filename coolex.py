@@ -94,7 +94,20 @@ tokens = tokens + list(reserved.values())
 
 lexer = lex.lex()
 
-data = "let a in 5"
+data = '''
+class Cons inherits List {
+    xcar : Int;
+    xcdr : List;
+    isNil() : Bool { false };
+    init(hd : Int, tl : List) : Cons {
+    {
+        xcar <- hd;
+        xcdr <- tl;
+        self;
+        }
+    }
+};
+    '''
 
 lexer.input(data)
 for tok in lexer:
