@@ -8,9 +8,12 @@ def p_program(p):
                | class SEMICOLON'''
 
     if len(p) == 4:
-        p[0] = p[3].classes.append(p[1])
+        p[3].classes.append(p[1])
+        p[0] = p[3]
     else:
-        p[0] = Program().classes.append(p[1])
+        new_program = Program()
+        new_program.classes.append(p[1])
+        p[0] = new_program
 
 def p_class(p):
     'class : CLASS TYPE inheritence LBRACE features RBRACE'
@@ -19,6 +22,7 @@ def p_class(p):
     class_declaration.type = p[2]
     class_declaration.inherit = p[3]
     class_declaration.features = p[5]
+    p[0] = class_declaration
 
 def p_inheritence(p):
     '''inheritence : INHERITS TYPE
@@ -35,7 +39,8 @@ def p_features(p):
                 | empty'''
 
     if len(p) == 4:
-        p[0] = p[3].append(p[1])
+        p[3].append(p[1])
+        p[0] = p[3]
     else:
         p[0] = []
 
@@ -70,6 +75,7 @@ def p_method_declaration(p):
     new_method.parameters = p[3]
     new_method.return_type = p[6]
     new_method.expressions = p[7]
+    p[0] = new_method
 
 
 def p_block(p):
@@ -98,9 +104,10 @@ def p_formals_empty(p):
 
 def p_expression_list(p):
     '''expression_list : expression SEMICOLON expression_list
-                        | expression'''
+                        | expression SEMICOLON'''
     if len(p) == 4:
-        p[0] = p[3].append(p[1])
+        p[3].append(p[1])
+        p[0] = p[3]
     else:
         p[0] = [p[1]]
 

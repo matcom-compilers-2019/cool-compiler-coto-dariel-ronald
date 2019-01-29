@@ -21,7 +21,7 @@ Rule 15    formals -> id_type COMMA formals
 Rule 16    formals -> id_type
 Rule 17    formals -> empty
 Rule 18    expression_list -> expression SEMICOLON expression_list
-Rule 19    expression_list -> expression
+Rule 19    expression_list -> expression SEMICOLON
 Rule 20    expression -> assign
 Rule 21    expression -> upper_non
 Rule 22    upper_non -> NOT upper_non
@@ -118,7 +118,7 @@ PLUS                 : 31 53
 POOL                 : 65
 RBRACE               : 3 13 14
 RBRACKET             : 13 39 74
-SEMICOLON            : 1 2 6 18
+SEMICOLON            : 1 2 6 18 19
 STRING               : 49
 TDOTS                : 12 13
 THEN                 : 64
@@ -567,12 +567,12 @@ state 31
     LTHAN           reduce using rule 20 (expression -> assign .)
     LETHAN          reduce using rule 20 (expression -> assign .)
     EQUALS          reduce using rule 20 (expression -> assign .)
-    RBRACE          reduce using rule 20 (expression -> assign .)
     THEN            reduce using rule 20 (expression -> assign .)
     LOOP            reduce using rule 20 (expression -> assign .)
     OF              reduce using rule 20 (expression -> assign .)
     ELSE            reduce using rule 20 (expression -> assign .)
     POOL            reduce using rule 20 (expression -> assign .)
+    RBRACE          reduce using rule 20 (expression -> assign .)
     FI              reduce using rule 20 (expression -> assign .)
     ESAC            reduce using rule 20 (expression -> assign .)
 
@@ -594,12 +594,12 @@ state 32
     LTHAN           reduce using rule 21 (expression -> upper_non .)
     LETHAN          reduce using rule 21 (expression -> upper_non .)
     EQUALS          reduce using rule 21 (expression -> upper_non .)
-    RBRACE          reduce using rule 21 (expression -> upper_non .)
     THEN            reduce using rule 21 (expression -> upper_non .)
     LOOP            reduce using rule 21 (expression -> upper_non .)
     OF              reduce using rule 21 (expression -> upper_non .)
     ELSE            reduce using rule 21 (expression -> upper_non .)
     POOL            reduce using rule 21 (expression -> upper_non .)
+    RBRACE          reduce using rule 21 (expression -> upper_non .)
     FI              reduce using rule 21 (expression -> upper_non .)
     ESAC            reduce using rule 21 (expression -> upper_non .)
 
@@ -624,12 +624,12 @@ state 33
     COMMA           reduce using rule 47 (atom -> ID .)
     IN              reduce using rule 47 (atom -> ID .)
     RBRACKET        reduce using rule 47 (atom -> ID .)
-    RBRACE          reduce using rule 47 (atom -> ID .)
     THEN            reduce using rule 47 (atom -> ID .)
     LOOP            reduce using rule 47 (atom -> ID .)
     OF              reduce using rule 47 (atom -> ID .)
     ELSE            reduce using rule 47 (atom -> ID .)
     POOL            reduce using rule 47 (atom -> ID .)
+    RBRACE          reduce using rule 47 (atom -> ID .)
     FI              reduce using rule 47 (atom -> ID .)
     ESAC            reduce using rule 47 (atom -> ID .)
     LBRACKET        shift and go to state 71
@@ -742,12 +742,12 @@ state 35
     LTHAN           reduce using rule 23 (upper_non -> operator_non .)
     LETHAN          reduce using rule 23 (upper_non -> operator_non .)
     EQUALS          reduce using rule 23 (upper_non -> operator_non .)
-    RBRACE          reduce using rule 23 (upper_non -> operator_non .)
     THEN            reduce using rule 23 (upper_non -> operator_non .)
     LOOP            reduce using rule 23 (upper_non -> operator_non .)
     OF              reduce using rule 23 (upper_non -> operator_non .)
     ELSE            reduce using rule 23 (upper_non -> operator_non .)
     POOL            reduce using rule 23 (upper_non -> operator_non .)
+    RBRACE          reduce using rule 23 (upper_non -> operator_non .)
     FI              reduce using rule 23 (upper_non -> operator_non .)
     ESAC            reduce using rule 23 (upper_non -> operator_non .)
 
@@ -775,12 +775,12 @@ state 36
     DIVIDE          reduce using rule 27 (operator_non -> k_arith .)
     PLUS            reduce using rule 27 (operator_non -> k_arith .)
     MINUS           reduce using rule 27 (operator_non -> k_arith .)
-    RBRACE          reduce using rule 27 (operator_non -> k_arith .)
     THEN            reduce using rule 27 (operator_non -> k_arith .)
     LOOP            reduce using rule 27 (operator_non -> k_arith .)
     OF              reduce using rule 27 (operator_non -> k_arith .)
     ELSE            reduce using rule 27 (operator_non -> k_arith .)
     POOL            reduce using rule 27 (operator_non -> k_arith .)
+    RBRACE          reduce using rule 27 (operator_non -> k_arith .)
     FI              reduce using rule 27 (operator_non -> k_arith .)
     ESAC            reduce using rule 27 (operator_non -> k_arith .)
 
@@ -810,12 +810,12 @@ state 37
     RBRACKET        reduce using rule 28 (k_arith -> arith .)
     TIMES           reduce using rule 28 (k_arith -> arith .)
     DIVIDE          reduce using rule 28 (k_arith -> arith .)
-    RBRACE          reduce using rule 28 (k_arith -> arith .)
     THEN            reduce using rule 28 (k_arith -> arith .)
     LOOP            reduce using rule 28 (k_arith -> arith .)
     OF              reduce using rule 28 (k_arith -> arith .)
     ELSE            reduce using rule 28 (k_arith -> arith .)
     POOL            reduce using rule 28 (k_arith -> arith .)
+    RBRACE          reduce using rule 28 (k_arith -> arith .)
     FI              reduce using rule 28 (k_arith -> arith .)
     ESAC            reduce using rule 28 (k_arith -> arith .)
     PLUS            shift and go to state 78
@@ -842,12 +842,12 @@ state 38
     DIVIDE          reduce using rule 29 (k_arith -> e_arith .)
     PLUS            reduce using rule 29 (k_arith -> e_arith .)
     MINUS           reduce using rule 29 (k_arith -> e_arith .)
-    RBRACE          reduce using rule 29 (k_arith -> e_arith .)
     THEN            reduce using rule 29 (k_arith -> e_arith .)
     LOOP            reduce using rule 29 (k_arith -> e_arith .)
     OF              reduce using rule 29 (k_arith -> e_arith .)
     ELSE            reduce using rule 29 (k_arith -> e_arith .)
     POOL            reduce using rule 29 (k_arith -> e_arith .)
+    RBRACE          reduce using rule 29 (k_arith -> e_arith .)
     FI              reduce using rule 29 (k_arith -> e_arith .)
     ESAC            reduce using rule 29 (k_arith -> e_arith .)
 
@@ -871,12 +871,12 @@ state 39
     COMMA           reduce using rule 33 (arith -> term .)
     IN              reduce using rule 33 (arith -> term .)
     RBRACKET        reduce using rule 33 (arith -> term .)
-    RBRACE          reduce using rule 33 (arith -> term .)
     THEN            reduce using rule 33 (arith -> term .)
     LOOP            reduce using rule 33 (arith -> term .)
     OF              reduce using rule 33 (arith -> term .)
     ELSE            reduce using rule 33 (arith -> term .)
     POOL            reduce using rule 33 (arith -> term .)
+    RBRACE          reduce using rule 33 (arith -> term .)
     FI              reduce using rule 33 (arith -> term .)
     ESAC            reduce using rule 33 (arith -> term .)
     TIMES           shift and go to state 80
@@ -996,12 +996,12 @@ state 41
     RBRACKET        reduce using rule 55 (e_arith -> e_term .)
     PLUS            reduce using rule 55 (e_arith -> e_term .)
     MINUS           reduce using rule 55 (e_arith -> e_term .)
-    RBRACE          reduce using rule 55 (e_arith -> e_term .)
     THEN            reduce using rule 55 (e_arith -> e_term .)
     LOOP            reduce using rule 55 (e_arith -> e_term .)
     OF              reduce using rule 55 (e_arith -> e_term .)
     ELSE            reduce using rule 55 (e_arith -> e_term .)
     POOL            reduce using rule 55 (e_arith -> e_term .)
+    RBRACE          reduce using rule 55 (e_arith -> e_term .)
     FI              reduce using rule 55 (e_arith -> e_term .)
     ESAC            reduce using rule 55 (e_arith -> e_term .)
     TIMES           shift and go to state 84
@@ -1028,12 +1028,12 @@ state 42
     COMMA           reduce using rule 36 (term -> factor .)
     IN              reduce using rule 36 (term -> factor .)
     RBRACKET        reduce using rule 36 (term -> factor .)
-    RBRACE          reduce using rule 36 (term -> factor .)
     THEN            reduce using rule 36 (term -> factor .)
     LOOP            reduce using rule 36 (term -> factor .)
     OF              reduce using rule 36 (term -> factor .)
     ELSE            reduce using rule 36 (term -> factor .)
     POOL            reduce using rule 36 (term -> factor .)
+    RBRACE          reduce using rule 36 (term -> factor .)
     FI              reduce using rule 36 (term -> factor .)
     ESAC            reduce using rule 36 (term -> factor .)
 
@@ -1055,12 +1055,12 @@ state 43
     RBRACKET        reduce using rule 58 (e_term -> e_factor .)
     PLUS            reduce using rule 58 (e_term -> e_factor .)
     MINUS           reduce using rule 58 (e_term -> e_factor .)
-    RBRACE          reduce using rule 58 (e_term -> e_factor .)
     THEN            reduce using rule 58 (e_term -> e_factor .)
     LOOP            reduce using rule 58 (e_term -> e_factor .)
     OF              reduce using rule 58 (e_term -> e_factor .)
     ELSE            reduce using rule 58 (e_term -> e_factor .)
     POOL            reduce using rule 58 (e_term -> e_factor .)
+    RBRACE          reduce using rule 58 (e_term -> e_factor .)
     FI              reduce using rule 58 (e_term -> e_factor .)
     ESAC            reduce using rule 58 (e_term -> e_factor .)
 
@@ -1082,12 +1082,12 @@ state 44
     COMMA           reduce using rule 38 (factor -> atom .)
     IN              reduce using rule 38 (factor -> atom .)
     RBRACKET        reduce using rule 38 (factor -> atom .)
-    RBRACE          reduce using rule 38 (factor -> atom .)
     THEN            reduce using rule 38 (factor -> atom .)
     LOOP            reduce using rule 38 (factor -> atom .)
     OF              reduce using rule 38 (factor -> atom .)
     ELSE            reduce using rule 38 (factor -> atom .)
     POOL            reduce using rule 38 (factor -> atom .)
+    RBRACE          reduce using rule 38 (factor -> atom .)
     FI              reduce using rule 38 (factor -> atom .)
     ESAC            reduce using rule 38 (factor -> atom .)
 
@@ -1109,12 +1109,12 @@ state 45
     RBRACKET        reduce using rule 60 (e_factor -> let_expression .)
     PLUS            reduce using rule 60 (e_factor -> let_expression .)
     MINUS           reduce using rule 60 (e_factor -> let_expression .)
-    RBRACE          reduce using rule 60 (e_factor -> let_expression .)
     THEN            reduce using rule 60 (e_factor -> let_expression .)
     LOOP            reduce using rule 60 (e_factor -> let_expression .)
     OF              reduce using rule 60 (e_factor -> let_expression .)
     ELSE            reduce using rule 60 (e_factor -> let_expression .)
     POOL            reduce using rule 60 (e_factor -> let_expression .)
+    RBRACE          reduce using rule 60 (e_factor -> let_expression .)
     FI              reduce using rule 60 (e_factor -> let_expression .)
     ESAC            reduce using rule 60 (e_factor -> let_expression .)
 
@@ -1316,12 +1316,12 @@ state 48
     COMMA           reduce using rule 41 (atom -> block .)
     IN              reduce using rule 41 (atom -> block .)
     RBRACKET        reduce using rule 41 (atom -> block .)
-    RBRACE          reduce using rule 41 (atom -> block .)
     THEN            reduce using rule 41 (atom -> block .)
     LOOP            reduce using rule 41 (atom -> block .)
     OF              reduce using rule 41 (atom -> block .)
     ELSE            reduce using rule 41 (atom -> block .)
     POOL            reduce using rule 41 (atom -> block .)
+    RBRACE          reduce using rule 41 (atom -> block .)
     FI              reduce using rule 41 (atom -> block .)
     ESAC            reduce using rule 41 (atom -> block .)
 
@@ -1343,12 +1343,12 @@ state 49
     COMMA           reduce using rule 42 (atom -> conditional .)
     IN              reduce using rule 42 (atom -> conditional .)
     RBRACKET        reduce using rule 42 (atom -> conditional .)
-    RBRACE          reduce using rule 42 (atom -> conditional .)
     THEN            reduce using rule 42 (atom -> conditional .)
     LOOP            reduce using rule 42 (atom -> conditional .)
     OF              reduce using rule 42 (atom -> conditional .)
     ELSE            reduce using rule 42 (atom -> conditional .)
     POOL            reduce using rule 42 (atom -> conditional .)
+    RBRACE          reduce using rule 42 (atom -> conditional .)
     FI              reduce using rule 42 (atom -> conditional .)
     ESAC            reduce using rule 42 (atom -> conditional .)
 
@@ -1370,12 +1370,12 @@ state 50
     COMMA           reduce using rule 43 (atom -> loop .)
     IN              reduce using rule 43 (atom -> loop .)
     RBRACKET        reduce using rule 43 (atom -> loop .)
-    RBRACE          reduce using rule 43 (atom -> loop .)
     THEN            reduce using rule 43 (atom -> loop .)
     LOOP            reduce using rule 43 (atom -> loop .)
     OF              reduce using rule 43 (atom -> loop .)
     ELSE            reduce using rule 43 (atom -> loop .)
     POOL            reduce using rule 43 (atom -> loop .)
+    RBRACE          reduce using rule 43 (atom -> loop .)
     FI              reduce using rule 43 (atom -> loop .)
     ESAC            reduce using rule 43 (atom -> loop .)
 
@@ -1397,12 +1397,12 @@ state 51
     COMMA           reduce using rule 44 (atom -> case .)
     IN              reduce using rule 44 (atom -> case .)
     RBRACKET        reduce using rule 44 (atom -> case .)
-    RBRACE          reduce using rule 44 (atom -> case .)
     THEN            reduce using rule 44 (atom -> case .)
     LOOP            reduce using rule 44 (atom -> case .)
     OF              reduce using rule 44 (atom -> case .)
     ELSE            reduce using rule 44 (atom -> case .)
     POOL            reduce using rule 44 (atom -> case .)
+    RBRACE          reduce using rule 44 (atom -> case .)
     FI              reduce using rule 44 (atom -> case .)
     ESAC            reduce using rule 44 (atom -> case .)
 
@@ -1424,12 +1424,12 @@ state 52
     COMMA           reduce using rule 45 (atom -> dispatch .)
     IN              reduce using rule 45 (atom -> dispatch .)
     RBRACKET        reduce using rule 45 (atom -> dispatch .)
-    RBRACE          reduce using rule 45 (atom -> dispatch .)
     THEN            reduce using rule 45 (atom -> dispatch .)
     LOOP            reduce using rule 45 (atom -> dispatch .)
     OF              reduce using rule 45 (atom -> dispatch .)
     ELSE            reduce using rule 45 (atom -> dispatch .)
     POOL            reduce using rule 45 (atom -> dispatch .)
+    RBRACE          reduce using rule 45 (atom -> dispatch .)
     FI              reduce using rule 45 (atom -> dispatch .)
     ESAC            reduce using rule 45 (atom -> dispatch .)
 
@@ -1541,12 +1541,12 @@ state 54
     COMMA           reduce using rule 48 (atom -> INTEGER .)
     IN              reduce using rule 48 (atom -> INTEGER .)
     RBRACKET        reduce using rule 48 (atom -> INTEGER .)
-    RBRACE          reduce using rule 48 (atom -> INTEGER .)
     THEN            reduce using rule 48 (atom -> INTEGER .)
     LOOP            reduce using rule 48 (atom -> INTEGER .)
     OF              reduce using rule 48 (atom -> INTEGER .)
     ELSE            reduce using rule 48 (atom -> INTEGER .)
     POOL            reduce using rule 48 (atom -> INTEGER .)
+    RBRACE          reduce using rule 48 (atom -> INTEGER .)
     FI              reduce using rule 48 (atom -> INTEGER .)
     ESAC            reduce using rule 48 (atom -> INTEGER .)
 
@@ -1568,12 +1568,12 @@ state 55
     COMMA           reduce using rule 49 (atom -> STRING .)
     IN              reduce using rule 49 (atom -> STRING .)
     RBRACKET        reduce using rule 49 (atom -> STRING .)
-    RBRACE          reduce using rule 49 (atom -> STRING .)
     THEN            reduce using rule 49 (atom -> STRING .)
     LOOP            reduce using rule 49 (atom -> STRING .)
     OF              reduce using rule 49 (atom -> STRING .)
     ELSE            reduce using rule 49 (atom -> STRING .)
     POOL            reduce using rule 49 (atom -> STRING .)
+    RBRACE          reduce using rule 49 (atom -> STRING .)
     FI              reduce using rule 49 (atom -> STRING .)
     ESAC            reduce using rule 49 (atom -> STRING .)
 
@@ -1595,12 +1595,12 @@ state 56
     COMMA           reduce using rule 50 (atom -> TRUE .)
     IN              reduce using rule 50 (atom -> TRUE .)
     RBRACKET        reduce using rule 50 (atom -> TRUE .)
-    RBRACE          reduce using rule 50 (atom -> TRUE .)
     THEN            reduce using rule 50 (atom -> TRUE .)
     LOOP            reduce using rule 50 (atom -> TRUE .)
     OF              reduce using rule 50 (atom -> TRUE .)
     ELSE            reduce using rule 50 (atom -> TRUE .)
     POOL            reduce using rule 50 (atom -> TRUE .)
+    RBRACE          reduce using rule 50 (atom -> TRUE .)
     FI              reduce using rule 50 (atom -> TRUE .)
     ESAC            reduce using rule 50 (atom -> TRUE .)
 
@@ -1622,12 +1622,12 @@ state 57
     COMMA           reduce using rule 51 (atom -> FALSE .)
     IN              reduce using rule 51 (atom -> FALSE .)
     RBRACKET        reduce using rule 51 (atom -> FALSE .)
-    RBRACE          reduce using rule 51 (atom -> FALSE .)
     THEN            reduce using rule 51 (atom -> FALSE .)
     LOOP            reduce using rule 51 (atom -> FALSE .)
     OF              reduce using rule 51 (atom -> FALSE .)
     ELSE            reduce using rule 51 (atom -> FALSE .)
     POOL            reduce using rule 51 (atom -> FALSE .)
+    RBRACE          reduce using rule 51 (atom -> FALSE .)
     FI              reduce using rule 51 (atom -> FALSE .)
     ESAC            reduce using rule 51 (atom -> FALSE .)
 
@@ -1658,7 +1658,7 @@ state 60
 
     (14) block -> LBRACE . expression_list RBRACE
     (18) expression_list -> . expression SEMICOLON expression_list
-    (19) expression_list -> . expression
+    (19) expression_list -> . expression SEMICOLON
     (20) expression -> . assign
     (21) expression -> . upper_non
     (30) assign -> . ID ASSIGN expression
@@ -2034,12 +2034,12 @@ state 64
     COMMA           reduce using rule 71 (dispatch -> dispatch_call .)
     IN              reduce using rule 71 (dispatch -> dispatch_call .)
     RBRACKET        reduce using rule 71 (dispatch -> dispatch_call .)
-    RBRACE          reduce using rule 71 (dispatch -> dispatch_call .)
     THEN            reduce using rule 71 (dispatch -> dispatch_call .)
     LOOP            reduce using rule 71 (dispatch -> dispatch_call .)
     OF              reduce using rule 71 (dispatch -> dispatch_call .)
     ELSE            reduce using rule 71 (dispatch -> dispatch_call .)
     POOL            reduce using rule 71 (dispatch -> dispatch_call .)
+    RBRACE          reduce using rule 71 (dispatch -> dispatch_call .)
     FI              reduce using rule 71 (dispatch -> dispatch_call .)
     ESAC            reduce using rule 71 (dispatch -> dispatch_call .)
 
@@ -2293,12 +2293,12 @@ state 72
     LTHAN           reduce using rule 22 (upper_non -> NOT upper_non .)
     LETHAN          reduce using rule 22 (upper_non -> NOT upper_non .)
     EQUALS          reduce using rule 22 (upper_non -> NOT upper_non .)
-    RBRACE          reduce using rule 22 (upper_non -> NOT upper_non .)
     THEN            reduce using rule 22 (upper_non -> NOT upper_non .)
     LOOP            reduce using rule 22 (upper_non -> NOT upper_non .)
     OF              reduce using rule 22 (upper_non -> NOT upper_non .)
     ELSE            reduce using rule 22 (upper_non -> NOT upper_non .)
     POOL            reduce using rule 22 (upper_non -> NOT upper_non .)
+    RBRACE          reduce using rule 22 (upper_non -> NOT upper_non .)
     FI              reduce using rule 22 (upper_non -> NOT upper_non .)
     ESAC            reduce using rule 22 (upper_non -> NOT upper_non .)
     DISP            reduce using rule 21 (expression -> upper_non .)
@@ -2340,12 +2340,12 @@ state 74
     LTHAN           reduce using rule 47 (atom -> ID .)
     LETHAN          reduce using rule 47 (atom -> ID .)
     EQUALS          reduce using rule 47 (atom -> ID .)
-    RBRACE          reduce using rule 47 (atom -> ID .)
     THEN            reduce using rule 47 (atom -> ID .)
     LOOP            reduce using rule 47 (atom -> ID .)
     OF              reduce using rule 47 (atom -> ID .)
     ELSE            reduce using rule 47 (atom -> ID .)
     POOL            reduce using rule 47 (atom -> ID .)
+    RBRACE          reduce using rule 47 (atom -> ID .)
     FI              reduce using rule 47 (atom -> ID .)
     ESAC            reduce using rule 47 (atom -> ID .)
     LBRACKET        shift and go to state 71
@@ -3002,12 +3002,12 @@ state 82
     COMMA           reduce using rule 37 (factor -> MINUS factor .)
     IN              reduce using rule 37 (factor -> MINUS factor .)
     RBRACKET        reduce using rule 37 (factor -> MINUS factor .)
-    RBRACE          reduce using rule 37 (factor -> MINUS factor .)
     THEN            reduce using rule 37 (factor -> MINUS factor .)
     LOOP            reduce using rule 37 (factor -> MINUS factor .)
     OF              reduce using rule 37 (factor -> MINUS factor .)
     ELSE            reduce using rule 37 (factor -> MINUS factor .)
     POOL            reduce using rule 37 (factor -> MINUS factor .)
+    RBRACE          reduce using rule 37 (factor -> MINUS factor .)
     FI              reduce using rule 37 (factor -> MINUS factor .)
     ESAC            reduce using rule 37 (factor -> MINUS factor .)
     TIMES           reduce using rule 36 (term -> factor .)
@@ -3049,12 +3049,12 @@ state 83
     RBRACKET        reduce using rule 59 (e_factor -> MINUS e_factor .)
     PLUS            reduce using rule 59 (e_factor -> MINUS e_factor .)
     MINUS           reduce using rule 59 (e_factor -> MINUS e_factor .)
-    RBRACE          reduce using rule 59 (e_factor -> MINUS e_factor .)
     THEN            reduce using rule 59 (e_factor -> MINUS e_factor .)
     LOOP            reduce using rule 59 (e_factor -> MINUS e_factor .)
     OF              reduce using rule 59 (e_factor -> MINUS e_factor .)
     ELSE            reduce using rule 59 (e_factor -> MINUS e_factor .)
     POOL            reduce using rule 59 (e_factor -> MINUS e_factor .)
+    RBRACE          reduce using rule 59 (e_factor -> MINUS e_factor .)
     FI              reduce using rule 59 (e_factor -> MINUS e_factor .)
     ESAC            reduce using rule 59 (e_factor -> MINUS e_factor .)
     TIMES           reduce using rule 58 (e_term -> e_factor .)
@@ -3136,12 +3136,12 @@ state 87
     COMMA           reduce using rule 40 (atom -> ISVOID expression .)
     IN              reduce using rule 40 (atom -> ISVOID expression .)
     RBRACKET        reduce using rule 40 (atom -> ISVOID expression .)
-    RBRACE          reduce using rule 40 (atom -> ISVOID expression .)
     THEN            reduce using rule 40 (atom -> ISVOID expression .)
     LOOP            reduce using rule 40 (atom -> ISVOID expression .)
     OF              reduce using rule 40 (atom -> ISVOID expression .)
     ELSE            reduce using rule 40 (atom -> ISVOID expression .)
     POOL            reduce using rule 40 (atom -> ISVOID expression .)
+    RBRACE          reduce using rule 40 (atom -> ISVOID expression .)
     FI              reduce using rule 40 (atom -> ISVOID expression .)
     ESAC            reduce using rule 40 (atom -> ISVOID expression .)
     DISP            shift and go to state 68
@@ -3173,12 +3173,12 @@ state 88
     COMMA           reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     IN              reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     RBRACKET        reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    RBRACE          reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     THEN            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     LOOP            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     OF              reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     ELSE            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     POOL            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
+    RBRACE          reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     FI              reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     ESAC            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
     DISP            shift and go to state 68
@@ -3206,12 +3206,12 @@ state 89
     COMMA           reduce using rule 52 (atom -> NEW TYPE .)
     IN              reduce using rule 52 (atom -> NEW TYPE .)
     RBRACKET        reduce using rule 52 (atom -> NEW TYPE .)
-    RBRACE          reduce using rule 52 (atom -> NEW TYPE .)
     THEN            reduce using rule 52 (atom -> NEW TYPE .)
     LOOP            reduce using rule 52 (atom -> NEW TYPE .)
     OF              reduce using rule 52 (atom -> NEW TYPE .)
     ELSE            reduce using rule 52 (atom -> NEW TYPE .)
     POOL            reduce using rule 52 (atom -> NEW TYPE .)
+    RBRACE          reduce using rule 52 (atom -> NEW TYPE .)
     FI              reduce using rule 52 (atom -> NEW TYPE .)
     ESAC            reduce using rule 52 (atom -> NEW TYPE .)
 
@@ -3242,14 +3242,13 @@ state 92
 state 93
 
     (18) expression_list -> expression . SEMICOLON expression_list
-    (19) expression_list -> expression .
+    (19) expression_list -> expression . SEMICOLON
     (70) dispatch -> expression . especific DOT dispatch_call
     (72) especific -> . DISP TYPE
     (73) especific -> . empty
     (78) empty -> .
 
     SEMICOLON       shift and go to state 121
-    RBRACE          reduce using rule 19 (expression_list -> expression .)
     DISP            shift and go to state 68
     DOT             reduce using rule 78 (empty -> .)
 
@@ -3352,12 +3351,12 @@ state 101
     LTHAN           reduce using rule 30 (assign -> ID ASSIGN expression .)
     LETHAN          reduce using rule 30 (assign -> ID ASSIGN expression .)
     EQUALS          reduce using rule 30 (assign -> ID ASSIGN expression .)
-    RBRACE          reduce using rule 30 (assign -> ID ASSIGN expression .)
     THEN            reduce using rule 30 (assign -> ID ASSIGN expression .)
     LOOP            reduce using rule 30 (assign -> ID ASSIGN expression .)
     OF              reduce using rule 30 (assign -> ID ASSIGN expression .)
     ELSE            reduce using rule 30 (assign -> ID ASSIGN expression .)
     POOL            reduce using rule 30 (assign -> ID ASSIGN expression .)
+    RBRACE          reduce using rule 30 (assign -> ID ASSIGN expression .)
     FI              reduce using rule 30 (assign -> ID ASSIGN expression .)
     ESAC            reduce using rule 30 (assign -> ID ASSIGN expression .)
     DISP            shift and go to state 68
@@ -3422,12 +3421,12 @@ state 105
     LTHAN           reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     LETHAN          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     EQUALS          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    RBRACE          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     THEN            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     LOOP            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     OF              reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     ELSE            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     POOL            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
+    RBRACE          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     FI              reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
     ESAC            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
 
@@ -3461,12 +3460,12 @@ state 106
     LTHAN           reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     LETHAN          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     EQUALS          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    RBRACE          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     THEN            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     LOOP            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     OF              reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     ELSE            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     POOL            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
+    RBRACE          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     FI              reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
     ESAC            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
 
@@ -3500,12 +3499,12 @@ state 107
     LTHAN           reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     LETHAN          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     EQUALS          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    RBRACE          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     THEN            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     LOOP            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     OF              reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     ELSE            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     POOL            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
+    RBRACE          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     FI              reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
     ESAC            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
 
@@ -3541,12 +3540,12 @@ state 108
     COMMA           reduce using rule 31 (arith -> arith PLUS term .)
     IN              reduce using rule 31 (arith -> arith PLUS term .)
     RBRACKET        reduce using rule 31 (arith -> arith PLUS term .)
-    RBRACE          reduce using rule 31 (arith -> arith PLUS term .)
     THEN            reduce using rule 31 (arith -> arith PLUS term .)
     LOOP            reduce using rule 31 (arith -> arith PLUS term .)
     OF              reduce using rule 31 (arith -> arith PLUS term .)
     ELSE            reduce using rule 31 (arith -> arith PLUS term .)
     POOL            reduce using rule 31 (arith -> arith PLUS term .)
+    RBRACE          reduce using rule 31 (arith -> arith PLUS term .)
     FI              reduce using rule 31 (arith -> arith PLUS term .)
     ESAC            reduce using rule 31 (arith -> arith PLUS term .)
     TIMES           shift and go to state 80
@@ -3586,12 +3585,12 @@ state 109
     RBRACKET        reduce using rule 53 (e_arith -> arith PLUS e_term .)
     PLUS            reduce using rule 53 (e_arith -> arith PLUS e_term .)
     MINUS           reduce using rule 53 (e_arith -> arith PLUS e_term .)
-    RBRACE          reduce using rule 53 (e_arith -> arith PLUS e_term .)
     THEN            reduce using rule 53 (e_arith -> arith PLUS e_term .)
     LOOP            reduce using rule 53 (e_arith -> arith PLUS e_term .)
     OF              reduce using rule 53 (e_arith -> arith PLUS e_term .)
     ELSE            reduce using rule 53 (e_arith -> arith PLUS e_term .)
     POOL            reduce using rule 53 (e_arith -> arith PLUS e_term .)
+    RBRACE          reduce using rule 53 (e_arith -> arith PLUS e_term .)
     FI              reduce using rule 53 (e_arith -> arith PLUS e_term .)
     ESAC            reduce using rule 53 (e_arith -> arith PLUS e_term .)
     TIMES           shift and go to state 84
@@ -3631,12 +3630,12 @@ state 110
     COMMA           reduce using rule 32 (arith -> arith MINUS term .)
     IN              reduce using rule 32 (arith -> arith MINUS term .)
     RBRACKET        reduce using rule 32 (arith -> arith MINUS term .)
-    RBRACE          reduce using rule 32 (arith -> arith MINUS term .)
     THEN            reduce using rule 32 (arith -> arith MINUS term .)
     LOOP            reduce using rule 32 (arith -> arith MINUS term .)
     OF              reduce using rule 32 (arith -> arith MINUS term .)
     ELSE            reduce using rule 32 (arith -> arith MINUS term .)
     POOL            reduce using rule 32 (arith -> arith MINUS term .)
+    RBRACE          reduce using rule 32 (arith -> arith MINUS term .)
     FI              reduce using rule 32 (arith -> arith MINUS term .)
     ESAC            reduce using rule 32 (arith -> arith MINUS term .)
     TIMES           shift and go to state 80
@@ -3676,12 +3675,12 @@ state 111
     RBRACKET        reduce using rule 54 (e_arith -> arith MINUS e_term .)
     PLUS            reduce using rule 54 (e_arith -> arith MINUS e_term .)
     MINUS           reduce using rule 54 (e_arith -> arith MINUS e_term .)
-    RBRACE          reduce using rule 54 (e_arith -> arith MINUS e_term .)
     THEN            reduce using rule 54 (e_arith -> arith MINUS e_term .)
     LOOP            reduce using rule 54 (e_arith -> arith MINUS e_term .)
     OF              reduce using rule 54 (e_arith -> arith MINUS e_term .)
     ELSE            reduce using rule 54 (e_arith -> arith MINUS e_term .)
     POOL            reduce using rule 54 (e_arith -> arith MINUS e_term .)
+    RBRACE          reduce using rule 54 (e_arith -> arith MINUS e_term .)
     FI              reduce using rule 54 (e_arith -> arith MINUS e_term .)
     ESAC            reduce using rule 54 (e_arith -> arith MINUS e_term .)
     TIMES           shift and go to state 84
@@ -3723,12 +3722,12 @@ state 112
     COMMA           reduce using rule 34 (term -> term TIMES factor .)
     IN              reduce using rule 34 (term -> term TIMES factor .)
     RBRACKET        reduce using rule 34 (term -> term TIMES factor .)
-    RBRACE          reduce using rule 34 (term -> term TIMES factor .)
     THEN            reduce using rule 34 (term -> term TIMES factor .)
     LOOP            reduce using rule 34 (term -> term TIMES factor .)
     OF              reduce using rule 34 (term -> term TIMES factor .)
     ELSE            reduce using rule 34 (term -> term TIMES factor .)
     POOL            reduce using rule 34 (term -> term TIMES factor .)
+    RBRACE          reduce using rule 34 (term -> term TIMES factor .)
     FI              reduce using rule 34 (term -> term TIMES factor .)
     ESAC            reduce using rule 34 (term -> term TIMES factor .)
 
@@ -3770,12 +3769,12 @@ state 113
     COMMA           reduce using rule 35 (term -> term DIVIDE factor .)
     IN              reduce using rule 35 (term -> term DIVIDE factor .)
     RBRACKET        reduce using rule 35 (term -> term DIVIDE factor .)
-    RBRACE          reduce using rule 35 (term -> term DIVIDE factor .)
     THEN            reduce using rule 35 (term -> term DIVIDE factor .)
     LOOP            reduce using rule 35 (term -> term DIVIDE factor .)
     OF              reduce using rule 35 (term -> term DIVIDE factor .)
     ELSE            reduce using rule 35 (term -> term DIVIDE factor .)
     POOL            reduce using rule 35 (term -> term DIVIDE factor .)
+    RBRACE          reduce using rule 35 (term -> term DIVIDE factor .)
     FI              reduce using rule 35 (term -> term DIVIDE factor .)
     ESAC            reduce using rule 35 (term -> term DIVIDE factor .)
 
@@ -3807,12 +3806,12 @@ state 114
     RBRACKET        reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     PLUS            reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     MINUS           reduce using rule 56 (e_term -> e_term TIMES e_factor .)
-    RBRACE          reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     THEN            reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     LOOP            reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     OF              reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     ELSE            reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     POOL            reduce using rule 56 (e_term -> e_term TIMES e_factor .)
+    RBRACE          reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     FI              reduce using rule 56 (e_term -> e_term TIMES e_factor .)
     ESAC            reduce using rule 56 (e_term -> e_term TIMES e_factor .)
 
@@ -3847,12 +3846,12 @@ state 116
     RBRACKET        reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     PLUS            reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     MINUS           reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
-    RBRACE          reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     THEN            reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     LOOP            reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     OF              reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     ELSE            reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     POOL            reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
+    RBRACE          reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     FI              reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
     ESAC            reduce using rule 57 (e_term -> e_term DIVIDE e_factor .)
 
@@ -3874,12 +3873,12 @@ state 117
     COMMA           reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     IN              reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     RBRACKET        reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    RBRACE          reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     THEN            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     LOOP            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     OF              reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     ELSE            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     POOL            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
+    RBRACE          reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     FI              reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
     ESAC            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
 
@@ -4006,12 +4005,12 @@ state 120
     COMMA           reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     IN              reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     RBRACKET        reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    RBRACE          reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     THEN            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     LOOP            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     OF              reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     ELSE            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     POOL            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
+    RBRACE          reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     FI              reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
     ESAC            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
 
@@ -4019,8 +4018,9 @@ state 120
 state 121
 
     (18) expression_list -> expression SEMICOLON . expression_list
+    (19) expression_list -> expression SEMICOLON .
     (18) expression_list -> . expression SEMICOLON expression_list
-    (19) expression_list -> . expression
+    (19) expression_list -> . expression SEMICOLON
     (20) expression -> . assign
     (21) expression -> . upper_non
     (30) assign -> . ID ASSIGN expression
@@ -4071,6 +4071,7 @@ state 121
     (71) dispatch -> . dispatch_call
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
+    RBRACE          reduce using rule 19 (expression_list -> expression SEMICOLON .)
     ID              shift and go to state 33
     NOT             shift and go to state 34
     MINUS           shift and go to state 40
@@ -4327,12 +4328,12 @@ state 126
     COMMA           reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     IN              reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     RBRACKET        reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    RBRACE          reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     THEN            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     LOOP            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     OF              reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     ELSE            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     POOL            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
+    RBRACE          reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     FI              reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
     ESAC            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
 
@@ -4361,12 +4362,12 @@ state 128
     COMMA           reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     IN              reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     RBRACKET        reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    RBRACE          reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     THEN            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     LOOP            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     OF              reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     ELSE            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     POOL            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    RBRACE          reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     FI              reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
     ESAC            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
 
@@ -4485,12 +4486,12 @@ state 130
     LTHAN           reduce using rule 59 (e_factor -> MINUS e_factor .)
     LETHAN          reduce using rule 59 (e_factor -> MINUS e_factor .)
     EQUALS          reduce using rule 59 (e_factor -> MINUS e_factor .)
-    RBRACE          reduce using rule 59 (e_factor -> MINUS e_factor .)
     THEN            reduce using rule 59 (e_factor -> MINUS e_factor .)
     LOOP            reduce using rule 59 (e_factor -> MINUS e_factor .)
     OF              reduce using rule 59 (e_factor -> MINUS e_factor .)
     ELSE            reduce using rule 59 (e_factor -> MINUS e_factor .)
     POOL            reduce using rule 59 (e_factor -> MINUS e_factor .)
+    RBRACE          reduce using rule 59 (e_factor -> MINUS e_factor .)
     FI              reduce using rule 59 (e_factor -> MINUS e_factor .)
     ESAC            reduce using rule 59 (e_factor -> MINUS e_factor .)
 
@@ -4517,12 +4518,12 @@ state 131
     RBRACKET        reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     PLUS            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     MINUS           reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    RBRACE          reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     THEN            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     LOOP            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     OF              reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     ELSE            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     POOL            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
+    RBRACE          reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     FI              reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     ESAC            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
     DISP            shift and go to state 68
@@ -4804,12 +4805,12 @@ state 142
     COMMA           reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     IN              reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     RBRACKET        reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    RBRACE          reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     THEN            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     LOOP            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     OF              reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     ELSE            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     POOL            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
+    RBRACE          reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     FI              reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
     ESAC            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
 
@@ -4831,12 +4832,12 @@ state 143
     COMMA           reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     IN              reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     RBRACKET        reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    RBRACE          reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     THEN            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     LOOP            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     OF              reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     ELSE            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     POOL            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
+    RBRACE          reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     FI              reduce using rule 66 (case -> CASE expression OF implications ESAC .)
     ESAC            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
 
@@ -5022,12 +5023,12 @@ state 151
     COMMA           reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     IN              reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     RBRACKET        reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    RBRACE          reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     THEN            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     LOOP            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     OF              reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     ELSE            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     POOL            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
+    RBRACE          reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     FI              reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
     ESAC            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
 
