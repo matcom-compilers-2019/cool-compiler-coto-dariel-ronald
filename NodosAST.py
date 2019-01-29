@@ -11,12 +11,11 @@ class Class(Node):
     def __init__(self):
         self.type = None
         self.inherit = None
-        self.features = []
+        self.features = None
 
 
 class Feature(Node):
     pass
-
 
 class Method(Feature):
     def __init__(self):
@@ -31,6 +30,7 @@ class Attribute(Feature):
     def __init__(self):
         self.type = None
         self.value = None
+        self.id = None
 
 
 class Formal(Node):
@@ -105,6 +105,7 @@ class UnaryExpression(Expression):
         - Not
         - Bcomlement
         - isvoid
+        - \-
     '''
     def __init__(self):
         self.operator = None
@@ -112,8 +113,8 @@ class UnaryExpression(Expression):
 
 
 class Variable(Expression):
-    def __init__(self,id):
-        self.id = id
+    def __init__(self):
+        self.id = None
 
 
 class Atom(Expression):
@@ -130,5 +131,5 @@ class Atom(Expression):
 class Implication(Expression):
     def _init_(self):
         self.id = None
-        self.id_type = None
+        self.type = None
         self.expression = None

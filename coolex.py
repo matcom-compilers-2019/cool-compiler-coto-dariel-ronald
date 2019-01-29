@@ -1,6 +1,6 @@
 import ply.lex as lex
 
-tokens=[
+tokens = [
     'TYPE',
     'SEMICOLON',
     'COMMA',
@@ -93,6 +93,22 @@ def t_error(t):
 tokens = tokens + list(reserved.values())
 
 lexer = lex.lex()
+#
+# data = '''
+# class Cons inherits List {
+#     xcar : Int;
+#     xcdr : List;
+#     isNil() : Bool { false };
+#     init(hd : Int, tl : List) : Cons {
+#     {
+#         xcar <- hd;
+#         xcdr <- tl;
+#         self;
+#         }
+#     }
+# };
+#     '''
+
 
 data = '''
 class Cons inherits List {
@@ -100,15 +116,15 @@ class Cons inherits List {
     xcdr : List;
     isNil() : Bool { false };
     init(hd : Int, tl : List) : Cons {
-    {
-        xcar <- hd;
-        xcdr <- tl;
-        self;
+        {
+            xcar <- hd;
+            xcdr <- tl;
+            self;
         }
-    }
+    };
 };
-    '''
+'''
 
-lexer.input(data)
-for tok in lexer:
-    print(tok)
+# lexer.input(data)
+# for tok in lexer:
+#     print(tok)
