@@ -110,18 +110,24 @@ lexer = lex.lex()
 #     '''
 
 
+# data = '''
+# class Cons inherits List {
+#     xcar : Int;
+#     xcdr : List;
+#     isNil() : Bool { false };
+#     init(hd : Int, tl : List) : Cons {
+#         {
+#             xcar <- hd;
+#             xcdr <- tl;
+#             self;
+#         }
+#     };
+# };
+# '''
 data = '''
-class Cons inherits List {
-    xcar : Int;
-    xcdr : List;
-    isNil() : Bool { false };
-    init(hd : Int, tl : List) : Cons {
-        {
-            xcar <- hd;
-            xcdr <- tl;
-            self;
-        }
-    };
+class Main {
+x : Sally <- (new Sally).copy();
+main() : Sally { x };
 };
 '''
 

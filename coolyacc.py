@@ -227,7 +227,6 @@ def p_atom_types(p):
     new_atom = Atom()
     new_atom.value = p[1]
     p[0] = new_atom
-    print("cacacacac")
 
 # def p_atom_types_error(p):
 #     'atom : error'
@@ -318,6 +317,7 @@ def p_case(p):
     new_case = Case()
     new_case.case_expression = p[2]
     new_case.implications = p[4]
+    p[0] = new_case
 
 
 def p_implications(p):
@@ -362,6 +362,7 @@ def p_dispatch_call(p):
     new_dispatch = Dispatch()
     new_dispatch.func_id = p[1]
     new_dispatch.parameters = p[3]
+    p[0] = new_dispatch
 
 
 def p_params_expression(p):
@@ -413,4 +414,4 @@ precedence = (
 
 
 parser = yacc.yacc()
-parser.parse(data,lexer=lexer,debug=True)
+parser.parse(data,lexer=lexer,debug=True,tracking=True)
