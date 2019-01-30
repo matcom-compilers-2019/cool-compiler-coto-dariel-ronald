@@ -45,6 +45,7 @@ t_LETHAN = r'<='
 t_LTHAN = r'<'
 t_EQUALS = r'='
 t_DISP = r'@'
+# me faltan por agregar simbolos y otras cosas
 t_STRING = r'\"[a-zA-Z_][a-zA-Z_0-9]*\"'
 t_TYPE = r'[A-Z][a-zA-Z_0-9]*'
 
@@ -83,7 +84,7 @@ def t_INTEGER(t):
 
 def t_newline(t):
     r'\n+'
-    t.lexer.lineno+=len(t.value)
+    t.lexer.lineno += len(t.value)
 t_ignore = ' \t'
 
 def t_error(t):
