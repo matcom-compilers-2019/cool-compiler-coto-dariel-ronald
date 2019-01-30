@@ -2,104 +2,95 @@ class Node:
     pass
 
 
-class Program (Node):
-    def __init__(self):
-        self.classes = []
+class ProgramNode(Node):
+    def __init__(self, classes=[]):
+        self.classes = classes
 
 
-class Class(Node):
-    def __init__(self):
-        self.type = None
-        self.inherit = None
-        self.features = None
+class ClassNode(Node):
+    def __init__(self,type,inherit,features):
+        self.type = type
+        self.inherit = inherit
+        self.features = features
 
 
-class Feature(Node):
+class FeatureNode(Node):
     pass
 
-class Method(Feature):
-    def __init__(self):
-        self.id = None
+
+class MethodNode(FeatureNode):
+    def __init__(self,id,parameters,return_type,expresions):
+        self.id = id
         # aqui se guardan los formal
-        self.parameters = []
-        self.return_type = None
-        self.expressions = []
+        self.parameters = parameters
+        self.return_type = return_type
+        self.expressions = expresions
 
 
-class Attribute(Feature):
-    def __init__(self):
-        self.type = None
-        self.value = None
-        self.id = None
+class AttributeNode(FeatureNode):
+    def __init__(self,id,type,value=None):
+        self.type = type
+        self.value = value
+        self.id = id
 
 
-class Formal(Node):
-    def __init__(self):
-        self.id = None
-        self.type = None
+# class FormalNode(Node):
+#     def __init__(self):
+#         self.id = None
+#         self.type = None
 
 
-class Expression(Node):
+class ExpressionNode(Node):
     pass
 
+class AtomNode(ExpressionNode):
+    pass
 
-class Assign(Expression):
-    def __init__(self):
-        self.id = None
-        self.expression = None
-
-
-class Dispatch(Expression):
-    def __init__(self):
-        self.left_expression = None
-        self.dispatch_type = None
-        self.func_id = None
-        self.parameters = []
+class AssignNode(ExpressionNode):
+    def __init__(self,id,expr):
+        self.id = id
+        self.expression = expr
 
 
-class Conditional(Expression):
-    def __init__(self):
-        self.if_expression = None
-        self.then_expression = None
-        self.else_expression = None
+class DispatchNode(AtomNode):
+    def __init__(self,func_id,params,left_expr=None,parent_type=None):
+        self.left_expression = left_expr
+        self.paren_type = parent_type
+        self.func_id = func_id
+        self.parameters = params
 
 
-class Loop(Expression):
-    def __init__(self):
-        self.while_expression = None
-        self.loop_expression = None
+class ConditionalNode(AtomNode):
+    def __init__(self,if_expr,then_expr,else_expr):
+        self.if_expression = if_expr
+        self.then_expression = then_expr
+        self.else_expression = else_expr
 
 
-class LetVar(Expression):
-    def __init__(self):
-        self.in_expression = None
-        self.declarations = []
+class LoopNode(AtomNode):
+    def __init__(self,while_expr,loop_exprs):
+        self.while_expression = while_expr
+        self.loop_expression = loop_exprs
 
 
-class Case(Expression):
-    def __init__(self):
-        self.case_expression = None
-        self.implications = []
+class LetVarNode(AtomNode):
+    def __init__(self,declarations,in_expr):
+        self.in_expression = in_expr
+        self.declarations = declarations
 
 
-class NewType(Expression):
-    def __init__(self):
-        # self.id = None
-        self.type = None
+class CaseNode(AtomNode):
+    def __init__(self,case_expr,implications):
+        self.case_expression = case_expr
+        self.implications = implications
 
 
-class BinaryExpression(Expression):
-    '''
-     Esta clase es para las operaciones aritméticas
-     y para las comparaciones.
-    '''
-    def __init__(self):
-        self.operator = None
-        self.left_expression = None
-        self.right_expression = None
+class NewTypeNode(AtomNode):
+    def __init__(self,type):
+        self.type = type
 
 
-class UnaryExpression(Expression):
+class UnaryOperatorNode(ExpressionNode):
     '''
         Esta clase es para las operaciones de:
         - Not
@@ -107,29 +98,101 @@ class UnaryExpression(Expression):
         - isvoid
         - \-
     '''
-    def __init__(self):
-        self.operator = None
-        self.expression = None
+    def __init__(self,expr):
+        self.expression = expr
 
 
-class Variable(Expression):
-    def __init__(self):
-        self.id = None
+class BinaryOperatorNode(ExpressionNode):
+    '''
+     Esta clase es para las operaciones aritméticas
+     y para las comparaciones.
+    '''
+    def __init__(self,left_expr,right_expr):
+        self.left_expression = left_expr
+        self.right_expression = right_expr
 
 
-class Atom(Expression):
+class PlusNode(BinaryOperatorNode):
+    pass
+
+
+class MinusNode(BinaryOperatorNode):
+    pass
+
+
+class StarNode(BinaryOperatorNode):
+    pass
+
+
+class DivNode(BinaryOperatorNode):
+    pass
+
+
+class NegationNode(UnaryOperatorNode):
+    pass
+
+
+class NotNode(UnaryOperatorNode):
+    pass
+
+
+class LowerThanNode(BinaryOperatorNode):
+    pass
+
+
+class LowerEqualThanNode(BinaryOperatorNode):
+    pass
+
+
+class EqualThanNode(BinaryOperatorNode):
+    pass
+
+
+class VariableNode(AtomNode):
+    def __init__(self,id):
+        self.id = id
+
+
+class IsVoidNode(AtomNode):
+    def __init__(self,expr):
+        self.expression = expr
+
+
+class BlockNode(AtomNode):
+    def __init__(self,exprs):
+        self.expressions = exprs
+
+
+class BComplementNode(AtomNode):
+    def __init__(self,expr):
+        self.expression = expr
+
+
+class IntNode(AtomNode):
+    pass
+
+
+class StrNode(AtomNode):
+    pass
+
+
+class BoolNode(AtomNode):
+    pass
+
+
+class AtomNode(ExpressionNode):
     '''
         Aqui entrarían:
         - integer
         - string
         - true and false
     '''
-    def __init__(self):
-        self.value = None
+    def __init__(self,value):
+        self.value = value
 
-
-class Implication(Expression):
-    def _init_(self):
-        self.id = None
-        self.type = None
-        self.expression = None
+#
+# class ImplicationNode(ExpressionNode):
+#     def _init_(self):
+#         self.id = None
+#         self.type = None
+#         self.expression = None

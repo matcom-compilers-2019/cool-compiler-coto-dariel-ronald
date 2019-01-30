@@ -11,17 +11,14 @@ def p_program(p):
         p[3].classes.append(p[1])
         p[0] = p[3]
     else:
-        new_program = Program()
-        new_program.classes.append(p[1])
+        new_program = ProgramNode([p[1]])
         p[0] = new_program
+
 
 def p_class(p):
     'class : CLASS TYPE inheritence LBRACE features RBRACE'
 
-    class_declaration = Class()
-    class_declaration.type = p[2]
-    class_declaration.inherit = p[3]
-    class_declaration.features = p[5]
+    class_declaration = ClassNode(p[2],p[3],p[5])
     p[0] = class_declaration
 
 def p_inheritence(p):
@@ -54,11 +51,10 @@ def p_feature(p):
 def p_attribute(p):
     '''attribute : id_type
                 | id_type ASSIGN expression'''
-    new_attr = Attribute()
 
+    new_attr = AttributeNode(p[1][0],p[1][1])
     if len(p) == 4:
         new_attr.value = p[3]
-    new_attr.id, new_attr.type = p[1]
     p[0] = new_attr
 
 
@@ -70,31 +66,18 @@ def p_id_type(p):
 def p_method_declaration(p):
     'method_declaration : ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression RBRACE'
 
-    new_method = Method()
-    new_method.id = p[1]
-    new_method.parameters = p[3]
-    new_method.return_type = p[6]
-    new_method.expressions = p[7]
+    new_method = MethodNode(p[1],p[3],p[6],p[7])
     p[0] = new_method
-
-
-def p_block(p):
-    'block : LBRACE expression_list RBRACE'
-    p[0] = p[2]
-
 
 
 def p_formals(p):
     '''formals : id_type COMMA formals
                 | id_type'''
-    new_formal = Formal()
-    new_formal.id,new_formal.type = p[1]
 
     if len(p) == 4:
-        p[3].append(new_formal)
-        p[0] = p[3]
+        p[0] = [p[1]] + [p[3]]
     else:
-        p[0] = [new_formal]
+        p[0] = [p[1]]
 
 
 def p_formals_empty(p):
@@ -106,8 +89,7 @@ def p_expression_list(p):
     '''expression_list : expression SEMICOLON expression_list
                         | expression SEMICOLON'''
     if len(p) == 4:
-        p[3].append(p[1])
-        p[0] = p[3]
+        p[0] = p[3] + [p[1]]
     else:
         p[0] = [p[1]]
 
@@ -122,9 +104,7 @@ def p_upper_non(p):
     '''upper_non : NOT upper_non
                 | operator_non'''
     if len(p) == 3:
-        p[0] = UnaryExpression()
-        p[0].operator = p[1]
-        p[0].expression = p[2]
+        p[0].expression = NotNode(p[2])
     else:
         p[0] = p[1]
 
@@ -137,10 +117,12 @@ def p_operator_non(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        p[0] = BinaryExpression()
-        p[0].operator = p[2]
-        p[0].left_expression = p[1]
-        p[0].right_expression = p[3]
+        if p[2] == '<':
+            p[0] = LowerThanNode(p[1], p[3])
+        elif p[2] == '<=':
+            p[0] = LowerEqualThanNode(p[1], p[3])
+        elif p[2] == '=':
+            p[0] = EqualThanNode(p[1], p[3])
 
 
 def p_k_arith(p):
@@ -151,21 +133,22 @@ def p_k_arith(p):
 
 def p_assign(p):
     'assign : ID ASSIGN expression'
-    new_assing = Assign()
-    new_assing.id, new_assing.expression = p[1],p[3]
-    p[0] = new_assing
+
+    p[0] = AssignNode(p[1], p[3])
+
 
 def p_arith(p):
     '''arith : arith PLUS term
             | arith MINUS term
             | term'''
+
     if len(p) == 2:
         p[0] = p[1]
     else:
-        new_bexpression = BinaryExpression()
-        new_bexpression.operator = p[2]
-        new_bexpression.left_expression,new_bexpression.right_expression = p[1],p[3]
-        p[0] = new_bexpression
+        if p[2] == '+':
+            p[0] = PlusNode(p[1], p[3])
+        elif p[2] == '-':
+            p[0] = MinusNode(p[1], p[3])
 
 
 def p_term(p):
@@ -175,10 +158,10 @@ def p_term(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        new_bexpression = BinaryExpression()
-        new_bexpression.operator = p[2]
-        new_bexpression.left_expression,new_bexpression.right_expression = p[1],p[3]
-        p[0] = new_bexpression
+        if p[2] == '*':
+            p[0] = StarNode(p[1], p[3])
+        elif p[2] == '/':
+            p[0] = DivNode(p[1], p[3])
 
 
 def p_factor(p):
@@ -187,9 +170,7 @@ def p_factor(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        new_uexpression = UnaryExpression()
-        new_uexpression.operator,new_uexpression.expression = p[1],p[2]
-        p[0] = new_uexpression
+        p[0] = NegationNode(p[2])
 
 
 def p_atom(p):
@@ -205,28 +186,36 @@ def p_atom(p):
     if len(p) == 4:
         p[0] = p[2]
     elif len(p) == 3:
-        new_uexpression = UnaryExpression()
-        new_uexpression.operator = p[1]
-        new_uexpression.expression = p[2]
-        p[0] = new_uexpression
+        if p[1] == 'isvoid':
+            p[0] = p[2]
+        else:
+            p[0] = BComplementNode(p[2])
     else:
         p[0] = p[1]
 
 
+def p_block(p):
+    'block : LBRACE expression_list RBRACE'
+    p[0] = BlockNode(p[2])
+
+
 def p_atom_variable(p):
     '''atom : ID'''
-    p[0] = Variable()
-    p[0].id = p[1]
+    p[0] = VariableNode(p[1])
 
 
-def p_atom_types(p):
-    '''atom : INTEGER
-            | STRING
-            | TRUE
+def p_atom_type_int(p):
+    '''atom : INTEGER '''
+    p[0] = IntNode(p[1])
+
+def p_atom_type_str(p):
+    '''atom : STRING'''
+    p[0] = StrNode(p[1])
+
+def p_atom_type_bool(p):
+    '''atom : TRUE
             | FALSE'''
-    new_atom = Atom()
-    new_atom.value = p[1]
-    p[0] = new_atom
+    p[0] = BoolNode(p[1])
 
 # def p_atom_types_error(p):
 #     'atom : error'
@@ -234,8 +223,7 @@ def p_atom_types(p):
 
 def p_atom_newtype(p):
     '''atom : NEW TYPE'''
-    p[0] = NewType()
-    p[0].type = p[2]
+    p[0] = NewTypeNode(p[2])
 
 
 def p_e_arith(p):
@@ -245,10 +233,10 @@ def p_e_arith(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        new_bexpression = BinaryExpression()
-        new_bexpression.operator = p[2]
-        new_bexpression.left_expression,new_bexpression.right_expression = p[1],p[3]
-        p[0] = new_bexpression
+        if p[2] == '+':
+            p[0] = PlusNode(p[1], p[3])
+        elif p[2] == '-':
+            p[0] = MinusNode(p[1], p[3])
 
 
 def p_e_term(p):
@@ -258,10 +246,11 @@ def p_e_term(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        new_bexpression = BinaryExpression()
-        new_bexpression.operator = p[2]
-        new_bexpression.left_expression,new_bexpression.right_expression = p[1],p[3]
-        p[0] = new_bexpression
+        if p[2] == '*':
+            p[0] = StarNode(p[1], p[3])
+        elif p[2] == '/':
+            p[0] = DivNode(p[1], p[3])
+
 
 def p_e_factor(p):
     '''e_factor : MINUS e_factor %prec UMINUS
@@ -269,16 +258,12 @@ def p_e_factor(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        new_uexpression = UnaryExpression()
-        new_uexpression.operator,new_uexpression.expression = p[1],p[2]
-        p[0] = new_uexpression
+        p[0] = NegationNode(p[2])
+
 
 def p_let_expression(p):
     'let_expression : LET declaration_list IN expression'
-    new_let = LetVar()
-    new_let.declarations = p[2]
-    new_let.in_expression = p[4]
-    p[0] = new_let
+    p[0] = LetVarNode(p[2],p[4])
 
 
 def p_declaration_list(p):
@@ -297,27 +282,17 @@ def p_declaration_list(p):
 
 def p_conditional(p):
     'conditional : IF expression THEN expression ELSE expression FI'
-    new_conditional = Conditional()
-    new_conditional.if_expression = p[2]
-    new_conditional.then_expression = p[4]
-    new_conditional.else_expression = p[6]
-    p[0] = new_conditional
+    p[0] = ConditionalNode(p[2], p[4], p[6])
 
 
 def p_loop(p):
     'loop : WHILE expression LOOP expression POOL'
-    new_loop = Loop()
-    new_loop.while_expression = p[2]
-    new_loop.loop_expression = p[4]
-    p[0] = new_loop
+    p[0] = LoopNode(p[2],p[4])
 
 
 def p_case(p):
     'case : CASE expression OF implications ESAC'
-    new_case = Case()
-    new_case.case_expression = p[2]
-    new_case.implications = p[4]
-    p[0] = new_case
+    p[0] = CaseNode(p[2],p[4])
 
 
 def p_implications(p):
@@ -326,26 +301,25 @@ def p_implications(p):
     if len(p) == 1:
         p[0] = [p[1]]
     else:
-        p[0] = p[3].append(p[1])
+        p[0] = [p[1]] + p[3]
 
 
 def p_implication(p):
     '''implication : id_type IMPLY expression'''
-    new_implication = Implication()
-    new_implication.id, new_implication.type = p[1]
-    new_implication.expression = p[3]
-    p[0] = new_implication
+    # new_implication = Implication()
+    # new_implication.id, new_implication.type = p[1]
+    # new_implication.expression = p[3]
+    # p[0] = new_implication
+    p[0] = (p[1],p[3])
 
 
 def p_dispatch(p):
     '''dispatch : expression especific DOT dispatch_call
                 | dispatch_call'''
     if len(p) == 1:
-        p[0] = p[1]
+        p[0] = DispatchNode(p[1][0],p[1][1])
     else:
-        p[4].left_expression = p[1]
-        p[4].dispatch_type = p[3]
-        p[0] = p[4]
+        p[0] = DispatchNode(p[4][0],p[4][1],p[1],p[2])
 
 
 def p_especific(p):
@@ -359,10 +333,7 @@ def p_especific(p):
 
 def p_dispatch_call(p):
     'dispatch_call : ID LBRACKET params_expression RBRACKET'
-    new_dispatch = Dispatch()
-    new_dispatch.func_id = p[1]
-    new_dispatch.parameters = p[3]
-    p[0] = new_dispatch
+    p[0] = (p[1],p[3])
 
 
 def p_params_expression(p):
