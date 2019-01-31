@@ -16,39 +16,39 @@ Rule 10    attribute -> id_type
 Rule 11    attribute -> id_type ASSIGN expression
 Rule 12    id_type -> ID TDOTS TYPE
 Rule 13    method_declaration -> ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression RBRACE
-Rule 14    block -> LBRACE expression_list RBRACE
-Rule 15    formals -> id_type COMMA formals
-Rule 16    formals -> id_type
-Rule 17    formals -> empty
-Rule 18    expression_list -> expression SEMICOLON expression_list
-Rule 19    expression_list -> expression SEMICOLON
-Rule 20    expression -> assign
-Rule 21    expression -> upper_non
-Rule 22    upper_non -> NOT upper_non
-Rule 23    upper_non -> operator_non
-Rule 24    operator_non -> k_arith LTHAN k_arith
-Rule 25    operator_non -> k_arith LETHAN k_arith
-Rule 26    operator_non -> k_arith EQUALS k_arith
-Rule 27    operator_non -> k_arith
-Rule 28    k_arith -> arith
-Rule 29    k_arith -> e_arith
-Rule 30    assign -> ID ASSIGN expression
-Rule 31    arith -> arith PLUS term
-Rule 32    arith -> arith MINUS term
-Rule 33    arith -> term
-Rule 34    term -> term TIMES factor
-Rule 35    term -> term DIVIDE factor
-Rule 36    term -> factor
-Rule 37    factor -> MINUS factor
-Rule 38    factor -> atom
-Rule 39    atom -> LBRACKET expression RBRACKET
-Rule 40    atom -> ISVOID expression
-Rule 41    atom -> block
-Rule 42    atom -> conditional
-Rule 43    atom -> loop
-Rule 44    atom -> case
-Rule 45    atom -> dispatch
-Rule 46    atom -> BCOMPLEMENT expression
+Rule 14    formals -> id_type COMMA formals
+Rule 15    formals -> id_type
+Rule 16    formals -> empty
+Rule 17    expression_list -> expression SEMICOLON expression_list
+Rule 18    expression_list -> expression SEMICOLON
+Rule 19    expression -> assign
+Rule 20    expression -> upper_non
+Rule 21    upper_non -> NOT upper_non
+Rule 22    upper_non -> operator_non
+Rule 23    operator_non -> k_arith LTHAN k_arith
+Rule 24    operator_non -> k_arith LETHAN k_arith
+Rule 25    operator_non -> k_arith EQUALS k_arith
+Rule 26    operator_non -> k_arith
+Rule 27    k_arith -> arith
+Rule 28    k_arith -> e_arith
+Rule 29    assign -> ID ASSIGN expression
+Rule 30    arith -> arith PLUS term
+Rule 31    arith -> arith MINUS term
+Rule 32    arith -> term
+Rule 33    term -> term TIMES factor
+Rule 34    term -> term DIVIDE factor
+Rule 35    term -> factor
+Rule 36    factor -> MINUS factor
+Rule 37    factor -> atom
+Rule 38    atom -> LBRACKET expression RBRACKET
+Rule 39    atom -> ISVOID expression
+Rule 40    atom -> block
+Rule 41    atom -> conditional
+Rule 42    atom -> loop
+Rule 43    atom -> case
+Rule 44    atom -> dispatch
+Rule 45    atom -> BCOMPLEMENT expression
+Rule 46    block -> LBRACE expression_list RBRACE
 Rule 47    atom -> ID
 Rule 48    atom -> INTEGER
 Rule 49    atom -> STRING
@@ -84,45 +84,45 @@ Rule 78    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ASSIGN               : 11 30
-BCOMPLEMENT          : 46
+ASSIGN               : 11 29
+BCOMPLEMENT          : 45
 CASE                 : 66
 CLASS                : 3
-COMMA                : 15 62 67 76
+COMMA                : 14 62 67 76
 DISP                 : 72
-DIVIDE               : 35 57
+DIVIDE               : 34 57
 DOT                  : 70
 ELSE                 : 64
-EQUALS               : 26
+EQUALS               : 25
 ESAC                 : 66
 FALSE                : 51
 FI                   : 64
-ID                   : 12 13 30 47 74
+ID                   : 12 13 29 47 74
 IF                   : 64
 IMPLY                : 69
 IN                   : 61
 INHERITS             : 4
 INTEGER              : 48
-ISVOID               : 40
-LBRACE               : 3 13 14
-LBRACKET             : 13 39 74
+ISVOID               : 39
+LBRACE               : 3 13 46
+LBRACKET             : 13 38 74
 LET                  : 61
-LETHAN               : 25
+LETHAN               : 24
 LOOP                 : 65
-LTHAN                : 24
-MINUS                : 32 37 54 59
+LTHAN                : 23
+MINUS                : 31 36 54 59
 NEW                  : 52
-NOT                  : 22
+NOT                  : 21
 OF                   : 66
-PLUS                 : 31 53
+PLUS                 : 30 53
 POOL                 : 65
-RBRACE               : 3 13 14
-RBRACKET             : 13 39 74
-SEMICOLON            : 1 2 6 18 19
+RBRACE               : 3 13 46
+RBRACKET             : 13 38 74
+SEMICOLON            : 1 2 6 17 18
 STRING               : 49
 TDOTS                : 12 13
 THEN                 : 64
-TIMES                : 34 56
+TIMES                : 33 56
 TRUE                 : 50
 TYPE                 : 3 4 12 13 52 72
 WHILE                : 65
@@ -130,41 +130,41 @@ error                :
 
 Nonterminals, with rules where they appear
 
-arith                : 28 31 32 53 54
-assign               : 20
-atom                 : 38
+arith                : 27 30 31 53 54
+assign               : 19
+atom                 : 37
 attribute            : 9 62 63
-block                : 41
-case                 : 44
+block                : 40
+case                 : 43
 class                : 1 2
-conditional          : 42
+conditional          : 41
 declaration_list     : 61 62
-dispatch             : 45
+dispatch             : 44
 dispatch_call        : 70 71
-e_arith              : 29
+e_arith              : 28
 e_factor             : 56 57 58 59
 e_term               : 53 54 55 56 57
-empty                : 5 7 17 73 77
+empty                : 5 7 16 73 77
 especific            : 70
-expression           : 11 13 18 19 30 39 40 46 61 64 64 64 65 65 66 69 70 75 76
-expression_list      : 14 18
-factor               : 34 35 36 37
+expression           : 11 13 17 18 29 38 39 45 61 64 64 64 65 65 66 69 70 75 76
+expression_list      : 17 46
+factor               : 33 34 35 36
 feature              : 6
 features             : 3 6
-formals              : 13 15
-id_type              : 10 11 15 16 69
+formals              : 13 14
+id_type              : 10 11 14 15 69
 implication          : 67 68
 implications         : 66 67
 inheritence          : 3
-k_arith              : 24 24 25 25 26 26 27
+k_arith              : 23 23 24 24 25 25 26
 let_expression       : 60
-loop                 : 43
+loop                 : 42
 method_declaration   : 8
-operator_non         : 23
+operator_non         : 22
 params_expression    : 74 76
 program              : 1 0
-term                 : 31 32 33 34 35
-upper_non            : 21 22
+term                 : 30 31 32 33 34
+upper_non            : 20 21
 
 Parsing method: LALR
 
@@ -374,9 +374,9 @@ state 20
 state 21
 
     (13) method_declaration -> ID LBRACKET . formals RBRACKET TDOTS TYPE LBRACE expression RBRACE
-    (15) formals -> . id_type COMMA formals
-    (16) formals -> . id_type
-    (17) formals -> . empty
+    (14) formals -> . id_type COMMA formals
+    (15) formals -> . id_type
+    (16) formals -> . empty
     (12) id_type -> . ID TDOTS TYPE
     (78) empty -> .
 
@@ -397,41 +397,41 @@ state 22
 state 23
 
     (11) attribute -> id_type ASSIGN . expression
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -439,7 +439,7 @@ state 23
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -507,18 +507,18 @@ state 26
 
 state 27
 
-    (15) formals -> id_type . COMMA formals
-    (16) formals -> id_type .
+    (14) formals -> id_type . COMMA formals
+    (15) formals -> id_type .
 
     COMMA           shift and go to state 66
-    RBRACKET        reduce using rule 16 (formals -> id_type .)
+    RBRACKET        reduce using rule 15 (formals -> id_type .)
 
 
 state 28
 
-    (17) formals -> empty .
+    (16) formals -> empty .
 
-    RBRACKET        reduce using rule 17 (formals -> empty .)
+    RBRACKET        reduce using rule 16 (formals -> empty .)
 
 
 state 29
@@ -552,61 +552,61 @@ state 30
 
 state 31
 
-    (20) expression -> assign .
+    (19) expression -> assign .
 
-    DISP            reduce using rule 20 (expression -> assign .)
-    DOT             reduce using rule 20 (expression -> assign .)
-    SEMICOLON       reduce using rule 20 (expression -> assign .)
-    COMMA           reduce using rule 20 (expression -> assign .)
-    IN              reduce using rule 20 (expression -> assign .)
-    RBRACKET        reduce using rule 20 (expression -> assign .)
-    TIMES           reduce using rule 20 (expression -> assign .)
-    DIVIDE          reduce using rule 20 (expression -> assign .)
-    PLUS            reduce using rule 20 (expression -> assign .)
-    MINUS           reduce using rule 20 (expression -> assign .)
-    LTHAN           reduce using rule 20 (expression -> assign .)
-    LETHAN          reduce using rule 20 (expression -> assign .)
-    EQUALS          reduce using rule 20 (expression -> assign .)
-    THEN            reduce using rule 20 (expression -> assign .)
-    LOOP            reduce using rule 20 (expression -> assign .)
-    OF              reduce using rule 20 (expression -> assign .)
-    ELSE            reduce using rule 20 (expression -> assign .)
-    POOL            reduce using rule 20 (expression -> assign .)
-    RBRACE          reduce using rule 20 (expression -> assign .)
-    FI              reduce using rule 20 (expression -> assign .)
-    ESAC            reduce using rule 20 (expression -> assign .)
+    DISP            reduce using rule 19 (expression -> assign .)
+    DOT             reduce using rule 19 (expression -> assign .)
+    SEMICOLON       reduce using rule 19 (expression -> assign .)
+    COMMA           reduce using rule 19 (expression -> assign .)
+    IN              reduce using rule 19 (expression -> assign .)
+    RBRACKET        reduce using rule 19 (expression -> assign .)
+    TIMES           reduce using rule 19 (expression -> assign .)
+    DIVIDE          reduce using rule 19 (expression -> assign .)
+    PLUS            reduce using rule 19 (expression -> assign .)
+    MINUS           reduce using rule 19 (expression -> assign .)
+    LTHAN           reduce using rule 19 (expression -> assign .)
+    LETHAN          reduce using rule 19 (expression -> assign .)
+    EQUALS          reduce using rule 19 (expression -> assign .)
+    THEN            reduce using rule 19 (expression -> assign .)
+    LOOP            reduce using rule 19 (expression -> assign .)
+    OF              reduce using rule 19 (expression -> assign .)
+    ELSE            reduce using rule 19 (expression -> assign .)
+    POOL            reduce using rule 19 (expression -> assign .)
+    RBRACE          reduce using rule 19 (expression -> assign .)
+    FI              reduce using rule 19 (expression -> assign .)
+    ESAC            reduce using rule 19 (expression -> assign .)
 
 
 state 32
 
-    (21) expression -> upper_non .
+    (20) expression -> upper_non .
 
-    DISP            reduce using rule 21 (expression -> upper_non .)
-    DOT             reduce using rule 21 (expression -> upper_non .)
-    SEMICOLON       reduce using rule 21 (expression -> upper_non .)
-    COMMA           reduce using rule 21 (expression -> upper_non .)
-    IN              reduce using rule 21 (expression -> upper_non .)
-    RBRACKET        reduce using rule 21 (expression -> upper_non .)
-    TIMES           reduce using rule 21 (expression -> upper_non .)
-    DIVIDE          reduce using rule 21 (expression -> upper_non .)
-    PLUS            reduce using rule 21 (expression -> upper_non .)
-    MINUS           reduce using rule 21 (expression -> upper_non .)
-    LTHAN           reduce using rule 21 (expression -> upper_non .)
-    LETHAN          reduce using rule 21 (expression -> upper_non .)
-    EQUALS          reduce using rule 21 (expression -> upper_non .)
-    THEN            reduce using rule 21 (expression -> upper_non .)
-    LOOP            reduce using rule 21 (expression -> upper_non .)
-    OF              reduce using rule 21 (expression -> upper_non .)
-    ELSE            reduce using rule 21 (expression -> upper_non .)
-    POOL            reduce using rule 21 (expression -> upper_non .)
-    RBRACE          reduce using rule 21 (expression -> upper_non .)
-    FI              reduce using rule 21 (expression -> upper_non .)
-    ESAC            reduce using rule 21 (expression -> upper_non .)
+    DISP            reduce using rule 20 (expression -> upper_non .)
+    DOT             reduce using rule 20 (expression -> upper_non .)
+    SEMICOLON       reduce using rule 20 (expression -> upper_non .)
+    COMMA           reduce using rule 20 (expression -> upper_non .)
+    IN              reduce using rule 20 (expression -> upper_non .)
+    RBRACKET        reduce using rule 20 (expression -> upper_non .)
+    TIMES           reduce using rule 20 (expression -> upper_non .)
+    DIVIDE          reduce using rule 20 (expression -> upper_non .)
+    PLUS            reduce using rule 20 (expression -> upper_non .)
+    MINUS           reduce using rule 20 (expression -> upper_non .)
+    LTHAN           reduce using rule 20 (expression -> upper_non .)
+    LETHAN          reduce using rule 20 (expression -> upper_non .)
+    EQUALS          reduce using rule 20 (expression -> upper_non .)
+    THEN            reduce using rule 20 (expression -> upper_non .)
+    LOOP            reduce using rule 20 (expression -> upper_non .)
+    OF              reduce using rule 20 (expression -> upper_non .)
+    ELSE            reduce using rule 20 (expression -> upper_non .)
+    POOL            reduce using rule 20 (expression -> upper_non .)
+    RBRACE          reduce using rule 20 (expression -> upper_non .)
+    FI              reduce using rule 20 (expression -> upper_non .)
+    ESAC            reduce using rule 20 (expression -> upper_non .)
 
 
 state 33
 
-    (30) assign -> ID . ASSIGN expression
+    (29) assign -> ID . ASSIGN expression
     (47) atom -> ID .
     (74) dispatch_call -> ID . LBRACKET params_expression RBRACKET
 
@@ -637,39 +637,39 @@ state 33
 
 state 34
 
-    (22) upper_non -> NOT . upper_non
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (21) upper_non -> NOT . upper_non
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -677,16 +677,16 @@ state 34
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
+    (29) assign -> . ID ASSIGN expression
 
     NOT             shift and go to state 34
     MINUS           shift and go to state 40
@@ -727,37 +727,37 @@ state 34
 
 state 35
 
-    (23) upper_non -> operator_non .
+    (22) upper_non -> operator_non .
 
-    DISP            reduce using rule 23 (upper_non -> operator_non .)
-    DOT             reduce using rule 23 (upper_non -> operator_non .)
-    SEMICOLON       reduce using rule 23 (upper_non -> operator_non .)
-    COMMA           reduce using rule 23 (upper_non -> operator_non .)
-    IN              reduce using rule 23 (upper_non -> operator_non .)
-    RBRACKET        reduce using rule 23 (upper_non -> operator_non .)
-    TIMES           reduce using rule 23 (upper_non -> operator_non .)
-    DIVIDE          reduce using rule 23 (upper_non -> operator_non .)
-    PLUS            reduce using rule 23 (upper_non -> operator_non .)
-    MINUS           reduce using rule 23 (upper_non -> operator_non .)
-    LTHAN           reduce using rule 23 (upper_non -> operator_non .)
-    LETHAN          reduce using rule 23 (upper_non -> operator_non .)
-    EQUALS          reduce using rule 23 (upper_non -> operator_non .)
-    THEN            reduce using rule 23 (upper_non -> operator_non .)
-    LOOP            reduce using rule 23 (upper_non -> operator_non .)
-    OF              reduce using rule 23 (upper_non -> operator_non .)
-    ELSE            reduce using rule 23 (upper_non -> operator_non .)
-    POOL            reduce using rule 23 (upper_non -> operator_non .)
-    RBRACE          reduce using rule 23 (upper_non -> operator_non .)
-    FI              reduce using rule 23 (upper_non -> operator_non .)
-    ESAC            reduce using rule 23 (upper_non -> operator_non .)
+    DISP            reduce using rule 22 (upper_non -> operator_non .)
+    DOT             reduce using rule 22 (upper_non -> operator_non .)
+    SEMICOLON       reduce using rule 22 (upper_non -> operator_non .)
+    COMMA           reduce using rule 22 (upper_non -> operator_non .)
+    IN              reduce using rule 22 (upper_non -> operator_non .)
+    RBRACKET        reduce using rule 22 (upper_non -> operator_non .)
+    TIMES           reduce using rule 22 (upper_non -> operator_non .)
+    DIVIDE          reduce using rule 22 (upper_non -> operator_non .)
+    PLUS            reduce using rule 22 (upper_non -> operator_non .)
+    MINUS           reduce using rule 22 (upper_non -> operator_non .)
+    LTHAN           reduce using rule 22 (upper_non -> operator_non .)
+    LETHAN          reduce using rule 22 (upper_non -> operator_non .)
+    EQUALS          reduce using rule 22 (upper_non -> operator_non .)
+    THEN            reduce using rule 22 (upper_non -> operator_non .)
+    LOOP            reduce using rule 22 (upper_non -> operator_non .)
+    OF              reduce using rule 22 (upper_non -> operator_non .)
+    ELSE            reduce using rule 22 (upper_non -> operator_non .)
+    POOL            reduce using rule 22 (upper_non -> operator_non .)
+    RBRACE          reduce using rule 22 (upper_non -> operator_non .)
+    FI              reduce using rule 22 (upper_non -> operator_non .)
+    ESAC            reduce using rule 22 (upper_non -> operator_non .)
 
 
 state 36
 
-    (24) operator_non -> k_arith . LTHAN k_arith
-    (25) operator_non -> k_arith . LETHAN k_arith
-    (26) operator_non -> k_arith . EQUALS k_arith
-    (27) operator_non -> k_arith .
+    (23) operator_non -> k_arith . LTHAN k_arith
+    (24) operator_non -> k_arith . LETHAN k_arith
+    (25) operator_non -> k_arith . EQUALS k_arith
+    (26) operator_non -> k_arith .
 
   ! shift/reduce conflict for LTHAN resolved as shift
   ! shift/reduce conflict for LETHAN resolved as shift
@@ -765,143 +765,143 @@ state 36
     LTHAN           shift and go to state 75
     LETHAN          shift and go to state 76
     EQUALS          shift and go to state 77
-    DISP            reduce using rule 27 (operator_non -> k_arith .)
-    DOT             reduce using rule 27 (operator_non -> k_arith .)
-    SEMICOLON       reduce using rule 27 (operator_non -> k_arith .)
-    COMMA           reduce using rule 27 (operator_non -> k_arith .)
-    IN              reduce using rule 27 (operator_non -> k_arith .)
-    RBRACKET        reduce using rule 27 (operator_non -> k_arith .)
-    TIMES           reduce using rule 27 (operator_non -> k_arith .)
-    DIVIDE          reduce using rule 27 (operator_non -> k_arith .)
-    PLUS            reduce using rule 27 (operator_non -> k_arith .)
-    MINUS           reduce using rule 27 (operator_non -> k_arith .)
-    THEN            reduce using rule 27 (operator_non -> k_arith .)
-    LOOP            reduce using rule 27 (operator_non -> k_arith .)
-    OF              reduce using rule 27 (operator_non -> k_arith .)
-    ELSE            reduce using rule 27 (operator_non -> k_arith .)
-    POOL            reduce using rule 27 (operator_non -> k_arith .)
-    RBRACE          reduce using rule 27 (operator_non -> k_arith .)
-    FI              reduce using rule 27 (operator_non -> k_arith .)
-    ESAC            reduce using rule 27 (operator_non -> k_arith .)
+    DISP            reduce using rule 26 (operator_non -> k_arith .)
+    DOT             reduce using rule 26 (operator_non -> k_arith .)
+    SEMICOLON       reduce using rule 26 (operator_non -> k_arith .)
+    COMMA           reduce using rule 26 (operator_non -> k_arith .)
+    IN              reduce using rule 26 (operator_non -> k_arith .)
+    RBRACKET        reduce using rule 26 (operator_non -> k_arith .)
+    TIMES           reduce using rule 26 (operator_non -> k_arith .)
+    DIVIDE          reduce using rule 26 (operator_non -> k_arith .)
+    PLUS            reduce using rule 26 (operator_non -> k_arith .)
+    MINUS           reduce using rule 26 (operator_non -> k_arith .)
+    THEN            reduce using rule 26 (operator_non -> k_arith .)
+    LOOP            reduce using rule 26 (operator_non -> k_arith .)
+    OF              reduce using rule 26 (operator_non -> k_arith .)
+    ELSE            reduce using rule 26 (operator_non -> k_arith .)
+    POOL            reduce using rule 26 (operator_non -> k_arith .)
+    RBRACE          reduce using rule 26 (operator_non -> k_arith .)
+    FI              reduce using rule 26 (operator_non -> k_arith .)
+    ESAC            reduce using rule 26 (operator_non -> k_arith .)
 
-  ! LTHAN           [ reduce using rule 27 (operator_non -> k_arith .) ]
-  ! LETHAN          [ reduce using rule 27 (operator_non -> k_arith .) ]
-  ! EQUALS          [ reduce using rule 27 (operator_non -> k_arith .) ]
+  ! LTHAN           [ reduce using rule 26 (operator_non -> k_arith .) ]
+  ! LETHAN          [ reduce using rule 26 (operator_non -> k_arith .) ]
+  ! EQUALS          [ reduce using rule 26 (operator_non -> k_arith .) ]
 
 
 state 37
 
-    (28) k_arith -> arith .
-    (31) arith -> arith . PLUS term
-    (32) arith -> arith . MINUS term
+    (27) k_arith -> arith .
+    (30) arith -> arith . PLUS term
+    (31) arith -> arith . MINUS term
     (53) e_arith -> arith . PLUS e_term
     (54) e_arith -> arith . MINUS e_term
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
-    LTHAN           reduce using rule 28 (k_arith -> arith .)
-    LETHAN          reduce using rule 28 (k_arith -> arith .)
-    EQUALS          reduce using rule 28 (k_arith -> arith .)
-    DISP            reduce using rule 28 (k_arith -> arith .)
-    DOT             reduce using rule 28 (k_arith -> arith .)
-    SEMICOLON       reduce using rule 28 (k_arith -> arith .)
-    COMMA           reduce using rule 28 (k_arith -> arith .)
-    IN              reduce using rule 28 (k_arith -> arith .)
-    RBRACKET        reduce using rule 28 (k_arith -> arith .)
-    TIMES           reduce using rule 28 (k_arith -> arith .)
-    DIVIDE          reduce using rule 28 (k_arith -> arith .)
-    THEN            reduce using rule 28 (k_arith -> arith .)
-    LOOP            reduce using rule 28 (k_arith -> arith .)
-    OF              reduce using rule 28 (k_arith -> arith .)
-    ELSE            reduce using rule 28 (k_arith -> arith .)
-    POOL            reduce using rule 28 (k_arith -> arith .)
-    RBRACE          reduce using rule 28 (k_arith -> arith .)
-    FI              reduce using rule 28 (k_arith -> arith .)
-    ESAC            reduce using rule 28 (k_arith -> arith .)
+    LTHAN           reduce using rule 27 (k_arith -> arith .)
+    LETHAN          reduce using rule 27 (k_arith -> arith .)
+    EQUALS          reduce using rule 27 (k_arith -> arith .)
+    DISP            reduce using rule 27 (k_arith -> arith .)
+    DOT             reduce using rule 27 (k_arith -> arith .)
+    SEMICOLON       reduce using rule 27 (k_arith -> arith .)
+    COMMA           reduce using rule 27 (k_arith -> arith .)
+    IN              reduce using rule 27 (k_arith -> arith .)
+    RBRACKET        reduce using rule 27 (k_arith -> arith .)
+    TIMES           reduce using rule 27 (k_arith -> arith .)
+    DIVIDE          reduce using rule 27 (k_arith -> arith .)
+    THEN            reduce using rule 27 (k_arith -> arith .)
+    LOOP            reduce using rule 27 (k_arith -> arith .)
+    OF              reduce using rule 27 (k_arith -> arith .)
+    ELSE            reduce using rule 27 (k_arith -> arith .)
+    POOL            reduce using rule 27 (k_arith -> arith .)
+    RBRACE          reduce using rule 27 (k_arith -> arith .)
+    FI              reduce using rule 27 (k_arith -> arith .)
+    ESAC            reduce using rule 27 (k_arith -> arith .)
     PLUS            shift and go to state 78
     MINUS           shift and go to state 79
 
-  ! PLUS            [ reduce using rule 28 (k_arith -> arith .) ]
-  ! MINUS           [ reduce using rule 28 (k_arith -> arith .) ]
+  ! PLUS            [ reduce using rule 27 (k_arith -> arith .) ]
+  ! MINUS           [ reduce using rule 27 (k_arith -> arith .) ]
 
 
 state 38
 
-    (29) k_arith -> e_arith .
+    (28) k_arith -> e_arith .
 
-    LTHAN           reduce using rule 29 (k_arith -> e_arith .)
-    LETHAN          reduce using rule 29 (k_arith -> e_arith .)
-    EQUALS          reduce using rule 29 (k_arith -> e_arith .)
-    DISP            reduce using rule 29 (k_arith -> e_arith .)
-    DOT             reduce using rule 29 (k_arith -> e_arith .)
-    SEMICOLON       reduce using rule 29 (k_arith -> e_arith .)
-    COMMA           reduce using rule 29 (k_arith -> e_arith .)
-    IN              reduce using rule 29 (k_arith -> e_arith .)
-    RBRACKET        reduce using rule 29 (k_arith -> e_arith .)
-    TIMES           reduce using rule 29 (k_arith -> e_arith .)
-    DIVIDE          reduce using rule 29 (k_arith -> e_arith .)
-    PLUS            reduce using rule 29 (k_arith -> e_arith .)
-    MINUS           reduce using rule 29 (k_arith -> e_arith .)
-    THEN            reduce using rule 29 (k_arith -> e_arith .)
-    LOOP            reduce using rule 29 (k_arith -> e_arith .)
-    OF              reduce using rule 29 (k_arith -> e_arith .)
-    ELSE            reduce using rule 29 (k_arith -> e_arith .)
-    POOL            reduce using rule 29 (k_arith -> e_arith .)
-    RBRACE          reduce using rule 29 (k_arith -> e_arith .)
-    FI              reduce using rule 29 (k_arith -> e_arith .)
-    ESAC            reduce using rule 29 (k_arith -> e_arith .)
+    LTHAN           reduce using rule 28 (k_arith -> e_arith .)
+    LETHAN          reduce using rule 28 (k_arith -> e_arith .)
+    EQUALS          reduce using rule 28 (k_arith -> e_arith .)
+    DISP            reduce using rule 28 (k_arith -> e_arith .)
+    DOT             reduce using rule 28 (k_arith -> e_arith .)
+    SEMICOLON       reduce using rule 28 (k_arith -> e_arith .)
+    COMMA           reduce using rule 28 (k_arith -> e_arith .)
+    IN              reduce using rule 28 (k_arith -> e_arith .)
+    RBRACKET        reduce using rule 28 (k_arith -> e_arith .)
+    TIMES           reduce using rule 28 (k_arith -> e_arith .)
+    DIVIDE          reduce using rule 28 (k_arith -> e_arith .)
+    PLUS            reduce using rule 28 (k_arith -> e_arith .)
+    MINUS           reduce using rule 28 (k_arith -> e_arith .)
+    THEN            reduce using rule 28 (k_arith -> e_arith .)
+    LOOP            reduce using rule 28 (k_arith -> e_arith .)
+    OF              reduce using rule 28 (k_arith -> e_arith .)
+    ELSE            reduce using rule 28 (k_arith -> e_arith .)
+    POOL            reduce using rule 28 (k_arith -> e_arith .)
+    RBRACE          reduce using rule 28 (k_arith -> e_arith .)
+    FI              reduce using rule 28 (k_arith -> e_arith .)
+    ESAC            reduce using rule 28 (k_arith -> e_arith .)
 
 
 state 39
 
-    (33) arith -> term .
-    (34) term -> term . TIMES factor
-    (35) term -> term . DIVIDE factor
+    (32) arith -> term .
+    (33) term -> term . TIMES factor
+    (34) term -> term . DIVIDE factor
 
   ! shift/reduce conflict for TIMES resolved as shift
   ! shift/reduce conflict for DIVIDE resolved as shift
-    PLUS            reduce using rule 33 (arith -> term .)
-    MINUS           reduce using rule 33 (arith -> term .)
-    LTHAN           reduce using rule 33 (arith -> term .)
-    LETHAN          reduce using rule 33 (arith -> term .)
-    EQUALS          reduce using rule 33 (arith -> term .)
-    DISP            reduce using rule 33 (arith -> term .)
-    DOT             reduce using rule 33 (arith -> term .)
-    SEMICOLON       reduce using rule 33 (arith -> term .)
-    COMMA           reduce using rule 33 (arith -> term .)
-    IN              reduce using rule 33 (arith -> term .)
-    RBRACKET        reduce using rule 33 (arith -> term .)
-    THEN            reduce using rule 33 (arith -> term .)
-    LOOP            reduce using rule 33 (arith -> term .)
-    OF              reduce using rule 33 (arith -> term .)
-    ELSE            reduce using rule 33 (arith -> term .)
-    POOL            reduce using rule 33 (arith -> term .)
-    RBRACE          reduce using rule 33 (arith -> term .)
-    FI              reduce using rule 33 (arith -> term .)
-    ESAC            reduce using rule 33 (arith -> term .)
+    PLUS            reduce using rule 32 (arith -> term .)
+    MINUS           reduce using rule 32 (arith -> term .)
+    LTHAN           reduce using rule 32 (arith -> term .)
+    LETHAN          reduce using rule 32 (arith -> term .)
+    EQUALS          reduce using rule 32 (arith -> term .)
+    DISP            reduce using rule 32 (arith -> term .)
+    DOT             reduce using rule 32 (arith -> term .)
+    SEMICOLON       reduce using rule 32 (arith -> term .)
+    COMMA           reduce using rule 32 (arith -> term .)
+    IN              reduce using rule 32 (arith -> term .)
+    RBRACKET        reduce using rule 32 (arith -> term .)
+    THEN            reduce using rule 32 (arith -> term .)
+    LOOP            reduce using rule 32 (arith -> term .)
+    OF              reduce using rule 32 (arith -> term .)
+    ELSE            reduce using rule 32 (arith -> term .)
+    POOL            reduce using rule 32 (arith -> term .)
+    RBRACE          reduce using rule 32 (arith -> term .)
+    FI              reduce using rule 32 (arith -> term .)
+    ESAC            reduce using rule 32 (arith -> term .)
     TIMES           shift and go to state 80
     DIVIDE          shift and go to state 81
 
-  ! TIMES           [ reduce using rule 33 (arith -> term .) ]
-  ! DIVIDE          [ reduce using rule 33 (arith -> term .) ]
+  ! TIMES           [ reduce using rule 32 (arith -> term .) ]
+  ! DIVIDE          [ reduce using rule 32 (arith -> term .) ]
 
 
 state 40
 
-    (37) factor -> MINUS . factor
+    (36) factor -> MINUS . factor
     (59) e_factor -> MINUS . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -909,33 +909,33 @@ state 40
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
@@ -1013,29 +1013,29 @@ state 41
 
 state 42
 
-    (36) term -> factor .
+    (35) term -> factor .
 
-    TIMES           reduce using rule 36 (term -> factor .)
-    DIVIDE          reduce using rule 36 (term -> factor .)
-    PLUS            reduce using rule 36 (term -> factor .)
-    MINUS           reduce using rule 36 (term -> factor .)
-    LTHAN           reduce using rule 36 (term -> factor .)
-    LETHAN          reduce using rule 36 (term -> factor .)
-    EQUALS          reduce using rule 36 (term -> factor .)
-    DISP            reduce using rule 36 (term -> factor .)
-    DOT             reduce using rule 36 (term -> factor .)
-    SEMICOLON       reduce using rule 36 (term -> factor .)
-    COMMA           reduce using rule 36 (term -> factor .)
-    IN              reduce using rule 36 (term -> factor .)
-    RBRACKET        reduce using rule 36 (term -> factor .)
-    THEN            reduce using rule 36 (term -> factor .)
-    LOOP            reduce using rule 36 (term -> factor .)
-    OF              reduce using rule 36 (term -> factor .)
-    ELSE            reduce using rule 36 (term -> factor .)
-    POOL            reduce using rule 36 (term -> factor .)
-    RBRACE          reduce using rule 36 (term -> factor .)
-    FI              reduce using rule 36 (term -> factor .)
-    ESAC            reduce using rule 36 (term -> factor .)
+    TIMES           reduce using rule 35 (term -> factor .)
+    DIVIDE          reduce using rule 35 (term -> factor .)
+    PLUS            reduce using rule 35 (term -> factor .)
+    MINUS           reduce using rule 35 (term -> factor .)
+    LTHAN           reduce using rule 35 (term -> factor .)
+    LETHAN          reduce using rule 35 (term -> factor .)
+    EQUALS          reduce using rule 35 (term -> factor .)
+    DISP            reduce using rule 35 (term -> factor .)
+    DOT             reduce using rule 35 (term -> factor .)
+    SEMICOLON       reduce using rule 35 (term -> factor .)
+    COMMA           reduce using rule 35 (term -> factor .)
+    IN              reduce using rule 35 (term -> factor .)
+    RBRACKET        reduce using rule 35 (term -> factor .)
+    THEN            reduce using rule 35 (term -> factor .)
+    LOOP            reduce using rule 35 (term -> factor .)
+    OF              reduce using rule 35 (term -> factor .)
+    ELSE            reduce using rule 35 (term -> factor .)
+    POOL            reduce using rule 35 (term -> factor .)
+    RBRACE          reduce using rule 35 (term -> factor .)
+    FI              reduce using rule 35 (term -> factor .)
+    ESAC            reduce using rule 35 (term -> factor .)
 
 
 state 43
@@ -1067,29 +1067,29 @@ state 43
 
 state 44
 
-    (38) factor -> atom .
+    (37) factor -> atom .
 
-    TIMES           reduce using rule 38 (factor -> atom .)
-    DIVIDE          reduce using rule 38 (factor -> atom .)
-    PLUS            reduce using rule 38 (factor -> atom .)
-    MINUS           reduce using rule 38 (factor -> atom .)
-    LTHAN           reduce using rule 38 (factor -> atom .)
-    LETHAN          reduce using rule 38 (factor -> atom .)
-    EQUALS          reduce using rule 38 (factor -> atom .)
-    DISP            reduce using rule 38 (factor -> atom .)
-    DOT             reduce using rule 38 (factor -> atom .)
-    SEMICOLON       reduce using rule 38 (factor -> atom .)
-    COMMA           reduce using rule 38 (factor -> atom .)
-    IN              reduce using rule 38 (factor -> atom .)
-    RBRACKET        reduce using rule 38 (factor -> atom .)
-    THEN            reduce using rule 38 (factor -> atom .)
-    LOOP            reduce using rule 38 (factor -> atom .)
-    OF              reduce using rule 38 (factor -> atom .)
-    ELSE            reduce using rule 38 (factor -> atom .)
-    POOL            reduce using rule 38 (factor -> atom .)
-    RBRACE          reduce using rule 38 (factor -> atom .)
-    FI              reduce using rule 38 (factor -> atom .)
-    ESAC            reduce using rule 38 (factor -> atom .)
+    TIMES           reduce using rule 37 (factor -> atom .)
+    DIVIDE          reduce using rule 37 (factor -> atom .)
+    PLUS            reduce using rule 37 (factor -> atom .)
+    MINUS           reduce using rule 37 (factor -> atom .)
+    LTHAN           reduce using rule 37 (factor -> atom .)
+    LETHAN          reduce using rule 37 (factor -> atom .)
+    EQUALS          reduce using rule 37 (factor -> atom .)
+    DISP            reduce using rule 37 (factor -> atom .)
+    DOT             reduce using rule 37 (factor -> atom .)
+    SEMICOLON       reduce using rule 37 (factor -> atom .)
+    COMMA           reduce using rule 37 (factor -> atom .)
+    IN              reduce using rule 37 (factor -> atom .)
+    RBRACKET        reduce using rule 37 (factor -> atom .)
+    THEN            reduce using rule 37 (factor -> atom .)
+    LOOP            reduce using rule 37 (factor -> atom .)
+    OF              reduce using rule 37 (factor -> atom .)
+    ELSE            reduce using rule 37 (factor -> atom .)
+    POOL            reduce using rule 37 (factor -> atom .)
+    RBRACE          reduce using rule 37 (factor -> atom .)
+    FI              reduce using rule 37 (factor -> atom .)
+    ESAC            reduce using rule 37 (factor -> atom .)
 
 
 state 45
@@ -1121,42 +1121,42 @@ state 45
 
 state 46
 
-    (39) atom -> LBRACKET . expression RBRACKET
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (38) atom -> LBRACKET . expression RBRACKET
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1164,7 +1164,7 @@ state 46
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -1211,42 +1211,42 @@ state 46
 
 state 47
 
-    (40) atom -> ISVOID . expression
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (39) atom -> ISVOID . expression
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1254,7 +1254,7 @@ state 47
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -1301,177 +1301,177 @@ state 47
 
 state 48
 
-    (41) atom -> block .
+    (40) atom -> block .
 
-    TIMES           reduce using rule 41 (atom -> block .)
-    DIVIDE          reduce using rule 41 (atom -> block .)
-    PLUS            reduce using rule 41 (atom -> block .)
-    MINUS           reduce using rule 41 (atom -> block .)
-    LTHAN           reduce using rule 41 (atom -> block .)
-    LETHAN          reduce using rule 41 (atom -> block .)
-    EQUALS          reduce using rule 41 (atom -> block .)
-    DISP            reduce using rule 41 (atom -> block .)
-    DOT             reduce using rule 41 (atom -> block .)
-    SEMICOLON       reduce using rule 41 (atom -> block .)
-    COMMA           reduce using rule 41 (atom -> block .)
-    IN              reduce using rule 41 (atom -> block .)
-    RBRACKET        reduce using rule 41 (atom -> block .)
-    THEN            reduce using rule 41 (atom -> block .)
-    LOOP            reduce using rule 41 (atom -> block .)
-    OF              reduce using rule 41 (atom -> block .)
-    ELSE            reduce using rule 41 (atom -> block .)
-    POOL            reduce using rule 41 (atom -> block .)
-    RBRACE          reduce using rule 41 (atom -> block .)
-    FI              reduce using rule 41 (atom -> block .)
-    ESAC            reduce using rule 41 (atom -> block .)
+    TIMES           reduce using rule 40 (atom -> block .)
+    DIVIDE          reduce using rule 40 (atom -> block .)
+    PLUS            reduce using rule 40 (atom -> block .)
+    MINUS           reduce using rule 40 (atom -> block .)
+    LTHAN           reduce using rule 40 (atom -> block .)
+    LETHAN          reduce using rule 40 (atom -> block .)
+    EQUALS          reduce using rule 40 (atom -> block .)
+    DISP            reduce using rule 40 (atom -> block .)
+    DOT             reduce using rule 40 (atom -> block .)
+    SEMICOLON       reduce using rule 40 (atom -> block .)
+    COMMA           reduce using rule 40 (atom -> block .)
+    IN              reduce using rule 40 (atom -> block .)
+    RBRACKET        reduce using rule 40 (atom -> block .)
+    THEN            reduce using rule 40 (atom -> block .)
+    LOOP            reduce using rule 40 (atom -> block .)
+    OF              reduce using rule 40 (atom -> block .)
+    ELSE            reduce using rule 40 (atom -> block .)
+    POOL            reduce using rule 40 (atom -> block .)
+    RBRACE          reduce using rule 40 (atom -> block .)
+    FI              reduce using rule 40 (atom -> block .)
+    ESAC            reduce using rule 40 (atom -> block .)
 
 
 state 49
 
-    (42) atom -> conditional .
+    (41) atom -> conditional .
 
-    TIMES           reduce using rule 42 (atom -> conditional .)
-    DIVIDE          reduce using rule 42 (atom -> conditional .)
-    PLUS            reduce using rule 42 (atom -> conditional .)
-    MINUS           reduce using rule 42 (atom -> conditional .)
-    LTHAN           reduce using rule 42 (atom -> conditional .)
-    LETHAN          reduce using rule 42 (atom -> conditional .)
-    EQUALS          reduce using rule 42 (atom -> conditional .)
-    DISP            reduce using rule 42 (atom -> conditional .)
-    DOT             reduce using rule 42 (atom -> conditional .)
-    SEMICOLON       reduce using rule 42 (atom -> conditional .)
-    COMMA           reduce using rule 42 (atom -> conditional .)
-    IN              reduce using rule 42 (atom -> conditional .)
-    RBRACKET        reduce using rule 42 (atom -> conditional .)
-    THEN            reduce using rule 42 (atom -> conditional .)
-    LOOP            reduce using rule 42 (atom -> conditional .)
-    OF              reduce using rule 42 (atom -> conditional .)
-    ELSE            reduce using rule 42 (atom -> conditional .)
-    POOL            reduce using rule 42 (atom -> conditional .)
-    RBRACE          reduce using rule 42 (atom -> conditional .)
-    FI              reduce using rule 42 (atom -> conditional .)
-    ESAC            reduce using rule 42 (atom -> conditional .)
+    TIMES           reduce using rule 41 (atom -> conditional .)
+    DIVIDE          reduce using rule 41 (atom -> conditional .)
+    PLUS            reduce using rule 41 (atom -> conditional .)
+    MINUS           reduce using rule 41 (atom -> conditional .)
+    LTHAN           reduce using rule 41 (atom -> conditional .)
+    LETHAN          reduce using rule 41 (atom -> conditional .)
+    EQUALS          reduce using rule 41 (atom -> conditional .)
+    DISP            reduce using rule 41 (atom -> conditional .)
+    DOT             reduce using rule 41 (atom -> conditional .)
+    SEMICOLON       reduce using rule 41 (atom -> conditional .)
+    COMMA           reduce using rule 41 (atom -> conditional .)
+    IN              reduce using rule 41 (atom -> conditional .)
+    RBRACKET        reduce using rule 41 (atom -> conditional .)
+    THEN            reduce using rule 41 (atom -> conditional .)
+    LOOP            reduce using rule 41 (atom -> conditional .)
+    OF              reduce using rule 41 (atom -> conditional .)
+    ELSE            reduce using rule 41 (atom -> conditional .)
+    POOL            reduce using rule 41 (atom -> conditional .)
+    RBRACE          reduce using rule 41 (atom -> conditional .)
+    FI              reduce using rule 41 (atom -> conditional .)
+    ESAC            reduce using rule 41 (atom -> conditional .)
 
 
 state 50
 
-    (43) atom -> loop .
+    (42) atom -> loop .
 
-    TIMES           reduce using rule 43 (atom -> loop .)
-    DIVIDE          reduce using rule 43 (atom -> loop .)
-    PLUS            reduce using rule 43 (atom -> loop .)
-    MINUS           reduce using rule 43 (atom -> loop .)
-    LTHAN           reduce using rule 43 (atom -> loop .)
-    LETHAN          reduce using rule 43 (atom -> loop .)
-    EQUALS          reduce using rule 43 (atom -> loop .)
-    DISP            reduce using rule 43 (atom -> loop .)
-    DOT             reduce using rule 43 (atom -> loop .)
-    SEMICOLON       reduce using rule 43 (atom -> loop .)
-    COMMA           reduce using rule 43 (atom -> loop .)
-    IN              reduce using rule 43 (atom -> loop .)
-    RBRACKET        reduce using rule 43 (atom -> loop .)
-    THEN            reduce using rule 43 (atom -> loop .)
-    LOOP            reduce using rule 43 (atom -> loop .)
-    OF              reduce using rule 43 (atom -> loop .)
-    ELSE            reduce using rule 43 (atom -> loop .)
-    POOL            reduce using rule 43 (atom -> loop .)
-    RBRACE          reduce using rule 43 (atom -> loop .)
-    FI              reduce using rule 43 (atom -> loop .)
-    ESAC            reduce using rule 43 (atom -> loop .)
+    TIMES           reduce using rule 42 (atom -> loop .)
+    DIVIDE          reduce using rule 42 (atom -> loop .)
+    PLUS            reduce using rule 42 (atom -> loop .)
+    MINUS           reduce using rule 42 (atom -> loop .)
+    LTHAN           reduce using rule 42 (atom -> loop .)
+    LETHAN          reduce using rule 42 (atom -> loop .)
+    EQUALS          reduce using rule 42 (atom -> loop .)
+    DISP            reduce using rule 42 (atom -> loop .)
+    DOT             reduce using rule 42 (atom -> loop .)
+    SEMICOLON       reduce using rule 42 (atom -> loop .)
+    COMMA           reduce using rule 42 (atom -> loop .)
+    IN              reduce using rule 42 (atom -> loop .)
+    RBRACKET        reduce using rule 42 (atom -> loop .)
+    THEN            reduce using rule 42 (atom -> loop .)
+    LOOP            reduce using rule 42 (atom -> loop .)
+    OF              reduce using rule 42 (atom -> loop .)
+    ELSE            reduce using rule 42 (atom -> loop .)
+    POOL            reduce using rule 42 (atom -> loop .)
+    RBRACE          reduce using rule 42 (atom -> loop .)
+    FI              reduce using rule 42 (atom -> loop .)
+    ESAC            reduce using rule 42 (atom -> loop .)
 
 
 state 51
 
-    (44) atom -> case .
+    (43) atom -> case .
 
-    TIMES           reduce using rule 44 (atom -> case .)
-    DIVIDE          reduce using rule 44 (atom -> case .)
-    PLUS            reduce using rule 44 (atom -> case .)
-    MINUS           reduce using rule 44 (atom -> case .)
-    LTHAN           reduce using rule 44 (atom -> case .)
-    LETHAN          reduce using rule 44 (atom -> case .)
-    EQUALS          reduce using rule 44 (atom -> case .)
-    DISP            reduce using rule 44 (atom -> case .)
-    DOT             reduce using rule 44 (atom -> case .)
-    SEMICOLON       reduce using rule 44 (atom -> case .)
-    COMMA           reduce using rule 44 (atom -> case .)
-    IN              reduce using rule 44 (atom -> case .)
-    RBRACKET        reduce using rule 44 (atom -> case .)
-    THEN            reduce using rule 44 (atom -> case .)
-    LOOP            reduce using rule 44 (atom -> case .)
-    OF              reduce using rule 44 (atom -> case .)
-    ELSE            reduce using rule 44 (atom -> case .)
-    POOL            reduce using rule 44 (atom -> case .)
-    RBRACE          reduce using rule 44 (atom -> case .)
-    FI              reduce using rule 44 (atom -> case .)
-    ESAC            reduce using rule 44 (atom -> case .)
+    TIMES           reduce using rule 43 (atom -> case .)
+    DIVIDE          reduce using rule 43 (atom -> case .)
+    PLUS            reduce using rule 43 (atom -> case .)
+    MINUS           reduce using rule 43 (atom -> case .)
+    LTHAN           reduce using rule 43 (atom -> case .)
+    LETHAN          reduce using rule 43 (atom -> case .)
+    EQUALS          reduce using rule 43 (atom -> case .)
+    DISP            reduce using rule 43 (atom -> case .)
+    DOT             reduce using rule 43 (atom -> case .)
+    SEMICOLON       reduce using rule 43 (atom -> case .)
+    COMMA           reduce using rule 43 (atom -> case .)
+    IN              reduce using rule 43 (atom -> case .)
+    RBRACKET        reduce using rule 43 (atom -> case .)
+    THEN            reduce using rule 43 (atom -> case .)
+    LOOP            reduce using rule 43 (atom -> case .)
+    OF              reduce using rule 43 (atom -> case .)
+    ELSE            reduce using rule 43 (atom -> case .)
+    POOL            reduce using rule 43 (atom -> case .)
+    RBRACE          reduce using rule 43 (atom -> case .)
+    FI              reduce using rule 43 (atom -> case .)
+    ESAC            reduce using rule 43 (atom -> case .)
 
 
 state 52
 
-    (45) atom -> dispatch .
+    (44) atom -> dispatch .
 
-    TIMES           reduce using rule 45 (atom -> dispatch .)
-    DIVIDE          reduce using rule 45 (atom -> dispatch .)
-    PLUS            reduce using rule 45 (atom -> dispatch .)
-    MINUS           reduce using rule 45 (atom -> dispatch .)
-    LTHAN           reduce using rule 45 (atom -> dispatch .)
-    LETHAN          reduce using rule 45 (atom -> dispatch .)
-    EQUALS          reduce using rule 45 (atom -> dispatch .)
-    DISP            reduce using rule 45 (atom -> dispatch .)
-    DOT             reduce using rule 45 (atom -> dispatch .)
-    SEMICOLON       reduce using rule 45 (atom -> dispatch .)
-    COMMA           reduce using rule 45 (atom -> dispatch .)
-    IN              reduce using rule 45 (atom -> dispatch .)
-    RBRACKET        reduce using rule 45 (atom -> dispatch .)
-    THEN            reduce using rule 45 (atom -> dispatch .)
-    LOOP            reduce using rule 45 (atom -> dispatch .)
-    OF              reduce using rule 45 (atom -> dispatch .)
-    ELSE            reduce using rule 45 (atom -> dispatch .)
-    POOL            reduce using rule 45 (atom -> dispatch .)
-    RBRACE          reduce using rule 45 (atom -> dispatch .)
-    FI              reduce using rule 45 (atom -> dispatch .)
-    ESAC            reduce using rule 45 (atom -> dispatch .)
+    TIMES           reduce using rule 44 (atom -> dispatch .)
+    DIVIDE          reduce using rule 44 (atom -> dispatch .)
+    PLUS            reduce using rule 44 (atom -> dispatch .)
+    MINUS           reduce using rule 44 (atom -> dispatch .)
+    LTHAN           reduce using rule 44 (atom -> dispatch .)
+    LETHAN          reduce using rule 44 (atom -> dispatch .)
+    EQUALS          reduce using rule 44 (atom -> dispatch .)
+    DISP            reduce using rule 44 (atom -> dispatch .)
+    DOT             reduce using rule 44 (atom -> dispatch .)
+    SEMICOLON       reduce using rule 44 (atom -> dispatch .)
+    COMMA           reduce using rule 44 (atom -> dispatch .)
+    IN              reduce using rule 44 (atom -> dispatch .)
+    RBRACKET        reduce using rule 44 (atom -> dispatch .)
+    THEN            reduce using rule 44 (atom -> dispatch .)
+    LOOP            reduce using rule 44 (atom -> dispatch .)
+    OF              reduce using rule 44 (atom -> dispatch .)
+    ELSE            reduce using rule 44 (atom -> dispatch .)
+    POOL            reduce using rule 44 (atom -> dispatch .)
+    RBRACE          reduce using rule 44 (atom -> dispatch .)
+    FI              reduce using rule 44 (atom -> dispatch .)
+    ESAC            reduce using rule 44 (atom -> dispatch .)
 
 
 state 53
 
-    (46) atom -> BCOMPLEMENT . expression
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (45) atom -> BCOMPLEMENT . expression
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1479,7 +1479,7 @@ state 53
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -1656,44 +1656,44 @@ state 59
 
 state 60
 
-    (14) block -> LBRACE . expression_list RBRACE
-    (18) expression_list -> . expression SEMICOLON expression_list
-    (19) expression_list -> . expression SEMICOLON
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (46) block -> LBRACE . expression_list RBRACE
+    (17) expression_list -> . expression SEMICOLON expression_list
+    (18) expression_list -> . expression SEMICOLON
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1701,7 +1701,7 @@ state 60
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -1750,41 +1750,41 @@ state 60
 state 61
 
     (64) conditional -> IF . expression THEN expression ELSE expression FI
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1792,7 +1792,7 @@ state 61
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -1840,41 +1840,41 @@ state 61
 state 62
 
     (65) loop -> WHILE . expression LOOP expression POOL
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1882,7 +1882,7 @@ state 62
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -1930,41 +1930,41 @@ state 62
 state 63
 
     (66) case -> CASE . expression OF implications ESAC
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -1972,7 +1972,7 @@ state 63
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -2053,10 +2053,10 @@ state 65
 
 state 66
 
-    (15) formals -> id_type COMMA . formals
-    (15) formals -> . id_type COMMA formals
-    (16) formals -> . id_type
-    (17) formals -> . empty
+    (14) formals -> id_type COMMA . formals
+    (14) formals -> . id_type COMMA formals
+    (15) formals -> . id_type
+    (16) formals -> . empty
     (12) id_type -> . ID TDOTS TYPE
     (78) empty -> .
 
@@ -2090,42 +2090,42 @@ state 69
 
 state 70
 
-    (30) assign -> ID ASSIGN . expression
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> ID ASSIGN . expression
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2133,7 +2133,7 @@ state 70
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -2184,42 +2184,42 @@ state 71
     (75) params_expression -> . expression
     (76) params_expression -> . expression COMMA params_expression
     (77) params_expression -> . empty
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (78) empty -> .
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2227,7 +2227,7 @@ state 71
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -2277,35 +2277,35 @@ state 71
 
 state 72
 
-    (22) upper_non -> NOT upper_non .
-    (21) expression -> upper_non .
+    (21) upper_non -> NOT upper_non .
+    (20) expression -> upper_non .
 
-  ! reduce/reduce conflict for DISP resolved using rule 21 (expression -> upper_non .)
-  ! reduce/reduce conflict for DOT resolved using rule 21 (expression -> upper_non .)
-    SEMICOLON       reduce using rule 22 (upper_non -> NOT upper_non .)
-    COMMA           reduce using rule 22 (upper_non -> NOT upper_non .)
-    IN              reduce using rule 22 (upper_non -> NOT upper_non .)
-    RBRACKET        reduce using rule 22 (upper_non -> NOT upper_non .)
-    TIMES           reduce using rule 22 (upper_non -> NOT upper_non .)
-    DIVIDE          reduce using rule 22 (upper_non -> NOT upper_non .)
-    PLUS            reduce using rule 22 (upper_non -> NOT upper_non .)
-    MINUS           reduce using rule 22 (upper_non -> NOT upper_non .)
-    LTHAN           reduce using rule 22 (upper_non -> NOT upper_non .)
-    LETHAN          reduce using rule 22 (upper_non -> NOT upper_non .)
-    EQUALS          reduce using rule 22 (upper_non -> NOT upper_non .)
-    THEN            reduce using rule 22 (upper_non -> NOT upper_non .)
-    LOOP            reduce using rule 22 (upper_non -> NOT upper_non .)
-    OF              reduce using rule 22 (upper_non -> NOT upper_non .)
-    ELSE            reduce using rule 22 (upper_non -> NOT upper_non .)
-    POOL            reduce using rule 22 (upper_non -> NOT upper_non .)
-    RBRACE          reduce using rule 22 (upper_non -> NOT upper_non .)
-    FI              reduce using rule 22 (upper_non -> NOT upper_non .)
-    ESAC            reduce using rule 22 (upper_non -> NOT upper_non .)
-    DISP            reduce using rule 21 (expression -> upper_non .)
-    DOT             reduce using rule 21 (expression -> upper_non .)
+  ! reduce/reduce conflict for DISP resolved using rule 20 (expression -> upper_non .)
+  ! reduce/reduce conflict for DOT resolved using rule 20 (expression -> upper_non .)
+    SEMICOLON       reduce using rule 21 (upper_non -> NOT upper_non .)
+    COMMA           reduce using rule 21 (upper_non -> NOT upper_non .)
+    IN              reduce using rule 21 (upper_non -> NOT upper_non .)
+    RBRACKET        reduce using rule 21 (upper_non -> NOT upper_non .)
+    TIMES           reduce using rule 21 (upper_non -> NOT upper_non .)
+    DIVIDE          reduce using rule 21 (upper_non -> NOT upper_non .)
+    PLUS            reduce using rule 21 (upper_non -> NOT upper_non .)
+    MINUS           reduce using rule 21 (upper_non -> NOT upper_non .)
+    LTHAN           reduce using rule 21 (upper_non -> NOT upper_non .)
+    LETHAN          reduce using rule 21 (upper_non -> NOT upper_non .)
+    EQUALS          reduce using rule 21 (upper_non -> NOT upper_non .)
+    THEN            reduce using rule 21 (upper_non -> NOT upper_non .)
+    LOOP            reduce using rule 21 (upper_non -> NOT upper_non .)
+    OF              reduce using rule 21 (upper_non -> NOT upper_non .)
+    ELSE            reduce using rule 21 (upper_non -> NOT upper_non .)
+    POOL            reduce using rule 21 (upper_non -> NOT upper_non .)
+    RBRACE          reduce using rule 21 (upper_non -> NOT upper_non .)
+    FI              reduce using rule 21 (upper_non -> NOT upper_non .)
+    ESAC            reduce using rule 21 (upper_non -> NOT upper_non .)
+    DISP            reduce using rule 20 (expression -> upper_non .)
+    DOT             reduce using rule 20 (expression -> upper_non .)
 
-  ! DISP            [ reduce using rule 22 (upper_non -> NOT upper_non .) ]
-  ! DOT             [ reduce using rule 22 (upper_non -> NOT upper_non .) ]
+  ! DISP            [ reduce using rule 21 (upper_non -> NOT upper_non .) ]
+  ! DOT             [ reduce using rule 21 (upper_non -> NOT upper_non .) ]
 
 
 state 73
@@ -2325,7 +2325,7 @@ state 74
 
     (47) atom -> ID .
     (74) dispatch_call -> ID . LBRACKET params_expression RBRACKET
-    (30) assign -> ID . ASSIGN expression
+    (29) assign -> ID . ASSIGN expression
 
     DISP            reduce using rule 47 (atom -> ID .)
     DOT             reduce using rule 47 (atom -> ID .)
@@ -2354,33 +2354,33 @@ state 74
 
 state 75
 
-    (24) operator_non -> k_arith LTHAN . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (23) operator_non -> k_arith LTHAN . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2388,22 +2388,22 @@ state 75
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
 
     MINUS           shift and go to state 40
     LBRACKET        shift and go to state 46
@@ -2444,33 +2444,33 @@ state 75
 
 state 76
 
-    (25) operator_non -> k_arith LETHAN . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (24) operator_non -> k_arith LETHAN . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2478,22 +2478,22 @@ state 76
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
 
     MINUS           shift and go to state 40
     LBRACKET        shift and go to state 46
@@ -2534,33 +2534,33 @@ state 76
 
 state 77
 
-    (26) operator_non -> k_arith EQUALS . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (25) operator_non -> k_arith EQUALS . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2568,22 +2568,22 @@ state 77
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
 
     MINUS           shift and go to state 40
     LBRACKET        shift and go to state 46
@@ -2624,26 +2624,26 @@ state 77
 
 state 78
 
-    (31) arith -> arith PLUS . term
+    (30) arith -> arith PLUS . term
     (53) e_arith -> arith PLUS . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2651,27 +2651,27 @@ state 78
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
@@ -2715,26 +2715,26 @@ state 78
 
 state 79
 
-    (32) arith -> arith MINUS . term
+    (31) arith -> arith MINUS . term
     (54) e_arith -> arith MINUS . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -2742,27 +2742,27 @@ state 79
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
@@ -2806,50 +2806,50 @@ state 79
 
 state 80
 
-    (34) term -> term TIMES . factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (33) term -> term TIMES . factor
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
@@ -2896,50 +2896,50 @@ state 80
 
 state 81
 
-    (35) term -> term DIVIDE . factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (34) term -> term DIVIDE . factor
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
     (70) dispatch -> . expression especific DOT dispatch_call
     (71) dispatch -> . dispatch_call
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
@@ -2986,49 +2986,49 @@ state 81
 
 state 82
 
-    (37) factor -> MINUS factor .
-    (36) term -> factor .
+    (36) factor -> MINUS factor .
+    (35) term -> factor .
 
-  ! reduce/reduce conflict for TIMES resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for DIVIDE resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for PLUS resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for MINUS resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for LTHAN resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for LETHAN resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for EQUALS resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for DISP resolved using rule 36 (term -> factor .)
-  ! reduce/reduce conflict for DOT resolved using rule 36 (term -> factor .)
-    SEMICOLON       reduce using rule 37 (factor -> MINUS factor .)
-    COMMA           reduce using rule 37 (factor -> MINUS factor .)
-    IN              reduce using rule 37 (factor -> MINUS factor .)
-    RBRACKET        reduce using rule 37 (factor -> MINUS factor .)
-    THEN            reduce using rule 37 (factor -> MINUS factor .)
-    LOOP            reduce using rule 37 (factor -> MINUS factor .)
-    OF              reduce using rule 37 (factor -> MINUS factor .)
-    ELSE            reduce using rule 37 (factor -> MINUS factor .)
-    POOL            reduce using rule 37 (factor -> MINUS factor .)
-    RBRACE          reduce using rule 37 (factor -> MINUS factor .)
-    FI              reduce using rule 37 (factor -> MINUS factor .)
-    ESAC            reduce using rule 37 (factor -> MINUS factor .)
-    TIMES           reduce using rule 36 (term -> factor .)
-    DIVIDE          reduce using rule 36 (term -> factor .)
-    PLUS            reduce using rule 36 (term -> factor .)
-    MINUS           reduce using rule 36 (term -> factor .)
-    LTHAN           reduce using rule 36 (term -> factor .)
-    LETHAN          reduce using rule 36 (term -> factor .)
-    EQUALS          reduce using rule 36 (term -> factor .)
-    DISP            reduce using rule 36 (term -> factor .)
-    DOT             reduce using rule 36 (term -> factor .)
+  ! reduce/reduce conflict for TIMES resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for PLUS resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for MINUS resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for LTHAN resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for LETHAN resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for EQUALS resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for DISP resolved using rule 35 (term -> factor .)
+  ! reduce/reduce conflict for DOT resolved using rule 35 (term -> factor .)
+    SEMICOLON       reduce using rule 36 (factor -> MINUS factor .)
+    COMMA           reduce using rule 36 (factor -> MINUS factor .)
+    IN              reduce using rule 36 (factor -> MINUS factor .)
+    RBRACKET        reduce using rule 36 (factor -> MINUS factor .)
+    THEN            reduce using rule 36 (factor -> MINUS factor .)
+    LOOP            reduce using rule 36 (factor -> MINUS factor .)
+    OF              reduce using rule 36 (factor -> MINUS factor .)
+    ELSE            reduce using rule 36 (factor -> MINUS factor .)
+    POOL            reduce using rule 36 (factor -> MINUS factor .)
+    RBRACE          reduce using rule 36 (factor -> MINUS factor .)
+    FI              reduce using rule 36 (factor -> MINUS factor .)
+    ESAC            reduce using rule 36 (factor -> MINUS factor .)
+    TIMES           reduce using rule 35 (term -> factor .)
+    DIVIDE          reduce using rule 35 (term -> factor .)
+    PLUS            reduce using rule 35 (term -> factor .)
+    MINUS           reduce using rule 35 (term -> factor .)
+    LTHAN           reduce using rule 35 (term -> factor .)
+    LETHAN          reduce using rule 35 (term -> factor .)
+    EQUALS          reduce using rule 35 (term -> factor .)
+    DISP            reduce using rule 35 (term -> factor .)
+    DOT             reduce using rule 35 (term -> factor .)
 
-  ! TIMES           [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! DIVIDE          [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! PLUS            [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! MINUS           [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! LTHAN           [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! LETHAN          [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! EQUALS          [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! DISP            [ reduce using rule 37 (factor -> MINUS factor .) ]
-  ! DOT             [ reduce using rule 37 (factor -> MINUS factor .) ]
+  ! TIMES           [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! DIVIDE          [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! PLUS            [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! MINUS           [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! LTHAN           [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! LETHAN          [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! EQUALS          [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! DISP            [ reduce using rule 36 (factor -> MINUS factor .) ]
+  ! DOT             [ reduce using rule 36 (factor -> MINUS factor .) ]
 
 
 state 83
@@ -3102,7 +3102,7 @@ state 85
 
 state 86
 
-    (39) atom -> LBRACKET expression . RBRACKET
+    (38) atom -> LBRACKET expression . RBRACKET
     (70) dispatch -> expression . especific DOT dispatch_call
     (72) especific -> . DISP TYPE
     (73) especific -> . empty
@@ -3117,36 +3117,36 @@ state 86
 
 state 87
 
-    (40) atom -> ISVOID expression .
+    (39) atom -> ISVOID expression .
     (70) dispatch -> expression . especific DOT dispatch_call
     (72) especific -> . DISP TYPE
     (73) especific -> . empty
     (78) empty -> .
 
-  ! reduce/reduce conflict for DOT resolved using rule 40 (atom -> ISVOID expression .)
-    TIMES           reduce using rule 40 (atom -> ISVOID expression .)
-    DIVIDE          reduce using rule 40 (atom -> ISVOID expression .)
-    PLUS            reduce using rule 40 (atom -> ISVOID expression .)
-    MINUS           reduce using rule 40 (atom -> ISVOID expression .)
-    LTHAN           reduce using rule 40 (atom -> ISVOID expression .)
-    LETHAN          reduce using rule 40 (atom -> ISVOID expression .)
-    EQUALS          reduce using rule 40 (atom -> ISVOID expression .)
-    DOT             reduce using rule 40 (atom -> ISVOID expression .)
-    SEMICOLON       reduce using rule 40 (atom -> ISVOID expression .)
-    COMMA           reduce using rule 40 (atom -> ISVOID expression .)
-    IN              reduce using rule 40 (atom -> ISVOID expression .)
-    RBRACKET        reduce using rule 40 (atom -> ISVOID expression .)
-    THEN            reduce using rule 40 (atom -> ISVOID expression .)
-    LOOP            reduce using rule 40 (atom -> ISVOID expression .)
-    OF              reduce using rule 40 (atom -> ISVOID expression .)
-    ELSE            reduce using rule 40 (atom -> ISVOID expression .)
-    POOL            reduce using rule 40 (atom -> ISVOID expression .)
-    RBRACE          reduce using rule 40 (atom -> ISVOID expression .)
-    FI              reduce using rule 40 (atom -> ISVOID expression .)
-    ESAC            reduce using rule 40 (atom -> ISVOID expression .)
+  ! reduce/reduce conflict for DOT resolved using rule 39 (atom -> ISVOID expression .)
+    TIMES           reduce using rule 39 (atom -> ISVOID expression .)
+    DIVIDE          reduce using rule 39 (atom -> ISVOID expression .)
+    PLUS            reduce using rule 39 (atom -> ISVOID expression .)
+    MINUS           reduce using rule 39 (atom -> ISVOID expression .)
+    LTHAN           reduce using rule 39 (atom -> ISVOID expression .)
+    LETHAN          reduce using rule 39 (atom -> ISVOID expression .)
+    EQUALS          reduce using rule 39 (atom -> ISVOID expression .)
+    DOT             reduce using rule 39 (atom -> ISVOID expression .)
+    SEMICOLON       reduce using rule 39 (atom -> ISVOID expression .)
+    COMMA           reduce using rule 39 (atom -> ISVOID expression .)
+    IN              reduce using rule 39 (atom -> ISVOID expression .)
+    RBRACKET        reduce using rule 39 (atom -> ISVOID expression .)
+    THEN            reduce using rule 39 (atom -> ISVOID expression .)
+    LOOP            reduce using rule 39 (atom -> ISVOID expression .)
+    OF              reduce using rule 39 (atom -> ISVOID expression .)
+    ELSE            reduce using rule 39 (atom -> ISVOID expression .)
+    POOL            reduce using rule 39 (atom -> ISVOID expression .)
+    RBRACE          reduce using rule 39 (atom -> ISVOID expression .)
+    FI              reduce using rule 39 (atom -> ISVOID expression .)
+    ESAC            reduce using rule 39 (atom -> ISVOID expression .)
     DISP            shift and go to state 68
 
-  ! DISP            [ reduce using rule 40 (atom -> ISVOID expression .) ]
+  ! DISP            [ reduce using rule 39 (atom -> ISVOID expression .) ]
   ! DOT             [ reduce using rule 78 (empty -> .) ]
 
     especific                      shift and go to state 67
@@ -3154,36 +3154,36 @@ state 87
 
 state 88
 
-    (46) atom -> BCOMPLEMENT expression .
+    (45) atom -> BCOMPLEMENT expression .
     (70) dispatch -> expression . especific DOT dispatch_call
     (72) especific -> . DISP TYPE
     (73) especific -> . empty
     (78) empty -> .
 
-  ! reduce/reduce conflict for DOT resolved using rule 46 (atom -> BCOMPLEMENT expression .)
-    TIMES           reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    DIVIDE          reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    PLUS            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    MINUS           reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    LTHAN           reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    LETHAN          reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    EQUALS          reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    DOT             reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    SEMICOLON       reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    COMMA           reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    IN              reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    RBRACKET        reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    THEN            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    LOOP            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    OF              reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    ELSE            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    POOL            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    RBRACE          reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    FI              reduce using rule 46 (atom -> BCOMPLEMENT expression .)
-    ESAC            reduce using rule 46 (atom -> BCOMPLEMENT expression .)
+  ! reduce/reduce conflict for DOT resolved using rule 45 (atom -> BCOMPLEMENT expression .)
+    TIMES           reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    DIVIDE          reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    PLUS            reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    MINUS           reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    LTHAN           reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    LETHAN          reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    EQUALS          reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    DOT             reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    SEMICOLON       reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    COMMA           reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    IN              reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    RBRACKET        reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    THEN            reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    LOOP            reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    OF              reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    ELSE            reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    POOL            reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    RBRACE          reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    FI              reduce using rule 45 (atom -> BCOMPLEMENT expression .)
+    ESAC            reduce using rule 45 (atom -> BCOMPLEMENT expression .)
     DISP            shift and go to state 68
 
-  ! DISP            [ reduce using rule 46 (atom -> BCOMPLEMENT expression .) ]
+  ! DISP            [ reduce using rule 45 (atom -> BCOMPLEMENT expression .) ]
   ! DOT             [ reduce using rule 78 (empty -> .) ]
 
     especific                      shift and go to state 67
@@ -3234,15 +3234,15 @@ state 91
 
 state 92
 
-    (14) block -> LBRACE expression_list . RBRACE
+    (46) block -> LBRACE expression_list . RBRACE
 
     RBRACE          shift and go to state 120
 
 
 state 93
 
-    (18) expression_list -> expression . SEMICOLON expression_list
-    (19) expression_list -> expression . SEMICOLON
+    (17) expression_list -> expression . SEMICOLON expression_list
+    (18) expression_list -> expression . SEMICOLON
     (70) dispatch -> expression . especific DOT dispatch_call
     (72) especific -> . DISP TYPE
     (73) especific -> . empty
@@ -3309,9 +3309,9 @@ state 97
 
 state 98
 
-    (15) formals -> id_type COMMA formals .
+    (14) formals -> id_type COMMA formals .
 
-    RBRACKET        reduce using rule 15 (formals -> id_type COMMA formals .)
+    RBRACKET        reduce using rule 14 (formals -> id_type COMMA formals .)
 
 
 state 99
@@ -3332,36 +3332,36 @@ state 100
 
 state 101
 
-    (30) assign -> ID ASSIGN expression .
+    (29) assign -> ID ASSIGN expression .
     (70) dispatch -> expression . especific DOT dispatch_call
     (72) especific -> . DISP TYPE
     (73) especific -> . empty
     (78) empty -> .
 
-  ! reduce/reduce conflict for DOT resolved using rule 30 (assign -> ID ASSIGN expression .)
-    DOT             reduce using rule 30 (assign -> ID ASSIGN expression .)
-    SEMICOLON       reduce using rule 30 (assign -> ID ASSIGN expression .)
-    COMMA           reduce using rule 30 (assign -> ID ASSIGN expression .)
-    IN              reduce using rule 30 (assign -> ID ASSIGN expression .)
-    RBRACKET        reduce using rule 30 (assign -> ID ASSIGN expression .)
-    TIMES           reduce using rule 30 (assign -> ID ASSIGN expression .)
-    DIVIDE          reduce using rule 30 (assign -> ID ASSIGN expression .)
-    PLUS            reduce using rule 30 (assign -> ID ASSIGN expression .)
-    MINUS           reduce using rule 30 (assign -> ID ASSIGN expression .)
-    LTHAN           reduce using rule 30 (assign -> ID ASSIGN expression .)
-    LETHAN          reduce using rule 30 (assign -> ID ASSIGN expression .)
-    EQUALS          reduce using rule 30 (assign -> ID ASSIGN expression .)
-    THEN            reduce using rule 30 (assign -> ID ASSIGN expression .)
-    LOOP            reduce using rule 30 (assign -> ID ASSIGN expression .)
-    OF              reduce using rule 30 (assign -> ID ASSIGN expression .)
-    ELSE            reduce using rule 30 (assign -> ID ASSIGN expression .)
-    POOL            reduce using rule 30 (assign -> ID ASSIGN expression .)
-    RBRACE          reduce using rule 30 (assign -> ID ASSIGN expression .)
-    FI              reduce using rule 30 (assign -> ID ASSIGN expression .)
-    ESAC            reduce using rule 30 (assign -> ID ASSIGN expression .)
+  ! reduce/reduce conflict for DOT resolved using rule 29 (assign -> ID ASSIGN expression .)
+    DOT             reduce using rule 29 (assign -> ID ASSIGN expression .)
+    SEMICOLON       reduce using rule 29 (assign -> ID ASSIGN expression .)
+    COMMA           reduce using rule 29 (assign -> ID ASSIGN expression .)
+    IN              reduce using rule 29 (assign -> ID ASSIGN expression .)
+    RBRACKET        reduce using rule 29 (assign -> ID ASSIGN expression .)
+    TIMES           reduce using rule 29 (assign -> ID ASSIGN expression .)
+    DIVIDE          reduce using rule 29 (assign -> ID ASSIGN expression .)
+    PLUS            reduce using rule 29 (assign -> ID ASSIGN expression .)
+    MINUS           reduce using rule 29 (assign -> ID ASSIGN expression .)
+    LTHAN           reduce using rule 29 (assign -> ID ASSIGN expression .)
+    LETHAN          reduce using rule 29 (assign -> ID ASSIGN expression .)
+    EQUALS          reduce using rule 29 (assign -> ID ASSIGN expression .)
+    THEN            reduce using rule 29 (assign -> ID ASSIGN expression .)
+    LOOP            reduce using rule 29 (assign -> ID ASSIGN expression .)
+    OF              reduce using rule 29 (assign -> ID ASSIGN expression .)
+    ELSE            reduce using rule 29 (assign -> ID ASSIGN expression .)
+    POOL            reduce using rule 29 (assign -> ID ASSIGN expression .)
+    RBRACE          reduce using rule 29 (assign -> ID ASSIGN expression .)
+    FI              reduce using rule 29 (assign -> ID ASSIGN expression .)
+    ESAC            reduce using rule 29 (assign -> ID ASSIGN expression .)
     DISP            shift and go to state 68
 
-  ! DISP            [ reduce using rule 30 (assign -> ID ASSIGN expression .) ]
+  ! DISP            [ reduce using rule 29 (assign -> ID ASSIGN expression .) ]
   ! DOT             [ reduce using rule 78 (empty -> .) ]
 
     especific                      shift and go to state 67
@@ -3400,166 +3400,166 @@ state 104
 
 state 105
 
-    (24) operator_non -> k_arith LTHAN k_arith .
-    (24) operator_non -> k_arith . LTHAN k_arith
-    (25) operator_non -> k_arith . LETHAN k_arith
-    (26) operator_non -> k_arith . EQUALS k_arith
-    (27) operator_non -> k_arith .
+    (23) operator_non -> k_arith LTHAN k_arith .
+    (23) operator_non -> k_arith . LTHAN k_arith
+    (24) operator_non -> k_arith . LETHAN k_arith
+    (25) operator_non -> k_arith . EQUALS k_arith
+    (26) operator_non -> k_arith .
 
-  ! reduce/reduce conflict for DISP resolved using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-  ! reduce/reduce conflict for DOT resolved using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    DISP            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    DOT             reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    SEMICOLON       reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    COMMA           reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    IN              reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    RBRACKET        reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    TIMES           reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    DIVIDE          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    PLUS            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    MINUS           reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    LTHAN           reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    LETHAN          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    EQUALS          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    THEN            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    LOOP            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    OF              reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    ELSE            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    POOL            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    RBRACE          reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    FI              reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
-    ESAC            reduce using rule 24 (operator_non -> k_arith LTHAN k_arith .)
+  ! reduce/reduce conflict for DISP resolved using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+  ! reduce/reduce conflict for DOT resolved using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    DISP            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    DOT             reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    SEMICOLON       reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    COMMA           reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    IN              reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    RBRACKET        reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    TIMES           reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    DIVIDE          reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    PLUS            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    MINUS           reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    LTHAN           reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    LETHAN          reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    EQUALS          reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    THEN            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    LOOP            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    OF              reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    ELSE            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    POOL            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    RBRACE          reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    FI              reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
+    ESAC            reduce using rule 23 (operator_non -> k_arith LTHAN k_arith .)
 
   ! LTHAN           [ shift and go to state 75 ]
   ! LETHAN          [ shift and go to state 76 ]
   ! EQUALS          [ shift and go to state 77 ]
-  ! DISP            [ reduce using rule 27 (operator_non -> k_arith .) ]
-  ! DOT             [ reduce using rule 27 (operator_non -> k_arith .) ]
+  ! DISP            [ reduce using rule 26 (operator_non -> k_arith .) ]
+  ! DOT             [ reduce using rule 26 (operator_non -> k_arith .) ]
 
 
 state 106
 
-    (25) operator_non -> k_arith LETHAN k_arith .
-    (24) operator_non -> k_arith . LTHAN k_arith
-    (25) operator_non -> k_arith . LETHAN k_arith
-    (26) operator_non -> k_arith . EQUALS k_arith
-    (27) operator_non -> k_arith .
+    (24) operator_non -> k_arith LETHAN k_arith .
+    (23) operator_non -> k_arith . LTHAN k_arith
+    (24) operator_non -> k_arith . LETHAN k_arith
+    (25) operator_non -> k_arith . EQUALS k_arith
+    (26) operator_non -> k_arith .
 
-  ! reduce/reduce conflict for DISP resolved using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-  ! reduce/reduce conflict for DOT resolved using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    DISP            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    DOT             reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    SEMICOLON       reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    COMMA           reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    IN              reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    RBRACKET        reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    TIMES           reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    DIVIDE          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    PLUS            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    MINUS           reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    LTHAN           reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    LETHAN          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    EQUALS          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    THEN            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    LOOP            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    OF              reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    ELSE            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    POOL            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    RBRACE          reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    FI              reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
-    ESAC            reduce using rule 25 (operator_non -> k_arith LETHAN k_arith .)
+  ! reduce/reduce conflict for DISP resolved using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+  ! reduce/reduce conflict for DOT resolved using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    DISP            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    DOT             reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    SEMICOLON       reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    COMMA           reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    IN              reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    RBRACKET        reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    TIMES           reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    DIVIDE          reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    PLUS            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    MINUS           reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    LTHAN           reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    LETHAN          reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    EQUALS          reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    THEN            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    LOOP            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    OF              reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    ELSE            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    POOL            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    RBRACE          reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    FI              reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
+    ESAC            reduce using rule 24 (operator_non -> k_arith LETHAN k_arith .)
 
   ! LTHAN           [ shift and go to state 75 ]
   ! LETHAN          [ shift and go to state 76 ]
   ! EQUALS          [ shift and go to state 77 ]
-  ! DISP            [ reduce using rule 27 (operator_non -> k_arith .) ]
-  ! DOT             [ reduce using rule 27 (operator_non -> k_arith .) ]
+  ! DISP            [ reduce using rule 26 (operator_non -> k_arith .) ]
+  ! DOT             [ reduce using rule 26 (operator_non -> k_arith .) ]
 
 
 state 107
 
-    (26) operator_non -> k_arith EQUALS k_arith .
-    (24) operator_non -> k_arith . LTHAN k_arith
-    (25) operator_non -> k_arith . LETHAN k_arith
-    (26) operator_non -> k_arith . EQUALS k_arith
-    (27) operator_non -> k_arith .
+    (25) operator_non -> k_arith EQUALS k_arith .
+    (23) operator_non -> k_arith . LTHAN k_arith
+    (24) operator_non -> k_arith . LETHAN k_arith
+    (25) operator_non -> k_arith . EQUALS k_arith
+    (26) operator_non -> k_arith .
 
-  ! reduce/reduce conflict for DISP resolved using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-  ! reduce/reduce conflict for DOT resolved using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    DISP            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    DOT             reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    SEMICOLON       reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    COMMA           reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    IN              reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    RBRACKET        reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    TIMES           reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    DIVIDE          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    PLUS            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    MINUS           reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    LTHAN           reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    LETHAN          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    EQUALS          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    THEN            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    LOOP            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    OF              reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    ELSE            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    POOL            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    RBRACE          reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    FI              reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
-    ESAC            reduce using rule 26 (operator_non -> k_arith EQUALS k_arith .)
+  ! reduce/reduce conflict for DISP resolved using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+  ! reduce/reduce conflict for DOT resolved using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    DISP            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    DOT             reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    SEMICOLON       reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    COMMA           reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    IN              reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    RBRACKET        reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    TIMES           reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    DIVIDE          reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    PLUS            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    MINUS           reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    LTHAN           reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    LETHAN          reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    EQUALS          reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    THEN            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    LOOP            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    OF              reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    ELSE            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    POOL            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    RBRACE          reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    FI              reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
+    ESAC            reduce using rule 25 (operator_non -> k_arith EQUALS k_arith .)
 
   ! LTHAN           [ shift and go to state 75 ]
   ! LETHAN          [ shift and go to state 76 ]
   ! EQUALS          [ shift and go to state 77 ]
-  ! DISP            [ reduce using rule 27 (operator_non -> k_arith .) ]
-  ! DOT             [ reduce using rule 27 (operator_non -> k_arith .) ]
+  ! DISP            [ reduce using rule 26 (operator_non -> k_arith .) ]
+  ! DOT             [ reduce using rule 26 (operator_non -> k_arith .) ]
 
 
 state 108
 
-    (31) arith -> arith PLUS term .
-    (34) term -> term . TIMES factor
-    (35) term -> term . DIVIDE factor
-    (33) arith -> term .
+    (30) arith -> arith PLUS term .
+    (33) term -> term . TIMES factor
+    (34) term -> term . DIVIDE factor
+    (32) arith -> term .
 
-  ! reduce/reduce conflict for PLUS resolved using rule 31 (arith -> arith PLUS term .)
-  ! reduce/reduce conflict for MINUS resolved using rule 31 (arith -> arith PLUS term .)
-  ! reduce/reduce conflict for LTHAN resolved using rule 31 (arith -> arith PLUS term .)
-  ! reduce/reduce conflict for LETHAN resolved using rule 31 (arith -> arith PLUS term .)
-  ! reduce/reduce conflict for EQUALS resolved using rule 31 (arith -> arith PLUS term .)
-  ! reduce/reduce conflict for DISP resolved using rule 31 (arith -> arith PLUS term .)
-  ! reduce/reduce conflict for DOT resolved using rule 31 (arith -> arith PLUS term .)
-    PLUS            reduce using rule 31 (arith -> arith PLUS term .)
-    MINUS           reduce using rule 31 (arith -> arith PLUS term .)
-    LTHAN           reduce using rule 31 (arith -> arith PLUS term .)
-    LETHAN          reduce using rule 31 (arith -> arith PLUS term .)
-    EQUALS          reduce using rule 31 (arith -> arith PLUS term .)
-    DISP            reduce using rule 31 (arith -> arith PLUS term .)
-    DOT             reduce using rule 31 (arith -> arith PLUS term .)
-    SEMICOLON       reduce using rule 31 (arith -> arith PLUS term .)
-    COMMA           reduce using rule 31 (arith -> arith PLUS term .)
-    IN              reduce using rule 31 (arith -> arith PLUS term .)
-    RBRACKET        reduce using rule 31 (arith -> arith PLUS term .)
-    THEN            reduce using rule 31 (arith -> arith PLUS term .)
-    LOOP            reduce using rule 31 (arith -> arith PLUS term .)
-    OF              reduce using rule 31 (arith -> arith PLUS term .)
-    ELSE            reduce using rule 31 (arith -> arith PLUS term .)
-    POOL            reduce using rule 31 (arith -> arith PLUS term .)
-    RBRACE          reduce using rule 31 (arith -> arith PLUS term .)
-    FI              reduce using rule 31 (arith -> arith PLUS term .)
-    ESAC            reduce using rule 31 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for PLUS resolved using rule 30 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for MINUS resolved using rule 30 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for LTHAN resolved using rule 30 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for LETHAN resolved using rule 30 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for EQUALS resolved using rule 30 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for DISP resolved using rule 30 (arith -> arith PLUS term .)
+  ! reduce/reduce conflict for DOT resolved using rule 30 (arith -> arith PLUS term .)
+    PLUS            reduce using rule 30 (arith -> arith PLUS term .)
+    MINUS           reduce using rule 30 (arith -> arith PLUS term .)
+    LTHAN           reduce using rule 30 (arith -> arith PLUS term .)
+    LETHAN          reduce using rule 30 (arith -> arith PLUS term .)
+    EQUALS          reduce using rule 30 (arith -> arith PLUS term .)
+    DISP            reduce using rule 30 (arith -> arith PLUS term .)
+    DOT             reduce using rule 30 (arith -> arith PLUS term .)
+    SEMICOLON       reduce using rule 30 (arith -> arith PLUS term .)
+    COMMA           reduce using rule 30 (arith -> arith PLUS term .)
+    IN              reduce using rule 30 (arith -> arith PLUS term .)
+    RBRACKET        reduce using rule 30 (arith -> arith PLUS term .)
+    THEN            reduce using rule 30 (arith -> arith PLUS term .)
+    LOOP            reduce using rule 30 (arith -> arith PLUS term .)
+    OF              reduce using rule 30 (arith -> arith PLUS term .)
+    ELSE            reduce using rule 30 (arith -> arith PLUS term .)
+    POOL            reduce using rule 30 (arith -> arith PLUS term .)
+    RBRACE          reduce using rule 30 (arith -> arith PLUS term .)
+    FI              reduce using rule 30 (arith -> arith PLUS term .)
+    ESAC            reduce using rule 30 (arith -> arith PLUS term .)
     TIMES           shift and go to state 80
     DIVIDE          shift and go to state 81
 
-  ! TIMES           [ reduce using rule 31 (arith -> arith PLUS term .) ]
-  ! DIVIDE          [ reduce using rule 31 (arith -> arith PLUS term .) ]
-  ! PLUS            [ reduce using rule 33 (arith -> term .) ]
-  ! MINUS           [ reduce using rule 33 (arith -> term .) ]
-  ! LTHAN           [ reduce using rule 33 (arith -> term .) ]
-  ! LETHAN          [ reduce using rule 33 (arith -> term .) ]
-  ! EQUALS          [ reduce using rule 33 (arith -> term .) ]
-  ! DISP            [ reduce using rule 33 (arith -> term .) ]
-  ! DOT             [ reduce using rule 33 (arith -> term .) ]
+  ! TIMES           [ reduce using rule 30 (arith -> arith PLUS term .) ]
+  ! DIVIDE          [ reduce using rule 30 (arith -> arith PLUS term .) ]
+  ! PLUS            [ reduce using rule 32 (arith -> term .) ]
+  ! MINUS           [ reduce using rule 32 (arith -> term .) ]
+  ! LTHAN           [ reduce using rule 32 (arith -> term .) ]
+  ! LETHAN          [ reduce using rule 32 (arith -> term .) ]
+  ! EQUALS          [ reduce using rule 32 (arith -> term .) ]
+  ! DISP            [ reduce using rule 32 (arith -> term .) ]
+  ! DOT             [ reduce using rule 32 (arith -> term .) ]
 
 
 state 109
@@ -3607,49 +3607,49 @@ state 109
 
 state 110
 
-    (32) arith -> arith MINUS term .
-    (34) term -> term . TIMES factor
-    (35) term -> term . DIVIDE factor
-    (33) arith -> term .
+    (31) arith -> arith MINUS term .
+    (33) term -> term . TIMES factor
+    (34) term -> term . DIVIDE factor
+    (32) arith -> term .
 
-  ! reduce/reduce conflict for PLUS resolved using rule 32 (arith -> arith MINUS term .)
-  ! reduce/reduce conflict for MINUS resolved using rule 32 (arith -> arith MINUS term .)
-  ! reduce/reduce conflict for LTHAN resolved using rule 32 (arith -> arith MINUS term .)
-  ! reduce/reduce conflict for LETHAN resolved using rule 32 (arith -> arith MINUS term .)
-  ! reduce/reduce conflict for EQUALS resolved using rule 32 (arith -> arith MINUS term .)
-  ! reduce/reduce conflict for DISP resolved using rule 32 (arith -> arith MINUS term .)
-  ! reduce/reduce conflict for DOT resolved using rule 32 (arith -> arith MINUS term .)
-    PLUS            reduce using rule 32 (arith -> arith MINUS term .)
-    MINUS           reduce using rule 32 (arith -> arith MINUS term .)
-    LTHAN           reduce using rule 32 (arith -> arith MINUS term .)
-    LETHAN          reduce using rule 32 (arith -> arith MINUS term .)
-    EQUALS          reduce using rule 32 (arith -> arith MINUS term .)
-    DISP            reduce using rule 32 (arith -> arith MINUS term .)
-    DOT             reduce using rule 32 (arith -> arith MINUS term .)
-    SEMICOLON       reduce using rule 32 (arith -> arith MINUS term .)
-    COMMA           reduce using rule 32 (arith -> arith MINUS term .)
-    IN              reduce using rule 32 (arith -> arith MINUS term .)
-    RBRACKET        reduce using rule 32 (arith -> arith MINUS term .)
-    THEN            reduce using rule 32 (arith -> arith MINUS term .)
-    LOOP            reduce using rule 32 (arith -> arith MINUS term .)
-    OF              reduce using rule 32 (arith -> arith MINUS term .)
-    ELSE            reduce using rule 32 (arith -> arith MINUS term .)
-    POOL            reduce using rule 32 (arith -> arith MINUS term .)
-    RBRACE          reduce using rule 32 (arith -> arith MINUS term .)
-    FI              reduce using rule 32 (arith -> arith MINUS term .)
-    ESAC            reduce using rule 32 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for PLUS resolved using rule 31 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for MINUS resolved using rule 31 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for LTHAN resolved using rule 31 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for LETHAN resolved using rule 31 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for EQUALS resolved using rule 31 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for DISP resolved using rule 31 (arith -> arith MINUS term .)
+  ! reduce/reduce conflict for DOT resolved using rule 31 (arith -> arith MINUS term .)
+    PLUS            reduce using rule 31 (arith -> arith MINUS term .)
+    MINUS           reduce using rule 31 (arith -> arith MINUS term .)
+    LTHAN           reduce using rule 31 (arith -> arith MINUS term .)
+    LETHAN          reduce using rule 31 (arith -> arith MINUS term .)
+    EQUALS          reduce using rule 31 (arith -> arith MINUS term .)
+    DISP            reduce using rule 31 (arith -> arith MINUS term .)
+    DOT             reduce using rule 31 (arith -> arith MINUS term .)
+    SEMICOLON       reduce using rule 31 (arith -> arith MINUS term .)
+    COMMA           reduce using rule 31 (arith -> arith MINUS term .)
+    IN              reduce using rule 31 (arith -> arith MINUS term .)
+    RBRACKET        reduce using rule 31 (arith -> arith MINUS term .)
+    THEN            reduce using rule 31 (arith -> arith MINUS term .)
+    LOOP            reduce using rule 31 (arith -> arith MINUS term .)
+    OF              reduce using rule 31 (arith -> arith MINUS term .)
+    ELSE            reduce using rule 31 (arith -> arith MINUS term .)
+    POOL            reduce using rule 31 (arith -> arith MINUS term .)
+    RBRACE          reduce using rule 31 (arith -> arith MINUS term .)
+    FI              reduce using rule 31 (arith -> arith MINUS term .)
+    ESAC            reduce using rule 31 (arith -> arith MINUS term .)
     TIMES           shift and go to state 80
     DIVIDE          shift and go to state 81
 
-  ! TIMES           [ reduce using rule 32 (arith -> arith MINUS term .) ]
-  ! DIVIDE          [ reduce using rule 32 (arith -> arith MINUS term .) ]
-  ! PLUS            [ reduce using rule 33 (arith -> term .) ]
-  ! MINUS           [ reduce using rule 33 (arith -> term .) ]
-  ! LTHAN           [ reduce using rule 33 (arith -> term .) ]
-  ! LETHAN          [ reduce using rule 33 (arith -> term .) ]
-  ! EQUALS          [ reduce using rule 33 (arith -> term .) ]
-  ! DISP            [ reduce using rule 33 (arith -> term .) ]
-  ! DOT             [ reduce using rule 33 (arith -> term .) ]
+  ! TIMES           [ reduce using rule 31 (arith -> arith MINUS term .) ]
+  ! DIVIDE          [ reduce using rule 31 (arith -> arith MINUS term .) ]
+  ! PLUS            [ reduce using rule 32 (arith -> term .) ]
+  ! MINUS           [ reduce using rule 32 (arith -> term .) ]
+  ! LTHAN           [ reduce using rule 32 (arith -> term .) ]
+  ! LETHAN          [ reduce using rule 32 (arith -> term .) ]
+  ! EQUALS          [ reduce using rule 32 (arith -> term .) ]
+  ! DISP            [ reduce using rule 32 (arith -> term .) ]
+  ! DOT             [ reduce using rule 32 (arith -> term .) ]
 
 
 state 111
@@ -3697,96 +3697,96 @@ state 111
 
 state 112
 
-    (34) term -> term TIMES factor .
-    (36) term -> factor .
+    (33) term -> term TIMES factor .
+    (35) term -> factor .
 
-  ! reduce/reduce conflict for TIMES resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for DIVIDE resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for PLUS resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for MINUS resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for LTHAN resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for LETHAN resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for EQUALS resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for DISP resolved using rule 34 (term -> term TIMES factor .)
-  ! reduce/reduce conflict for DOT resolved using rule 34 (term -> term TIMES factor .)
-    TIMES           reduce using rule 34 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 34 (term -> term TIMES factor .)
-    PLUS            reduce using rule 34 (term -> term TIMES factor .)
-    MINUS           reduce using rule 34 (term -> term TIMES factor .)
-    LTHAN           reduce using rule 34 (term -> term TIMES factor .)
-    LETHAN          reduce using rule 34 (term -> term TIMES factor .)
-    EQUALS          reduce using rule 34 (term -> term TIMES factor .)
-    DISP            reduce using rule 34 (term -> term TIMES factor .)
-    DOT             reduce using rule 34 (term -> term TIMES factor .)
-    SEMICOLON       reduce using rule 34 (term -> term TIMES factor .)
-    COMMA           reduce using rule 34 (term -> term TIMES factor .)
-    IN              reduce using rule 34 (term -> term TIMES factor .)
-    RBRACKET        reduce using rule 34 (term -> term TIMES factor .)
-    THEN            reduce using rule 34 (term -> term TIMES factor .)
-    LOOP            reduce using rule 34 (term -> term TIMES factor .)
-    OF              reduce using rule 34 (term -> term TIMES factor .)
-    ELSE            reduce using rule 34 (term -> term TIMES factor .)
-    POOL            reduce using rule 34 (term -> term TIMES factor .)
-    RBRACE          reduce using rule 34 (term -> term TIMES factor .)
-    FI              reduce using rule 34 (term -> term TIMES factor .)
-    ESAC            reduce using rule 34 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for TIMES resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for PLUS resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for MINUS resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for LTHAN resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for LETHAN resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for EQUALS resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for DISP resolved using rule 33 (term -> term TIMES factor .)
+  ! reduce/reduce conflict for DOT resolved using rule 33 (term -> term TIMES factor .)
+    TIMES           reduce using rule 33 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 33 (term -> term TIMES factor .)
+    PLUS            reduce using rule 33 (term -> term TIMES factor .)
+    MINUS           reduce using rule 33 (term -> term TIMES factor .)
+    LTHAN           reduce using rule 33 (term -> term TIMES factor .)
+    LETHAN          reduce using rule 33 (term -> term TIMES factor .)
+    EQUALS          reduce using rule 33 (term -> term TIMES factor .)
+    DISP            reduce using rule 33 (term -> term TIMES factor .)
+    DOT             reduce using rule 33 (term -> term TIMES factor .)
+    SEMICOLON       reduce using rule 33 (term -> term TIMES factor .)
+    COMMA           reduce using rule 33 (term -> term TIMES factor .)
+    IN              reduce using rule 33 (term -> term TIMES factor .)
+    RBRACKET        reduce using rule 33 (term -> term TIMES factor .)
+    THEN            reduce using rule 33 (term -> term TIMES factor .)
+    LOOP            reduce using rule 33 (term -> term TIMES factor .)
+    OF              reduce using rule 33 (term -> term TIMES factor .)
+    ELSE            reduce using rule 33 (term -> term TIMES factor .)
+    POOL            reduce using rule 33 (term -> term TIMES factor .)
+    RBRACE          reduce using rule 33 (term -> term TIMES factor .)
+    FI              reduce using rule 33 (term -> term TIMES factor .)
+    ESAC            reduce using rule 33 (term -> term TIMES factor .)
 
-  ! TIMES           [ reduce using rule 36 (term -> factor .) ]
-  ! DIVIDE          [ reduce using rule 36 (term -> factor .) ]
-  ! PLUS            [ reduce using rule 36 (term -> factor .) ]
-  ! MINUS           [ reduce using rule 36 (term -> factor .) ]
-  ! LTHAN           [ reduce using rule 36 (term -> factor .) ]
-  ! LETHAN          [ reduce using rule 36 (term -> factor .) ]
-  ! EQUALS          [ reduce using rule 36 (term -> factor .) ]
-  ! DISP            [ reduce using rule 36 (term -> factor .) ]
-  ! DOT             [ reduce using rule 36 (term -> factor .) ]
+  ! TIMES           [ reduce using rule 35 (term -> factor .) ]
+  ! DIVIDE          [ reduce using rule 35 (term -> factor .) ]
+  ! PLUS            [ reduce using rule 35 (term -> factor .) ]
+  ! MINUS           [ reduce using rule 35 (term -> factor .) ]
+  ! LTHAN           [ reduce using rule 35 (term -> factor .) ]
+  ! LETHAN          [ reduce using rule 35 (term -> factor .) ]
+  ! EQUALS          [ reduce using rule 35 (term -> factor .) ]
+  ! DISP            [ reduce using rule 35 (term -> factor .) ]
+  ! DOT             [ reduce using rule 35 (term -> factor .) ]
 
 
 state 113
 
-    (35) term -> term DIVIDE factor .
-    (36) term -> factor .
+    (34) term -> term DIVIDE factor .
+    (35) term -> factor .
 
-  ! reduce/reduce conflict for TIMES resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for DIVIDE resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for PLUS resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for MINUS resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for LTHAN resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for LETHAN resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for EQUALS resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for DISP resolved using rule 35 (term -> term DIVIDE factor .)
-  ! reduce/reduce conflict for DOT resolved using rule 35 (term -> term DIVIDE factor .)
-    TIMES           reduce using rule 35 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 35 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 35 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 35 (term -> term DIVIDE factor .)
-    LTHAN           reduce using rule 35 (term -> term DIVIDE factor .)
-    LETHAN          reduce using rule 35 (term -> term DIVIDE factor .)
-    EQUALS          reduce using rule 35 (term -> term DIVIDE factor .)
-    DISP            reduce using rule 35 (term -> term DIVIDE factor .)
-    DOT             reduce using rule 35 (term -> term DIVIDE factor .)
-    SEMICOLON       reduce using rule 35 (term -> term DIVIDE factor .)
-    COMMA           reduce using rule 35 (term -> term DIVIDE factor .)
-    IN              reduce using rule 35 (term -> term DIVIDE factor .)
-    RBRACKET        reduce using rule 35 (term -> term DIVIDE factor .)
-    THEN            reduce using rule 35 (term -> term DIVIDE factor .)
-    LOOP            reduce using rule 35 (term -> term DIVIDE factor .)
-    OF              reduce using rule 35 (term -> term DIVIDE factor .)
-    ELSE            reduce using rule 35 (term -> term DIVIDE factor .)
-    POOL            reduce using rule 35 (term -> term DIVIDE factor .)
-    RBRACE          reduce using rule 35 (term -> term DIVIDE factor .)
-    FI              reduce using rule 35 (term -> term DIVIDE factor .)
-    ESAC            reduce using rule 35 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for TIMES resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for PLUS resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for MINUS resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for LTHAN resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for LETHAN resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for EQUALS resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for DISP resolved using rule 34 (term -> term DIVIDE factor .)
+  ! reduce/reduce conflict for DOT resolved using rule 34 (term -> term DIVIDE factor .)
+    TIMES           reduce using rule 34 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 34 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 34 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 34 (term -> term DIVIDE factor .)
+    LTHAN           reduce using rule 34 (term -> term DIVIDE factor .)
+    LETHAN          reduce using rule 34 (term -> term DIVIDE factor .)
+    EQUALS          reduce using rule 34 (term -> term DIVIDE factor .)
+    DISP            reduce using rule 34 (term -> term DIVIDE factor .)
+    DOT             reduce using rule 34 (term -> term DIVIDE factor .)
+    SEMICOLON       reduce using rule 34 (term -> term DIVIDE factor .)
+    COMMA           reduce using rule 34 (term -> term DIVIDE factor .)
+    IN              reduce using rule 34 (term -> term DIVIDE factor .)
+    RBRACKET        reduce using rule 34 (term -> term DIVIDE factor .)
+    THEN            reduce using rule 34 (term -> term DIVIDE factor .)
+    LOOP            reduce using rule 34 (term -> term DIVIDE factor .)
+    OF              reduce using rule 34 (term -> term DIVIDE factor .)
+    ELSE            reduce using rule 34 (term -> term DIVIDE factor .)
+    POOL            reduce using rule 34 (term -> term DIVIDE factor .)
+    RBRACE          reduce using rule 34 (term -> term DIVIDE factor .)
+    FI              reduce using rule 34 (term -> term DIVIDE factor .)
+    ESAC            reduce using rule 34 (term -> term DIVIDE factor .)
 
-  ! TIMES           [ reduce using rule 36 (term -> factor .) ]
-  ! DIVIDE          [ reduce using rule 36 (term -> factor .) ]
-  ! PLUS            [ reduce using rule 36 (term -> factor .) ]
-  ! MINUS           [ reduce using rule 36 (term -> factor .) ]
-  ! LTHAN           [ reduce using rule 36 (term -> factor .) ]
-  ! LETHAN          [ reduce using rule 36 (term -> factor .) ]
-  ! EQUALS          [ reduce using rule 36 (term -> factor .) ]
-  ! DISP            [ reduce using rule 36 (term -> factor .) ]
-  ! DOT             [ reduce using rule 36 (term -> factor .) ]
+  ! TIMES           [ reduce using rule 35 (term -> factor .) ]
+  ! DIVIDE          [ reduce using rule 35 (term -> factor .) ]
+  ! PLUS            [ reduce using rule 35 (term -> factor .) ]
+  ! MINUS           [ reduce using rule 35 (term -> factor .) ]
+  ! LTHAN           [ reduce using rule 35 (term -> factor .) ]
+  ! LETHAN          [ reduce using rule 35 (term -> factor .) ]
+  ! EQUALS          [ reduce using rule 35 (term -> factor .) ]
+  ! DISP            [ reduce using rule 35 (term -> factor .) ]
+  ! DOT             [ reduce using rule 35 (term -> factor .) ]
 
 
 state 114
@@ -3858,69 +3858,69 @@ state 116
 
 state 117
 
-    (39) atom -> LBRACKET expression RBRACKET .
+    (38) atom -> LBRACKET expression RBRACKET .
 
-    TIMES           reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    DIVIDE          reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    PLUS            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    MINUS           reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    LTHAN           reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    LETHAN          reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    EQUALS          reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    DISP            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    DOT             reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    SEMICOLON       reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    COMMA           reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    IN              reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    RBRACKET        reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    THEN            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    LOOP            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    OF              reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    ELSE            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    POOL            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    RBRACE          reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    FI              reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
-    ESAC            reduce using rule 39 (atom -> LBRACKET expression RBRACKET .)
+    TIMES           reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    DIVIDE          reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    PLUS            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    MINUS           reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    LTHAN           reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    LETHAN          reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    EQUALS          reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    DISP            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    DOT             reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    SEMICOLON       reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    COMMA           reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    IN              reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    RBRACKET        reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    THEN            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    LOOP            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    OF              reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    ELSE            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    POOL            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    RBRACE          reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    FI              reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
+    ESAC            reduce using rule 38 (atom -> LBRACKET expression RBRACKET .)
 
 
 state 118
 
     (61) let_expression -> LET declaration_list IN . expression
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -3928,7 +3928,7 @@ state 118
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -3990,72 +3990,72 @@ state 119
 
 state 120
 
-    (14) block -> LBRACE expression_list RBRACE .
+    (46) block -> LBRACE expression_list RBRACE .
 
-    TIMES           reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    DIVIDE          reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    PLUS            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    MINUS           reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    LTHAN           reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    LETHAN          reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    EQUALS          reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    DISP            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    DOT             reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    SEMICOLON       reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    COMMA           reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    IN              reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    RBRACKET        reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    THEN            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    LOOP            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    OF              reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    ELSE            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    POOL            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    RBRACE          reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    FI              reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
-    ESAC            reduce using rule 14 (block -> LBRACE expression_list RBRACE .)
+    TIMES           reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    DIVIDE          reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    PLUS            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    MINUS           reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    LTHAN           reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    LETHAN          reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    EQUALS          reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    DISP            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    DOT             reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    SEMICOLON       reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    COMMA           reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    IN              reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    RBRACKET        reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    THEN            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    LOOP            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    OF              reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    ELSE            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    POOL            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    RBRACE          reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    FI              reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
+    ESAC            reduce using rule 46 (block -> LBRACE expression_list RBRACE .)
 
 
 state 121
 
-    (18) expression_list -> expression SEMICOLON . expression_list
-    (19) expression_list -> expression SEMICOLON .
-    (18) expression_list -> . expression SEMICOLON expression_list
-    (19) expression_list -> . expression SEMICOLON
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (17) expression_list -> expression SEMICOLON . expression_list
+    (18) expression_list -> expression SEMICOLON .
+    (17) expression_list -> . expression SEMICOLON expression_list
+    (18) expression_list -> . expression SEMICOLON
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4063,7 +4063,7 @@ state 121
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -4071,7 +4071,7 @@ state 121
     (71) dispatch -> . dispatch_call
     (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
-    RBRACE          reduce using rule 19 (expression_list -> expression SEMICOLON .)
+    RBRACE          reduce using rule 18 (expression_list -> expression SEMICOLON .)
     ID              shift and go to state 33
     NOT             shift and go to state 34
     MINUS           shift and go to state 40
@@ -4113,41 +4113,41 @@ state 121
 state 122
 
     (64) conditional -> IF expression THEN . expression ELSE expression FI
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4155,7 +4155,7 @@ state 122
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -4203,41 +4203,41 @@ state 122
 state 123
 
     (65) loop -> WHILE expression LOOP . expression POOL
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4245,7 +4245,7 @@ state 123
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -4378,42 +4378,42 @@ state 129
     (75) params_expression -> . expression
     (76) params_expression -> . expression COMMA params_expression
     (77) params_expression -> . empty
-    (20) expression -> . assign
-    (21) expression -> . upper_non
+    (19) expression -> . assign
+    (20) expression -> . upper_non
     (78) empty -> .
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4421,7 +4421,7 @@ state 129
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -4543,9 +4543,9 @@ state 132
 
 state 133
 
-    (18) expression_list -> expression SEMICOLON expression_list .
+    (17) expression_list -> expression SEMICOLON expression_list .
 
-    RBRACE          reduce using rule 18 (expression_list -> expression SEMICOLON expression_list .)
+    RBRACE          reduce using rule 17 (expression_list -> expression SEMICOLON expression_list .)
 
 
 state 134
@@ -4604,41 +4604,41 @@ state 138
 state 139
 
     (13) method_declaration -> ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE . expression RBRACE
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4646,7 +4646,7 @@ state 139
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -4701,41 +4701,41 @@ state 140
 state 141
 
     (64) conditional -> IF expression THEN expression ELSE . expression FI
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4743,7 +4743,7 @@ state 141
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC
@@ -4859,41 +4859,41 @@ state 144
 state 145
 
     (69) implication -> id_type IMPLY . expression
-    (20) expression -> . assign
-    (21) expression -> . upper_non
-    (30) assign -> . ID ASSIGN expression
-    (22) upper_non -> . NOT upper_non
-    (23) upper_non -> . operator_non
-    (24) operator_non -> . k_arith LTHAN k_arith
-    (25) operator_non -> . k_arith LETHAN k_arith
-    (26) operator_non -> . k_arith EQUALS k_arith
-    (27) operator_non -> . k_arith
-    (28) k_arith -> . arith
-    (29) k_arith -> . e_arith
-    (31) arith -> . arith PLUS term
-    (32) arith -> . arith MINUS term
-    (33) arith -> . term
+    (19) expression -> . assign
+    (20) expression -> . upper_non
+    (29) assign -> . ID ASSIGN expression
+    (21) upper_non -> . NOT upper_non
+    (22) upper_non -> . operator_non
+    (23) operator_non -> . k_arith LTHAN k_arith
+    (24) operator_non -> . k_arith LETHAN k_arith
+    (25) operator_non -> . k_arith EQUALS k_arith
+    (26) operator_non -> . k_arith
+    (27) k_arith -> . arith
+    (28) k_arith -> . e_arith
+    (30) arith -> . arith PLUS term
+    (31) arith -> . arith MINUS term
+    (32) arith -> . term
     (53) e_arith -> . arith PLUS e_term
     (54) e_arith -> . arith MINUS e_term
     (55) e_arith -> . e_term
-    (34) term -> . term TIMES factor
-    (35) term -> . term DIVIDE factor
-    (36) term -> . factor
+    (33) term -> . term TIMES factor
+    (34) term -> . term DIVIDE factor
+    (35) term -> . factor
     (56) e_term -> . e_term TIMES e_factor
     (57) e_term -> . e_term DIVIDE e_factor
     (58) e_term -> . e_factor
-    (37) factor -> . MINUS factor
-    (38) factor -> . atom
+    (36) factor -> . MINUS factor
+    (37) factor -> . atom
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (39) atom -> . LBRACKET expression RBRACKET
-    (40) atom -> . ISVOID expression
-    (41) atom -> . block
-    (42) atom -> . conditional
-    (43) atom -> . loop
-    (44) atom -> . case
-    (45) atom -> . dispatch
-    (46) atom -> . BCOMPLEMENT expression
+    (38) atom -> . LBRACKET expression RBRACKET
+    (39) atom -> . ISVOID expression
+    (40) atom -> . block
+    (41) atom -> . conditional
+    (42) atom -> . loop
+    (43) atom -> . case
+    (44) atom -> . dispatch
+    (45) atom -> . BCOMPLEMENT expression
     (47) atom -> . ID
     (48) atom -> . INTEGER
     (49) atom -> . STRING
@@ -4901,7 +4901,7 @@ state 145
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (61) let_expression -> . LET declaration_list IN expression
-    (14) block -> . LBRACE expression_list RBRACE
+    (46) block -> . LBRACE expression_list RBRACE
     (64) conditional -> . IF expression THEN expression ELSE expression FI
     (65) loop -> . WHILE expression LOOP expression POOL
     (66) case -> . CASE expression OF implications ESAC

@@ -43,12 +43,14 @@ class AttributeNode(FeatureNode):
 class ExpressionNode(Node):
     pass
 
+
 class AtomNode(ExpressionNode):
     pass
 
+
 class AssignNode(ExpressionNode):
-    def __init__(self,id,expr):
-        self.id = id
+    def __init__(self,variable,expr):
+        self.variable = variable
         self.expression = expr
 
 

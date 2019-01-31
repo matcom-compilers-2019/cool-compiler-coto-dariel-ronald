@@ -27,7 +27,7 @@ def p_inheritence(p):
     if len(p) == 3:
         p[0] = p[2]
     else:
-        p[0] = None
+        p[0] = 'Object'
 
 
 
@@ -133,8 +133,7 @@ def p_k_arith(p):
 
 def p_assign(p):
     'assign : ID ASSIGN expression'
-
-    p[0] = AssignNode(p[1], p[3])
+    p[0] = AssignNode(VariableNode(p[1]), p[3])
 
 
 def p_arith(p):
@@ -385,4 +384,4 @@ precedence = (
 
 
 parser = yacc.yacc()
-parser.parse(data,lexer=lexer,debug=True,tracking=True)
+# parser.parse(data,lexer,True)

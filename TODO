@@ -1,0 +1,26 @@
+Todo Clases:
+    -Las clases empiezan con mayúsculas
+    -Las clases no se deben redefinir
+    -All attributes have scope local
+to the class, and all methods have global scope. Thus, the only way to provide access to object state in
+Cool is through methods.
+    -Feature names must begin with a lowercase letter.
+    -No method name may be defined multiple times in
+a class, and no attribute name may be defined multiple times in a class, but a method and an attribute
+may have the same name.
+
+Todo Inheritence:
+    -The semantics of C inherits P is that C has all of the features defined in P in addition to its own
+    features.
+    -In the case that a parent and child both define the same method name, then the definition
+given in the child class takes precedence.
+    -It is illegal to redefine attribute names.
+    -for type
+safety, it is necessary to place some restrictions on how methods may be redefined
+    -There is a distinguished class Object.
+    -If a class definition does not specify a parent class, then the
+class inherits from Object by default.
+    -single inheritance.
+    -The parent-child relation on classes defines a graph. This graph may not contain
+cycles.
+    -In addition to Object, Cool has four other basic classes: Int, String, Bool, and IO.
