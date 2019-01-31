@@ -42,24 +42,30 @@ def p_features(p):
         p[0] = []
 
 
-def p_feature(p):
+def p_feature_method_declaration(p):
     '''feature : method_declaration
-               | attribute'''
+               '''
     p[0] = p[1]
+
+
+def p_feature_attribute(p):
+    '''feature : attribute'''
+    p[0] = AttributeNode(p[1][0][0],p[1][0][1],p[1][1])
 
 
 def p_attribute(p):
     '''attribute : id_type
                 | id_type ASSIGN expression'''
-
-    new_attr = AttributeNode(p[1][0],p[1][1])
+    #  esto devuelve una tupla((id,type),value)
+    new_attr = (p[1], None)
     if len(p) == 4:
-        new_attr.value = p[3]
+        new_attr = (p[1], p[3])
     p[0] = new_attr
 
 
 def p_id_type(p):
     'id_type : ID TDOTS TYPE'
+    # esto lo que devuelve es(id,type)
     p[0] = (p[1],p[3])
 
 
@@ -75,6 +81,7 @@ def p_formals(p):
                 | id_type'''
 
     if len(p) == 4:
+        # aqui devolvemos una lista de id_type, que es una tupla (id,type)
         p[0] = [p[1]] + [p[3]]
     else:
         p[0] = [p[1]]
@@ -318,7 +325,7 @@ def p_dispatch(p):
     if len(p) == 1:
         p[0] = DispatchNode(p[1][0],p[1][1])
     else:
-        p[0] = DispatchNode(p[4][0],p[4][1],p[1],p[2])
+        p[0] = StaticDispatchNode(p[4][0],p[4][1],p[1],p[2])
 
 
 def p_especific(p):
@@ -384,4 +391,4 @@ precedence = (
 
 
 parser = yacc.yacc()
-# parser.parse(data,lexer,True)
+parser.parse(data,lexer,True)

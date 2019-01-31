@@ -28,7 +28,7 @@ class MethodNode(FeatureNode):
 
 
 class AttributeNode(FeatureNode):
-    def __init__(self,id,type,value=None):
+    def __init__(self,id, type,value=None):
         self.type = type
         self.value = value
         self.id = id
@@ -54,10 +54,17 @@ class AssignNode(ExpressionNode):
         self.expression = expr
 
 
-class DispatchNode(AtomNode):
+class StaticDispatchNode(AtomNode):
     def __init__(self,func_id,params,left_expr=None,parent_type=None):
         self.left_expression = left_expr
         self.paren_type = parent_type
+        self.func_id = func_id
+        self.parameters = params
+
+
+class DispatchNode(AtomNode):
+    def __init__(self,func_id,params,left_expr=None):
+        self.left_expression = left_expr
         self.func_id = func_id
         self.parameters = params
 

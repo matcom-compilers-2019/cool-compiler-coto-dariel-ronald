@@ -1,6 +1,5 @@
 import ply.yacc as yacc
 from coolex import tokens
-from test import test
 
 def p_program(p):
     '''program : class SEMICOLON program
@@ -223,7 +222,7 @@ def p_empty(p):
     
 
 def p_error(p):
-    print("Syntax error in input {}".fo rmat(p))
+    print("Syntax error in input ")
 precedence = (
     ('right','ASSIGN'),
     ('left','NOT'),
@@ -238,6 +237,4 @@ precedence = (
 
 parser = yacc.yacc()
 
-for t in test:
-    parser.parse(t)
 
