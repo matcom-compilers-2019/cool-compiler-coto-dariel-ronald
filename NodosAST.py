@@ -1,10 +1,10 @@
 class Node:
     pass
 
-
-class ProgramNode(Node):
-    def __init__(self, classes=[]):
-        self.classes = classes
+#
+# class ProgramNode(Node):
+#     def __init__(self, classes=[]):
+#         self.classes = classes
 
 
 class ClassNode(Node):
@@ -19,12 +19,12 @@ class FeatureNode(Node):
 
 
 class MethodNode(FeatureNode):
-    def __init__(self,id,parameters,return_type,expresions):
+    def __init__(self,id,parameters,return_type,expr):
         self.id = id
         # aqui se guardan los formal
         self.parameters = parameters
         self.return_type = return_type
-        self.expressions = expresions
+        self.expressions = expr
 
 
 class AttributeNode(FeatureNode):
@@ -55,18 +55,17 @@ class AssignNode(ExpressionNode):
 
 
 class StaticDispatchNode(AtomNode):
-    def __init__(self,func_id,params,left_expr=None,parent_type=None):
-        self.left_expression = left_expr
-        self.paren_type = parent_type
+    def __init__(self,func_id,params):
         self.func_id = func_id
         self.parameters = params
 
 
 class DispatchNode(AtomNode):
-    def __init__(self,func_id,params,left_expr=None):
+    def __init__(self,func_id,params,left_expr,parent_type):
         self.left_expression = left_expr
         self.func_id = func_id
         self.parameters = params
+        self.paren_type = parent_type
 
 
 class ConditionalNode(AtomNode):
@@ -178,26 +177,22 @@ class BComplementNode(AtomNode):
 
 
 class IntNode(AtomNode):
-    pass
+    def __init__(self,value):
+        self.value = value
 
 
 class StrNode(AtomNode):
-    pass
+    def __init__(self,value):
+        self.value = value
 
 
 class BoolNode(AtomNode):
-    pass
+    def __init__(self,value):
+        self.value = value
 
 
 class AtomNode(ExpressionNode):
-    '''
-        Aqui entrarían:
-        - integer
-        - string
-        - true and false
-    '''
-    def __init__(self,value):
-        self.value = value
+   pass
 
 #
 # class ImplicationNode(ExpressionNode):

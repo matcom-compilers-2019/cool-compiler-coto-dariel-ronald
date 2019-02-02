@@ -126,10 +126,15 @@ lexer = lex.lex()
 # };
 # '''
 data = '''
-class Main {
-x : Sally <- (new Sally).copy();
-main() : Sally { x };
-};
+class A {
+       funk():Type {
+            case 1 of
+                x:Int => 10;
+                x:String => 9;
+                x:Guru => 8;
+            esac
+       };
+    };
 '''
 
 # lexer.input(data)

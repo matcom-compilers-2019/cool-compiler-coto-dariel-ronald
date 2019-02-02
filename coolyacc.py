@@ -8,11 +8,10 @@ def p_program(p):
                | class SEMICOLON'''
 
     if len(p) == 4:
-        p[3].classes.append(p[1])
+        p[3].insert(0,p[1])
         p[0] = p[3]
     else:
-        new_program = ProgramNode([p[1]])
-        p[0] = new_program
+        p[0] = [p[1]]
 
 
 def p_class(p):
@@ -36,7 +35,7 @@ def p_features(p):
                 | empty'''
 
     if len(p) == 4:
-        p[3].append(p[1])
+        p[3].insert(0, p[1])
         p[0] = p[3]
     else:
         p[0] = []
@@ -72,7 +71,7 @@ def p_id_type(p):
 def p_method_declaration(p):
     'method_declaration : ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression RBRACE'
 
-    new_method = MethodNode(p[1],p[3],p[6],p[7])
+    new_method = MethodNode(p[1],p[3],p[6],p[8])
     p[0] = new_method
 
 
@@ -82,7 +81,8 @@ def p_formals(p):
 
     if len(p) == 4:
         # aqui devolvemos una lista de id_type, que es una tupla (id,type)
-        p[0] = [p[1]] + [p[3]]
+        p[3].insert(0, p[1])
+        p[0] = p[3]
     else:
         p[0] = [p[1]]
 
@@ -96,7 +96,8 @@ def p_expression_list(p):
     '''expression_list : expression SEMICOLON expression_list
                         | expression SEMICOLON'''
     if len(p) == 4:
-        p[0] = p[3] + [p[1]]
+        p[3].insert(0, p[1])
+        p[0] = p[3]
     else:
         p[0] = [p[1]]
 
@@ -111,7 +112,7 @@ def p_upper_non(p):
     '''upper_non : NOT upper_non
                 | operator_non'''
     if len(p) == 3:
-        p[0].expression = NotNode(p[2])
+        p[0] = NotNode(p[2])
     else:
         p[0] = p[1]
 
@@ -193,7 +194,7 @@ def p_atom(p):
         p[0] = p[2]
     elif len(p) == 3:
         if p[1] == 'isvoid':
-            p[0] = p[2]
+            p[0] = IsVoidNode(p[2])
         else:
             p[0] = BComplementNode(p[2])
     else:
@@ -275,10 +276,10 @@ def p_let_expression(p):
 def p_declaration_list(p):
     '''declaration_list : attribute COMMA declaration_list
                         | attribute'''
-    if len(p) == 1:
+    if len(p) == 2:
         p[0] = [p[1]]
     else:
-        p[3].append(p[1])
+        p[3].insert(0,p[1])
         p[0] = p[3]
 
 
@@ -302,12 +303,13 @@ def p_case(p):
 
 
 def p_implications(p):
-    '''implications : implication COMMA implications
-                    | implication '''
-    if len(p) == 1:
+    '''implications : implication SEMICOLON implications
+                    | implication SEMICOLON'''
+    if len(p) == 3:
         p[0] = [p[1]]
     else:
-        p[0] = [p[1]] + p[3]
+        p[3].insert(0,p[1])
+        p[0] = p[3]
 
 
 def p_implication(p):
@@ -322,10 +324,10 @@ def p_implication(p):
 def p_dispatch(p):
     '''dispatch : expression especific DOT dispatch_call
                 | dispatch_call'''
-    if len(p) == 1:
-        p[0] = DispatchNode(p[1][0],p[1][1])
+    if len(p) == 5:
+        p[0] = DispatchNode(p[4][0],p[4][1],p[1],p[2])
     else:
-        p[0] = StaticDispatchNode(p[4][0],p[4][1],p[1],p[2])
+        p[0] = StaticDispatchNode(p[4][0],p[4][1])
 
 
 def p_especific(p):
@@ -349,7 +351,8 @@ def p_params_expression(p):
     if len(p) == 2:
         p[0] = [p[1]]
     else:
-        p[0] = p[3].append(p[1])
+        p[3].insert(0,p[1])
+        p[0] = p[3]
 
 
 def p_params_expression_empty(p):
