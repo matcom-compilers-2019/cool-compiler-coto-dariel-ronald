@@ -325,9 +325,12 @@ def p_dispatch(p):
     '''dispatch : expression especific DOT dispatch_call
                 | dispatch_call'''
     if len(p) == 5:
-        p[0] = DispatchNode(p[4][0],p[4][1],p[1],p[2])
+        if p[2] is None:
+            p[0] = DispatchNode(p[4][0],p[4][1],p[1])
+        else:
+            p[0] = StaticDispatchNode(p[4][0], p[4][1], p[1], p[2])
     else:
-        p[0] = StaticDispatchNode(p[4][0],p[4][1])
+        p[0] = DispatchNode(p[4][0],p[4][1],None)
 
 
 def p_especific(p):
@@ -394,4 +397,4 @@ precedence = (
 
 
 parser = yacc.yacc()
-parser.parse(data,lexer,True)
+# parser.parse(data,lexer,True)

@@ -54,13 +54,14 @@ class AssignNode(ExpressionNode):
         self.expression = expr
 
 
-class StaticDispatchNode(AtomNode):
-    def __init__(self,func_id,params):
+class DispatchNode(AtomNode):
+    def __init__(self,func_id,params,left_expr):
+        self.left_expression = left_expr
         self.func_id = func_id
         self.parameters = params
 
 
-class DispatchNode(AtomNode):
+class StaticDispatchNode(AtomNode):
     def __init__(self,func_id,params,left_expr,parent_type):
         self.left_expression = left_expr
         self.func_id = func_id

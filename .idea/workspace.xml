@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parser.out" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parsetab.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NodosAST.py" afterPath="$PROJECT_DIR$/NodosAST.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coolex.py" afterPath="$PROJECT_DIR$/coolex.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coolyacc.py" afterPath="$PROJECT_DIR$/coolyacc.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,27 +15,27 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Playing_with_PLY$Nosetests_for_test_parser_test_empty_class_definition.coverage" NAME="Nosetests for test_parser.test_empty_class_definition Coverage Results" MODIFIED="1549053869959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/Playing_with_PLY$Nosetests_in_test_parser_py.coverage" NAME="Nosetests in test_parser.py Coverage Results" MODIFIED="1549080406233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/Playing_with_PLY$Nosetests_in_test_parser_py.coverage" NAME="Nosetests in test_parser.py Coverage Results" MODIFIED="1549157375967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.3851688">
+    <splitter split-orientation="horizontal" split-proportion="0.5077139">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="NodosAST.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="NodosAST.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/NodosAST.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="268">
-                  <caret line="63" column="58" lean-forward="false" selection-start-line="63" selection-start-column="58" selection-end-line="63" selection-end-column="58" />
+                <state relative-caret-position="300">
+                  <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="coolex.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="coolex.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/coolex.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="629">
+                <state relative-caret-position="1471">
                   <caret line="136" column="6" lean-forward="false" selection-start-line="136" selection-start-column="6" selection-end-line="136" selection-end-column="6" />
                   <folding />
                 </state>
@@ -52,8 +49,8 @@
           <file leaf-file-name="test_parser.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_parser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="40">
-                  <caret line="468" column="4" lean-forward="true" selection-start-line="468" selection-start-column="4" selection-end-line="476" selection-end-column="6" />
+                <state relative-caret-position="420">
+                  <caret line="223" column="1" lean-forward="true" selection-start-line="223" selection-start-column="1" selection-end-line="223" selection-end-column="1" />
                   <folding>
                     <element signature="e#0#27#0" expanded="true" />
                   </folding>
@@ -64,8 +61,8 @@
           <file leaf-file-name="coolyacc.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/coolyacc.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
-                  <caret line="115" column="9" lean-forward="true" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+                <state relative-caret-position="268">
+                  <caret line="331" column="9" lean-forward="true" selection-start-line="331" selection-start-column="9" selection-end-line="331" selection-end-column="9" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -89,7 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>93</find>
       <find>150</find>
       <find>+</find>
       <find>block</find>
@@ -117,8 +113,9 @@
       <find>LetVa</find>
       <find>IsVoidNode</find>
       <find>isvoid</find>
-      <find>este es</find>
       <find>Case</find>
+      <find>este es</find>
+      <find>Dispatch</find>
     </findStrings>
     <replaceStrings>
       <replace>ClassNode(</replace>
@@ -154,9 +151,9 @@
         <option value="$PROJECT_DIR$/parser.out" />
         <option value="$PROJECT_DIR$/cool_first.py" />
         <option value="$PROJECT_DIR$/TODO" />
+        <option value="$PROJECT_DIR$/coolex.py" />
         <option value="$PROJECT_DIR$/NodosAST.py" />
         <option value="$PROJECT_DIR$/tests/test_parser.py" />
-        <option value="$PROJECT_DIR$/coolex.py" />
         <option value="$PROJECT_DIR$/coolyacc.py" />
       </list>
     </option>
@@ -169,9 +166,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="67" />
-    <option name="y" value="27" />
+    <option name="y" value="25" />
     <option name="width" value="1853" />
-    <option name="height" value="1053" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -189,7 +186,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -218,7 +215,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -513,16 +510,17 @@
       <option name="project" value="LOCAL" />
       <updated>1548971089747</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Se vencieron todos los test">
+      <created>1549080435509</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1549080435509</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Nosetests_in_test_parser_py - 2019.02.01 at 22h 51m 08s.xml">
-      <configuration name="Nosetests in test_parser.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_test_parser_py - 2019.02.01 at 22h 51m 36s.xml">
-      <configuration name="Nosetests in test_parser.py" configurationId="tests" />
-    </history-entry>
     <history-entry file="Nosetests_in_test_parser_py - 2019.02.01 at 22h 53m 51s.xml">
       <configuration name="Nosetests in test_parser.py" configurationId="tests" />
     </history-entry>
@@ -547,22 +545,28 @@
     <history-entry file="Nosetests_in_test_parser_py - 2019.02.01 at 23h 06m 46s.xml">
       <configuration name="Nosetests in test_parser.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Nosetests_in_test_parser_py - 2019.02.02 at 20h 26m 52s.xml">
+      <configuration name="Nosetests in test_parser.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_parser_py - 2019.02.02 at 20h 29m 36s.xml">
+      <configuration name="Nosetests in test_parser.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="27" width="1853" height="1053" extended-state="0" />
+    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2086331" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2108467" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32901832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17799352" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32756758" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29405406" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4054054" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -618,7 +622,8 @@
     <MESSAGE value="Arreglamos un poco la gramatica" />
     <MESSAGE value="Arreglamos un poco la gramatica, y agregamos el readme de los todo sobre algunos aspectos importantes del lenguaje a tener en cuenta. este archivo seguirá creciendo." />
     <MESSAGE value="Preparamos unos test para el parser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Preparamos unos test para el parser" />
+    <MESSAGE value="Se vencieron todos los test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se vencieron todos los test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -634,6 +639,16 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/coolyacc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7900">
+          <caret line="397" column="0" lean-forward="true" selection-start-line="397" selection-start-column="0" selection-end-line="397" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/NodosAST.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3480">
@@ -922,7 +937,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="198" column="0" lean-forward="false" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -930,7 +944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -991,36 +1004,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/coolex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1471">
+          <caret line="136" column="6" lean-forward="false" selection-start-line="136" selection-start-column="6" selection-end-line="136" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/NodosAST.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="63" column="58" lean-forward="false" selection-start-line="63" selection-start-column="58" selection-end-line="63" selection-end-column="58" />
+        <state relative-caret-position="300">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="468" column="4" lean-forward="true" selection-start-line="468" selection-start-column="4" selection-end-line="476" selection-end-column="6" />
+        <state relative-caret-position="420">
+          <caret line="223" column="1" lean-forward="true" selection-start-line="223" selection-start-column="1" selection-end-line="223" selection-end-column="1" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coolex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="136" column="6" lean-forward="false" selection-start-line="136" selection-start-column="6" selection-end-line="136" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/coolyacc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="115" column="9" lean-forward="true" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+        <state relative-caret-position="268">
+          <caret line="331" column="9" lean-forward="true" selection-start-line="331" selection-start-column="9" selection-end-line="331" selection-end-column="9" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
