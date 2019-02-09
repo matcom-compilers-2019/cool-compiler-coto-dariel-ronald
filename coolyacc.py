@@ -8,10 +8,10 @@ def p_program(p):
                | class SEMICOLON'''
 
     if len(p) == 4:
-        p[3].insert(0,p[1])
+        p[3].classes.insert(0,p[1])
         p[0] = p[3]
     else:
-        p[0] = [p[1]]
+        p[0] = ProgramNode([p[1]])
 
 
 def p_class(p):

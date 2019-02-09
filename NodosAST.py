@@ -1,10 +1,10 @@
 class Node:
     pass
 
-#
-# class ProgramNode(Node):
-#     def __init__(self, classes=[]):
-#         self.classes = classes
+
+class ProgramNode(Node):
+    def __init__(self, classes=[]):
+        self.classes = classes
 
 
 class ClassNode(Node):
