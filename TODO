@@ -34,8 +34,11 @@ Todo on checksemanticks:
 Todo a preguntar
 - Cómo va a ser el tema de la recuperación de errores
 - EL null aca como se representa
-- los valores por defecto de cada una de las clases
-- los metodos de las clases q vienen con cool (Int,str,bool)
+- los valores por defecto de cada una de las clases(pudiera agregar a la clase type un
+    campo que esa el valor por defecto en el acso de las clases int,str,bool)
+- los métodos de las clases q vienen con cool (Int,str,bool)
+- las operaciones binarias y unarias se pueden realizar entre clases creadas?
+
 
 TypeCheckerVisitor
  - en cada nodo verificar si todas las operaciones que se realizan son correctas:

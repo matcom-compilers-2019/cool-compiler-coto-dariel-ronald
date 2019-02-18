@@ -140,11 +140,22 @@ class TypeCheckerVisitor:
 
     @visitor.when(ast.AttributeNode)
     def visit(self, node, scope,errors):
-        vinfo = scope.define_variable(node.id,)
+        vinfo = scope.define_variable(node.id,node.type)
+        if vinfo is None:
+            errors.append("Error while definening attr ",node.id)
+        if node.value is not None:
+            self.visit(node.value,scope,errors)
+    #     else que hago? le pongo valor por defecto
 
     @visitor.when(ast.AssignNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope,errors):
+    #     Verificamos si existe este símbolo
+        vinfo = scope.get_variable_info(node.variable.id)
+        if vinfo is None:
+            errors.append('Error while assinging ',node.variable.id, 'not defined')
+
+        self.visit(node.expression,scope,errors)
+        node.computed_type = vinfo.vtype
 
     @visitor.when(ast.DispatchNode)
     def visit(self, node, errors):
@@ -207,35 +218,34 @@ class TypeCheckerVisitor:
      '''
      Para verificar si aqui todo está en talla tengo que buscar primeramente
      si está definido el objeto.
-     Para poder verificar si está definido:
-        -tengo que buscar en los parámetos del método.
-        -buscar en los atributos de la clase
-        -buscar en las variables del scope
-
      :param node:
      :param errors:
      :return:
      '''
 
     @visitor.when(ast.BlockNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        child_scope = scope.create_child_scope()
+        for expr in node.expressions:
+            self.visit(expr,child_scope,errors)
+
+        node.computed_type = node.expressions[-1].computed_type
 
     @visitor.when(ast.BComplementNode)
     def visit(self, node, errors):
         pass
 
     @visitor.when(ast.IntNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node, scope,errors):
+        node.computed_type = scope.get_type('Int')
 
     @visitor.when(ast.BoolNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        node.computed_type = scope.get_type('Bool')
 
     @visitor.when(ast.StrNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        node.computed_type = scope.get_type('Str')
 
 
 
