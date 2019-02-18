@@ -141,7 +141,7 @@ def p_k_arith(p):
 
 def p_assign(p):
     'assign : ID ASSIGN expression'
-    p[0] = AssignNode(VariableNode(p[1]), p[3])
+    p[0] = AssignNode(Object(p[1]), p[3])
 
 
 def p_arith(p):
@@ -208,7 +208,7 @@ def p_block(p):
 
 def p_atom_variable(p):
     '''atom : ID'''
-    p[0] = VariableNode(p[1])
+    p[0] = Object(p[1])
 
 
 def p_atom_type_int(p):

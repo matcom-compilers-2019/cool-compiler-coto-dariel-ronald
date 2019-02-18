@@ -24,3 +24,22 @@ class inherits from Object by default.
     -The parent-child relation on classes defines a graph. This graph may not contain
 cycles.
     -In addition to Object, Cool has four other basic classes: Int, String, Bool, and IO.
+
+Todo on checksemanticks:
+    - recorrer el ast buscando todos los tipos y agregandolos al contexto(Buscar definiciones de tipos)
+    - recorrer el ast agregando a cada clase los atributos y los metodos(asociar metodos y atributos)
+    - entrar en el cuerpo de los metodos...(semantica)
+    - Tema de la recuperacion de errores
+
+Todo a preguntar
+- Cómo va a ser el tema de la recuperación de errores
+- EL null aca como se representa
+- los valores por defecto de cada una de las clases
+- los metodos de las clases q vienen con cool (Int,str,bool)
+
+TypeCheckerVisitor
+ - en cada nodo verificar si todas las operaciones que se realizan son correctas:
+    -guardar en el scope correspondiente las declaraciones de variables:
+        - Los parámetros de los métodos
+        - Los atributos de la clase
+        - Las variables locales

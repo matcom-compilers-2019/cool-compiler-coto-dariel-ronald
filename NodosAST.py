@@ -1,17 +1,40 @@
 class Node:
     pass
 
+from semantic import *
+from utils import Scope
+
 
 class ProgramNode(Node):
     def __init__(self, classes=[]):
         self.classes = classes
 
+    def check_semantics(self):
+        current_scope = Scope()
+        errors = []
+
+        type_collector = TypeCollectorVisitor(current_scope)
+        type_collector.visit(self, errors)
+
+        type_builder = TypeBuilderVisitor(current_scope)
+        type_builder.visit(self, errors)
+
+        type_checker = TypeCheckerVisitor()
+        type_checker.visit(self, current_scope,errors)
+
 
 class ClassNode(Node):
-    def __init__(self,type,inherit,features):
-        self.type = type
+    def __init__(self,type,inherit,features=[]):
+        self.name = type
         self.inherit = inherit
-        self.features = features
+        self.methods = []
+        self.attributes = []
+
+        for feature in features:
+            if isinstance(feature,MethodNode):
+                self.methods.append(feature)
+            else:
+                self.attributes.append(feature)
 
 
 class FeatureNode(Node):
@@ -19,12 +42,17 @@ class FeatureNode(Node):
 
 
 class MethodNode(FeatureNode):
-    def __init__(self,id,parameters,return_type,expr):
+    def __init__(self,id,parameters,return_type,expr=None):
         self.id = id
-        # aqui se guardan los formal
+        # aqui se guardan los formal (id,type)
         self.parameters = parameters
         self.return_type = return_type
         self.expressions = expr
+
+    def __eq__(self, other):
+        return isinstance(other,MethodNode) and \
+        other.id == self.id and other.parameters == self.parameters and \
+        other.return_type == self.return_type
 
 
 class AttributeNode(FeatureNode):
@@ -32,6 +60,10 @@ class AttributeNode(FeatureNode):
         self.type = type
         self.value = value
         self.id = id
+
+    def __eq__(self, other):
+        return isinstance(other,AttributeNode) and \
+        other.id == self.id and other.type == self.type
 
 
 # class FormalNode(Node):
@@ -41,6 +73,7 @@ class AttributeNode(FeatureNode):
 
 
 class ExpressionNode(Node):
+    computed_type = None
     pass
 
 
@@ -157,8 +190,8 @@ class EqualThanNode(BinaryOperatorNode):
     pass
 
 
-class VariableNode(AtomNode):
-    def __init__(self,id):
+class Object(AtomNode):
+    def __init__(self, id):
         self.id = id
 
 
