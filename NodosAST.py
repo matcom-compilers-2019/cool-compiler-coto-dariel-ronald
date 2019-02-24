@@ -112,8 +112,8 @@ class CaseNode(AtomNode):
 
 
 class NewTypeNode(AtomNode):
-    def __init__(self,type):
-        self.type = type
+    def __init__(self,type_name):
+        self.type_name = type_name
 
 
 class UnaryOperatorNode(ExpressionNode):

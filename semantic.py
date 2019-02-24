@@ -91,19 +91,8 @@ class TypeCheckerVisitor:
         return True
 
     @visitor.on('node')
-    def visit(self, node, errors):
+    def visit(self, node, scope, errors):
         pass
-
-    # @visitor.when(ast.BinaryOperatorNode)
-    # def visit(self, node, errors):
-    #     self.visit(node.left_expression)
-    #     self.visit(node.right_expression)
-    #     if node.left_expression.computed_type != node.right_expression.computed_type:
-    #         errors.append('Type missmatch, ')
-    #         node.computed_type = None
-    #     else:
-    #         node.computed_type = node.left_expression.computed_type
-
 
     @visitor.when(ast.ProgramNode)
     def visit(self, node,scope, errors):
@@ -152,30 +141,137 @@ class TypeCheckerVisitor:
     #     Verificamos si existe este símbolo
         vinfo = scope.get_variable_info(node.variable.id)
         if vinfo is None:
-            errors.append('Error while assinging ',node.variable.id, 'not defined')
+            errors.append('Error while assinging '+ node.variable.id + 'not defined')
 
         self.visit(node.expression,scope,errors)
         node.computed_type = vinfo.vtype
 
+        if not node.expression.computed_type.is_lower(node.computed_type):
+            errors.append('Error while assinging: the expression type is not lower')
+
     @visitor.when(ast.DispatchNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        '''
+        Para revisar el dispatch: e0.f(e1,...,en)
+        1-calcular los tipos ei
+        2-verificar si todos los tipos de están definidos
+        3-verificar si el tipo de e0 tiene definido el metodo f con los
+            parámetro respectivos.
+            3.1-cada uno de los tipos q le pasamos como parámetro tiene
+                que ser lower than the original
+        4-devolver el tipo del resultado del método
+
+        :param node:
+        :param scope:
+        :param errors:
+        :return:
+        '''
+        self.visit(node.left_expression,scope,errors)
+        dispatch_type = node.left_expression.computed_type
+        if not scope.is_defined(dispatch_type):
+            errors.append('Error type {} not defined in dispatch'.format(dispatch_type))
+
+        method = scope.get_params_from_method(dispatch_type,node.func_id)
+        for i, param in enumerate(node.parameters):
+            self.visit(param,scope,errors)
+            if not param.computed_type.is_lower(method.arguments[i][1]):
+                errors.append('Error in dispatch node, type {} is not lower than {}'.format(param.computed_type.name,
+                                                                                            method.arguments[i][1].name))
+        node.computed_type = method.return_type
+
 
     @visitor.when(ast.StaticDispatchNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        self.visit(node.left_expression,scope,errors)
+        dispatch_type = node.left_expression.computed_type
+        if not scope.is_defined(dispatch_type):
+            errors.append('Error type {} not defined in dispatch'.format(dispatch_type))
+
+        parent_type = scope.get_type(node.parent_type)
+        if not dispatch_type.is_lower(parent_type):
+            errors.append("Error parent type defined is not lower in static dispatch")
+
+        method = scope.get_params_from_method(parent_type,node.func_id)
+        for i, param in enumerate(node.parameters):
+            self.visit(param,scope,errors)
+            if not param.computed_type.is_lower(method.arguments[i][1]):
+                errors.append('Error in dispatch node, type {} is not lower than {}'.format(param.computed_type.name,
+                                                                                            method.arguments[i][1].name))
+        node.computed_type = method.return_type
+
+
 
     @visitor.when(ast.ConditionalNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node, scope, errors):
+        '''
+        Si e1 es de tipo bool, e2 de tipo T2 y e3 de tipo T3
+        :param node:
+        :param errors:
+        :return: LCA de las expresiones e3 y e2
+        '''
+        self.visit(node.if_expression,scope,errors)
+        then_child_scope = scope.create_child_scope()
+        else_child_scope = scope.create_child_scope()
+        self.visit(node.then_expression,then_child_scope,errors)
+        self.visit(node.else_expression,else_child_scope,errors)
+
+        if node.if_expression.computed_type != scope.get_type('Bool'):
+            errors.append('Error. IfCondition is not type bool')
+        lca = node.then_expression.computed_type.get_lca(node.else_expression.computed_type)
+        node.computed_type = lca
 
     @visitor.when(ast.CaseNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        self.visit(node.case_expression,scope,errors)
+        case_expression_type = node.case_expression.computed_type
+        lcas = []
+        for id_type,expr in node.implications:
+            self.visit(expr,scope,errors)
+            if not expr.computed_type.is_lower(id_type[1]):
+                errors.append('Error evaluating expression in case')
+            vtype = scope.get_type(id_type[1])
+            if vtype is None:
+                errors.append('Error in case expression, type {} not defined'.format(id_type[1]))
+                return
+            lcas.append(case_expression_type.get_lca(vtype))
+
+        lca_joined = scope.get_type('Object')
+        for lca in lcas:
+            if lca.height > lca_joined.height:
+                lca_joined = lca.height
+
+        node.computed_type = lca_joined
+
+
+
+
+    @visitor.when(ast.LoopNode)
+    def visit(self, node,scope, errors):
+        self.visit(node.while_expression,scope,errors)
+        if node.while_expression.computed_type != scope.get_type('Bool'):
+            errors.append('Error in while expression')
+        child_scope = scope.create_child_scope()
+        self.visit(node.loop_expression,child_scope,errors)
+        node.computed_type = scope.get_type('Object')
 
     @visitor.when(ast.NewTypeNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        '''
+        Hay dos casos para new:
+        1- si T es SELF_TYPE:
+        2- en otro caso
+        en cualquier caso ahora mismo devolver el mismo tipo T
+        Para checkear ahora mismo lo único que me parece que hay que ver
+        es si está definido el Tipo T
+        :param node:
+        :param errors:
+        :return:
+        '''
+        new_intance_type = scope.get_type(node.type_name)
+        if new_intance_type is None:
+            errors.append('Error type {} is not defined'.format(node.type_name))
+        else:
+            node.computed_type = new_intance_type
 
     @visitor.when(ast.BAritmeticOperationNode)
     def visit(self, node,scope, errors):
@@ -185,8 +281,8 @@ class TypeCheckerVisitor:
         :param errors:
         :return: el resultado es Int
         '''
-        self.visit(node.left_expression)
-        self.visit(node.right_expression)
+        self.visit(node.left_expression,scope,errors)
+        self.visit(node.right_expression,scope,errors)
         if node.left_expression.computed_type == scope.get_type('Int') and \
                         node.left_expression.computed_type == scope.get_type('Int'):
             return
@@ -243,11 +339,20 @@ class TypeCheckerVisitor:
         :param errors:
         :return: el resultado es Int
         '''
-        self.visit(node.expression)
+        self.visit(node.expression,scope,errors)
         if node.expression.computed_type == scope.get_type("Int"):
             return
         errors.append("Error while checking_type")
         node.computed_type = scope.get_type('Int')
+
+    @visitor.when(ast.IsVoidNode)
+    def visit(self, node, scope, errors):
+        self.visit(node.expression,scope,errors)
+        boolean = scope.get_type('Bool')
+        if node.expression.computed_type is not boolean:
+            errors.append('Error, is void argument must be boolean')
+        node.computed_type = boolean
+
 
     @visitor.when(ast.NotNode)
     def visit(self, node,scope, errors):
@@ -257,7 +362,7 @@ class TypeCheckerVisitor:
         :param errors:
         :return: devuelve tipo bool
         '''
-        self.visit(node.expression)
+        self.visit(node.expression,scope,errors)
         if node.expression.computed_type == scope.get_type("Bool"):
             return
         errors.append("Error while checking_type")
@@ -271,7 +376,7 @@ class TypeCheckerVisitor:
         :param errors:
         :return: el resultado es bool
         '''
-        self.visit(node.left_expression)
+        self.visit(node.left_expression,scope,errors)
         if node.left_expression.computed_type == scope.get_type("Int"):
             return
         errors.append("Error while checking_type")
@@ -285,7 +390,7 @@ class TypeCheckerVisitor:
         :param errors:
         :return: el resultado es bool
         '''
-        self.visit(node.left_expression)
+        self.visit(node.left_expression,scope,errors)
         if node.left_expression.computed_type == scope.get_type("Int"):
             return
         errors.append("Error while checking_type")
@@ -301,8 +406,8 @@ class TypeCheckerVisitor:
         :param errors:
         :return:
         '''
-        self.visit(node.left_expression)
-        self.visit(node.right_expression)
+        self.visit(node.left_expression,scope,errors)
+        self.visit(node.right_expression,scope,errors)
 
         def selector(expression):
             return expression.computed_type == scope.get_type('Int') or \
@@ -326,21 +431,19 @@ class TypeCheckerVisitor:
         :param errors:
         :return: devuelve static type Int
         '''
-        self.visit(node.expression)
+        self.visit(node.expression,scope,errors)
         if node.expression.computed_type == scope.get_type('Int'):
             return
         errors.append("Error while checking_type")
         node.computed_type = scope.get_type('Int')
 
     @visitor.when(ast.ObjectNode)
-    def visit(self, node, errors):
-     '''
-     Para verificar si aqui todo está en talla tengo que buscar primeramente
-     si está definido el objeto.
-     :param node:
-     :param errors:
-     :return:
-     '''
+    def visit(self, node, scope, errors):
+
+        if not scope.is_defined(node.id):
+            errors.append("Error, object {} does not exist".format(node.id))
+            return
+        node.computed_type = scope.get_variable_info(node.id)[1]
 
     @visitor.when(ast.BlockNode)
     def visit(self, node,scope, errors):
@@ -349,6 +452,31 @@ class TypeCheckerVisitor:
             self.visit(expr,child_scope,errors)
 
         node.computed_type = node.expressions[-1].computed_type
+
+    @visitor.when(ast.LetVarNode)
+    def visit(self, node, scope, errors):
+        '''
+
+        :param node:
+        :param scope:
+        :param errors:
+        :return:
+        '''
+        child_scope = scope.create_child_scope()
+        for id_type, expr in node.declaration_list:
+            vtype = scope.get_type(id_type[1])
+            if vtype is None:
+                errors.append('Error in let. type not defined')
+                return
+
+            if expr is not None:
+                self.visit(expr,child_scope,errors)
+                if not expr.computed_type.is_lower(vtype):
+                    errors.append("Error in let. ")
+            child_scope.define_variable(id_type[0],id_type[1])
+        self.visit(node.in_expression,child_scope,errors)
+        node.computed_type = node.in_expression.computed_type
+
 
     @visitor.when(ast.IntNode)
     def visit(self, node, scope,errors):

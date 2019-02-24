@@ -12,6 +12,47 @@ class VariableInfo:
 
 # a lo mejor sería buena idea hacer que se pueda instanciar una sola vez.
 class Type:
+    def cal_height(self):
+        if self.height != 0:
+            return
+        elif self.parent_type is None:
+            self.height = 1
+        else:
+            self.parent_type.cal_height()
+            self.height = 1 + self.parent_type.height
+
+    def _know_its_height(self):
+        return self.height != 0
+
+    def lower_equals(self,other_type):
+        '''
+        Determina si el other_type es ancestro de self
+        :param other_type: objeto de tipo type del cual se verifica la condición
+        de ancestro.
+        :return: boolean
+        '''
+        if not self._know_its_height():
+            self.cal_height()
+
+        if not other_type._know_its_height():
+            other_type.cal_height()
+
+        if self.height > other_type.height:
+            the_highest = self
+            the_lowest = other_type
+        else:
+            the_highest = other_type
+            the_lowest = self
+
+        while the_highest.parent_type is not None:
+            if the_highest.height == the_lowest.height:
+                if the_highest != the_lowest:
+                    return False
+                else:
+                    return True
+        return False
+
+
 
     def __init__(self,name:str,attrs={},methods={},parent_type='Object'):
         '''
@@ -28,6 +69,8 @@ class Type:
         self.parent_type = None
         self._checking_for_cycle = False
         self._checked_for_cycle = False
+
+        self.height = 0
 
     def __eq__(self, other):
         return other.name == self.name
@@ -160,6 +203,12 @@ class Scope:
         self.index_at_parent = 0 if parent is None else len(parent.locals)
 
     def define_variable(self, vname, vtypename):
+        '''
+        Salva vinfo (vname,vtype) en la lista locals
+        :param vname:
+        :param vtypename:
+        :return:
+        '''
         if vtypename not in self.scope_classes_dictionary:
             return None
         vtype = self.scope_classes_dictionary[vtypename]
@@ -194,6 +243,8 @@ class Scope:
     def get_local_variable_info(self, vname):
         return Scope.find_variable_info(vname, self)
 
+    def type_is_defined(self,type_name):
+        return self.get_type(type_name)
 
     def _classes_global_field(self):
         return self.scope_classes_dictionary
