@@ -196,7 +196,7 @@ def p_atom(p):
         if p[1] == 'isvoid':
             p[0] = IsVoidNode(p[2])
         else:
-            p[0] = BComplementNode(p[2])
+            p[0] = IntegerComplementNode(p[2])
     else:
         p[0] = p[1]
 

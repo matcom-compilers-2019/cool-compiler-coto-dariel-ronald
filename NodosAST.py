@@ -138,19 +138,23 @@ class BinaryOperatorNode(ExpressionNode):
         self.right_expression = right_expr
 
 
-class PlusNode(BinaryOperatorNode):
+class BAritmeticOperationNode(BinaryOperatorNode):
     pass
 
 
-class MinusNode(BinaryOperatorNode):
+class PlusNode(BAritmeticOperationNode):
     pass
 
 
-class StarNode(BinaryOperatorNode):
+class MinusNode(BAritmeticOperationNode):
     pass
 
 
-class DivNode(BinaryOperatorNode):
+class StarNode(BAritmeticOperationNode):
+    pass
+
+
+class DivNode(BAritmeticOperationNode):
     pass
 
 
@@ -189,7 +193,7 @@ class BlockNode(AtomNode):
         self.expressions = exprs
 
 
-class BComplementNode(AtomNode):
+class IntegerComplementNode(AtomNode):
     def __init__(self,expr):
         self.expression = expr
 

@@ -33,16 +33,17 @@ Todo on checksemanticks:
 
 Todo a preguntar
 - Cómo va a ser el tema de la recuperación de errores
-- EL null aca como se representa(respuesta de juanpablo -> no existe la asignación de null, lo que hay es un void)
-- los métodos de las clases q vienen con cool (Int,str,bool)()
+- (checked)EL null aca como se representa(respuesta de juanpablo -> no existe la asignación de null, lo que hay es un void)
+- (checked)los métodos de las clases q vienen con cool (Int,str,bool)()
     (respuesta de juanpablo-> si devuelven selftype ALGUNO DE LOS METODOS DE LAS CLASES INT STR Y BOOL
     que devuelvan el mismo tipo de la clase)
 
-- las operaciones binarias y unarias se pueden realizar entre clases creadas?
+- (checked)las operaciones binarias y unarias se pueden realizar entre clases creadas?
     (respuesta de juanpablo -> 1-buscar en el libro y
     2- dice el libro que solamente enteros para las operaciones binarias y unarias,
     en el caso de '=' entre int bool y str tienen que serambos del mismo tipo, en otro caso
     no tiene por qué)
+- Que devuelve el metodo main de la clase Main
 
 
 TypeCheckerVisitor

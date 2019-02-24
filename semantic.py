@@ -66,9 +66,9 @@ class TypeBuilderVisitor:
         attr_type = self.context.get_type(node.type)
         self._current_type.define_attr(node.id, attr_type)
 
+#Todo: tengo que verificar que el ProgramNode tiene una claseMain la cual tiene un metodo main()
 
 class TypeCheckerVisitor:
-
     def check_class_hierarchy(self,context,errors):
         classes = context._classes_global_field()
 
@@ -177,43 +177,162 @@ class TypeCheckerVisitor:
     def visit(self, node, errors):
         pass
 
-    @visitor.when(ast.PlusNode)
-    def visit(self, node, errors):
-        pass
+    @visitor.when(ast.BAritmeticOperationNode)
+    def visit(self, node,scope, errors):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es Int
+        '''
+        self.visit(node.left_expression)
+        self.visit(node.right_expression)
+        if node.left_expression.computed_type == scope.get_type('Int') and \
+                        node.left_expression.computed_type == scope.get_type('Int'):
+            return
+        errors.append("Error while checking types")
+        node.computed_type = scope.get_type('Int')
 
-    @visitor.when(ast.StarNode)
-    def visit(self, node, errors):
-        pass
-
-    @visitor.when(ast.MinusNode)
-    def visit(self, node, errors):
-        pass
-
-    @visitor.when(ast.DivNode)
-    def visit(self, node, errors):
-        pass
+    #
+    # @visitor.when(ast.PlusNode)
+    # def visit(self, node, errors):
+    #     '''
+    #     <expr1> y <expr2> tienen que tener tipo Int
+    #     :param node:
+    #     :param errors:
+    #     :return: el resultado es Int
+    #     '''
+    #
+    #     pass
+    #
+    # @visitor.when(ast.StarNode)
+    # def visit(self, node, errors):
+    #     '''
+    #     <expr1> y <expr2> tienen que tener tipo Int
+    #     :param node:
+    #     :param errors:
+    #     :return: el resultado es Int
+    #     '''
+    #     pass
+    #
+    # @visitor.when(ast.MinusNode)
+    # def visit(self, node, errors):
+    #     '''
+    #     <expr1> y <expr2> tienen que tener tipo Int
+    #     :param node:
+    #     :param errors:
+    #     :return: el resultado es Int
+    #     '''
+    #     pass
+    #
+    # @visitor.when(ast.DivNode)
+    # def visit(self, node, errors):
+    #     '''
+    #     <expr1> y <expr2> tienen que tener tipo Int
+    #     :param node:
+    #     :param errors:
+    #     :return: el resultado es Int
+    #     '''
+    #     pass
 
     @visitor.when(ast.NegationNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        '''
+        <expr> tiene que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es Int
+        '''
+        self.visit(node.expression)
+        if node.expression.computed_type == scope.get_type("Int"):
+            return
+        errors.append("Error while checking_type")
+        node.computed_type = scope.get_type('Int')
 
     @visitor.when(ast.NotNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node,scope, errors):
+        '''
+        <expr> tiene que tener tipo bool
+        :param node:
+        :param errors:
+        :return: devuelve tipo bool
+        '''
+        self.visit(node.expression)
+        if node.expression.computed_type == scope.get_type("Bool"):
+            return
+        errors.append("Error while checking_type")
+        node.computed_type = scope.get_type('Bool')
 
     @visitor.when(ast.LowerThanNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node, scope,errors):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es bool
+        '''
+        self.visit(node.left_expression)
+        if node.left_expression.computed_type == scope.get_type("Int"):
+            return
+        errors.append("Error while checking_type")
+        node.computed_type = scope.get_type('Bool')
 
     @visitor.when(ast.LowerEqualThanNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node, scope, errors):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es bool
+        '''
+        self.visit(node.left_expression)
+        if node.left_expression.computed_type == scope.get_type("Int"):
+            return
+        errors.append("Error while checking_type")
+        node.computed_type = scope.get_type('Bool')
 
     @visitor.when(ast.EqualThanNode)
-    def visit(self, node, errors):
-        pass
+    def visit(self, node, scope, errors):
+        '''
+        Si <expr1> o <expr2> son de tipo Int ,str or bool entonces el otro tiene que tener
+        el mismo tipo. Para objetos no básicos, este símbolo chequea por la igualdad de punteros.
+        Está definido para void.
+        :param node:
+        :param errors:
+        :return:
+        '''
+        self.visit(node.left_expression)
+        self.visit(node.right_expression)
 
-    @visitor.when(ast.Object)
+        def selector(expression):
+            return expression.computed_type == scope.get_type('Int') or \
+                    expression.computed_type == scope.get_type('String') or \
+                    expression.computed_type == scope.get_type('Bool')
+
+        if selector(node.left_expression) or selector(node.right_expression):
+            if node.left_expression.computed_type == node.right_expression.computed_type:
+                return
+            errors.append("Error while checking_type")
+        else:
+            # Si se comparan dos clases no basicas hay que comparar los punteros
+            pass
+        node.computed_type = scope.get_type('Bool')
+
+    @visitor.when(ast.IntegerComplementNode)
+    def visit(self, node,scope, errors):
+        '''
+        <expr> tiene que ser de tipo Int
+        :param node:
+        :param errors:
+        :return: devuelve static type Int
+        '''
+        self.visit(node.expression)
+        if node.expression.computed_type == scope.get_type('Int'):
+            return
+        errors.append("Error while checking_type")
+        node.computed_type = scope.get_type('Int')
+
+    @visitor.when(ast.ObjectNode)
     def visit(self, node, errors):
      '''
      Para verificar si aqui todo está en talla tengo que buscar primeramente
@@ -231,10 +350,6 @@ class TypeCheckerVisitor:
 
         node.computed_type = node.expressions[-1].computed_type
 
-    @visitor.when(ast.BComplementNode)
-    def visit(self, node, errors):
-        pass
-
     @visitor.when(ast.IntNode)
     def visit(self, node, scope,errors):
         node.computed_type = scope.get_type('Int')
@@ -246,9 +361,6 @@ class TypeCheckerVisitor:
     @visitor.when(ast.StrNode)
     def visit(self, node,scope, errors):
         node.computed_type = scope.get_type('Str')
-
-
-
 
 
 class CheckSemanticsVisitor:
