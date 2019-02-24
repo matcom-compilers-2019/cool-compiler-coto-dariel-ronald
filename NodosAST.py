@@ -1,27 +1,11 @@
 class Node:
     pass
 
-from semantic import *
-from utils import Scope
-
 
 class ProgramNode(Node):
     def __init__(self, classes=[]):
         self.classes = classes
 
-    def check_semantics(self):
-        # current_scope = Scope()
-        # errors = []
-
-        # type_collector = TypeCollectorVisitor(current_scope)
-        # type_collector.visit(self, errors)
-        #
-        # type_builder = TypeBuilderVisitor(current_scope)
-        # type_builder.visit(self, errors)
-        #
-        # type_checker = TypeCheckerVisitor()
-        # type_checker.visit(self, current_scope,errors)
-        pass
 
 class ClassNode(Node):
     def __init__(self,type,inherit,features=[]):
