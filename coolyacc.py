@@ -384,7 +384,6 @@ def p_dispatch(p):
         p[0].index = p.lexpos(1)
 
 
-
 def p_especific(p):
     '''especific : DISP TYPE
                  | empty'''
@@ -406,7 +405,7 @@ def p_params_expression(p):
     if len(p) == 2:
         p[0] = [p[1]]
     else:
-        p[3].insert(0,p[1])
+        p[3].insert(0, p[1])
         p[0] = p[3]
 
 
