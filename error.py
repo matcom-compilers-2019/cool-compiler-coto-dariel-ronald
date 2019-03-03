@@ -11,6 +11,7 @@ class ErrorLogger:
                     Copyright: {}\n'''.format(NAME,VERSION,COPYRIGHT)
         body = ''.join(self.body_errors)
 
+
 class Error:
     error_type = 'Error'
     def __init__(self,line,index,error_message):
@@ -20,9 +21,9 @@ class Error:
 
     def __str__(self):
         return '(line: {}, index: {}) - {}: {}\n'.format(self.line,
-                                                       self.index,
-                                                       self.error_type,
-                                                       self.error_message)
+                                                         self.index,
+                                                         self.error_type,
+                                                         self.error_message)
 
 
 class CompilerError(Error):

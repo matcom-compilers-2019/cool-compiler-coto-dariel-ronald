@@ -1,12 +1,25 @@
 from coolex import lexer, data
 from coolyacc import parser
-from semantic import TypeCollectorVisitor
+from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
+from utils import Scope
+from error import ErrorLogger
 
 ast = parser.parse(data,lexer,True)
+scope = Scope()
+tcv = TypeCollectorVisitor(scope)
+errors = []
+tcv.visit(ast,errors)
 
-tcv = TypeCollectorVisitor()
-tcv.visit(ast,None)
+tbv = TypeBuilderVisitor(scope)
+tbv.visit(ast,errors)
 
-print(tcv.context._classes_field())
+tchecv = TypeCheckerVisitor()
+tchecv.visit(ast,scope,errors)
+
+print(ErrorLogger(errors))
+
+
+
+
 
 

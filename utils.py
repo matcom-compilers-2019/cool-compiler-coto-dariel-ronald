@@ -54,7 +54,7 @@ class Type:
 
 
 
-    def __init__(self,name:str,attrs={},methods={},parent_type='Object'):
+    def __init__(self,name:str,line:int,index:int,attrs={},methods={},parent_type='Object'):
         '''
 
         :param name: Nombre de la clase
@@ -62,6 +62,8 @@ class Type:
         :param methods: diccionario {nombre_del_method : ObjetoMethod}
         :param parent_type: str del tipo del padre
         '''
+        self.index = index
+        self.line = line
         self.name = name
         self.attrs = attrs
         self.methods = methods
@@ -159,9 +161,6 @@ class Methodinfo:
         return other.name == self.name and \
                len(other.arguments) == len(self.arguments)
 
-class ErrorLogger:
-    def log_error(self,mesagge):
-        pass
 
 Str_Class = Type('String')
 Bool_Class = Type("Bool")
@@ -257,7 +256,7 @@ class Scope:
         candidates = (vinfo for vinfo in itl.islice(scope.locals, top) if vinfo.name == vname)
         return next(candidates, None)
 
-    def get_type(self,typeName):
+    def get_type(self, typeName):
         if typeName not in self.scope_classes_dictionary:
             return None
         return self.scope_classes_dictionary[typeName]
@@ -274,8 +273,8 @@ class Scope:
         :return:
         '''
 
-    def create_type(self,name,inherit_type_name):
-        new_type = Type(name,parent_type=inherit_type_name)
+    def create_type(self,name,inherit_type_name,line,index):
+        new_type = Type(name,line=line,index=index,parent_type=inherit_type_name)
         self.scope_classes_dictionary[name] = new_type
 
     def get_params_from_method(self, type_name, method_name):
