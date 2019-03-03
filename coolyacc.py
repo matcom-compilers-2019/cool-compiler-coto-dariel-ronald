@@ -30,6 +30,7 @@ def p_inheritence(p):
 
 
 
+
 def p_features(p):
     '''features : feature SEMICOLON features
                 | empty'''
@@ -50,7 +51,8 @@ def p_feature_method_declaration(p):
 def p_feature_attribute(p):
     '''feature : attribute'''
     p[0] = AttributeNode(p[1][0][0],p[1][0][1],p[1][1])
-
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_attribute(p):
     '''attribute : id_type
@@ -73,6 +75,8 @@ def p_method_declaration(p):
 
     new_method = MethodNode(p[1],p[3],p[6],p[8])
     p[0] = new_method
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_formals(p):
@@ -113,8 +117,11 @@ def p_upper_non(p):
                 | operator_non'''
     if len(p) == 3:
         p[0] = NotNode(p[2])
+        p[0].line = p.lineno(1)
+        p[0].index = p.lexpos(1)
     else:
         p[0] = p[1]
+
 
 
 def p_operator_non(p):
@@ -132,6 +139,9 @@ def p_operator_non(p):
         elif p[2] == '=':
             p[0] = EqualThanNode(p[1], p[3])
 
+        p[0].line = p.lineno(2)
+        p[0].index = p.lexpos(2)
+
 
 def p_k_arith(p):
     '''k_arith : arith
@@ -142,6 +152,8 @@ def p_k_arith(p):
 def p_assign(p):
     'assign : ID ASSIGN expression'
     p[0] = AssignNode(ObjectNode(p[1]), p[3])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_arith(p):
@@ -157,6 +169,9 @@ def p_arith(p):
         elif p[2] == '-':
             p[0] = MinusNode(p[1], p[3])
 
+        p[0].line = p.lineno(2)
+        p[0].index = p.lexpos(2)
+
 
 def p_term(p):
     '''term : term TIMES factor
@@ -170,6 +185,10 @@ def p_term(p):
         elif p[2] == '/':
             p[0] = DivNode(p[1], p[3])
 
+        p[0].line = p.lineno(2)
+        p[0].index = p.lexpos(2)
+
+
 
 def p_factor(p):
     '''factor : MINUS factor %prec UMINUS
@@ -178,6 +197,8 @@ def p_factor(p):
         p[0] = p[1]
     else:
         p[0] = NegationNode(p[2])
+        p[0].line = p.lineno(1)
+        p[0].index = p.lexpos(1)
 
 
 def p_atom(p):
@@ -197,6 +218,8 @@ def p_atom(p):
             p[0] = IsVoidNode(p[2])
         else:
             p[0] = IntegerComplementNode(p[2])
+        p[0].line = p.lineno(1)
+        p[0].index = p.lexpos(1)
     else:
         p[0] = p[1]
 
@@ -205,25 +228,34 @@ def p_atom(p):
 def p_block(p):
     'block : LBRACE expression_list RBRACE'
     p[0] = BlockNode(p[2])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_atom_variable(p):
     '''atom : ID'''
     p[0] = ObjectNode(p[1])
-
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_atom_type_int(p):
     '''atom : INTEGER '''
     p[0] = IntNode(p[1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_atom_type_str(p):
     '''atom : STRING'''
     p[0] = StrNode(p[1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_atom_type_bool(p):
     '''atom : TRUE
             | FALSE'''
     p[0] = BoolNode(p[1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 # def p_atom_types_error(p):
 #     'atom : error'
@@ -232,6 +264,8 @@ def p_atom_type_bool(p):
 def p_atom_newtype(p):
     '''atom : NEW TYPE'''
     p[0] = NewTypeNode(p[2])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_e_arith(p):
@@ -245,6 +279,8 @@ def p_e_arith(p):
             p[0] = PlusNode(p[1], p[3])
         elif p[2] == '-':
             p[0] = MinusNode(p[1], p[3])
+        p[0].line = p.lineno(2)
+        p[0].index = p.lexpos(2)
 
 
 def p_e_term(p):
@@ -258,6 +294,8 @@ def p_e_term(p):
             p[0] = StarNode(p[1], p[3])
         elif p[2] == '/':
             p[0] = DivNode(p[1], p[3])
+        p[0].line = p.lineno(2)
+        p[0].index = p.lexpos(2)
 
 
 def p_e_factor(p):
@@ -267,6 +305,8 @@ def p_e_factor(p):
         p[0] = p[1]
     else:
         p[0] = NegationNode(p[2])
+        p[0].line = p.lineno(1)
+        p[0].index = p.lexpos(1)
 
 
 def p_let_expression(p):
@@ -291,16 +331,22 @@ def p_declaration_list(p):
 def p_conditional(p):
     'conditional : IF expression THEN expression ELSE expression FI'
     p[0] = ConditionalNode(p[2], p[4], p[6])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_loop(p):
     'loop : WHILE expression LOOP expression POOL'
     p[0] = LoopNode(p[2],p[4])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_case(p):
     'case : CASE expression OF implications ESAC'
     p[0] = CaseNode(p[2],p[4])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_implications(p):
@@ -330,8 +376,13 @@ def p_dispatch(p):
             p[0] = DispatchNode(p[4][0],p[4][1],p[1])
         else:
             p[0] = StaticDispatchNode(p[4][0], p[4][1], p[1], p[2])
+        p[0].line = p.lineno(3)
+        p[0].index = p.lexpos(3)
     else:
         p[0] = DispatchNode(p[4][0],p[4][1],None)
+        p[0].line = p.lineno(1)
+        p[0].index = p.lexpos(1)
+
 
 
 def p_especific(p):
