@@ -1,5 +1,6 @@
 class Node:
-    pass
+    line = 0
+    index = 0
 
 
 class ProgramNode(Node):
