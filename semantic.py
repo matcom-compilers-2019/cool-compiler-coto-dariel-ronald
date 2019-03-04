@@ -49,6 +49,7 @@ class TypeBuilderVisitor:
     def visit(self, node, errors):
         self._current_type = self.context.get_type(node.name)
         if not self._current_type.define_parent(self.context):
+            errors.append(TypeError(node.line,node.index,'Type %s is not defined'% self._current_type._parent_type_name))
             return False
 
         for methoddef in node.methods:

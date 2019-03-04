@@ -78,7 +78,7 @@ class Type:
         self.height = 0
 
     def __eq__(self, other):
-        return other.name == self.name
+        return isinstance(other,Type) and other.name == self.name
 
     def get_hierarchy_iterator(self):
 
@@ -87,6 +87,7 @@ class Type:
         while current_type != object_obj:
             yield current_type
             current_type = current_type.parent_type
+            print("Current_type.........",current_type.name)
         yield current_type
 
     def get_attr(self,name):
