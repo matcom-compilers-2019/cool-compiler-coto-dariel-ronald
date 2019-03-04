@@ -87,7 +87,6 @@ class Type:
         while current_type != object_obj:
             yield current_type
             current_type = current_type.parent_type
-            print("Current_type.........",current_type.name)
         yield current_type
 
     def get_attr(self,name):

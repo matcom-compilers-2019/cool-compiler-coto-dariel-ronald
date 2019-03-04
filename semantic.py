@@ -44,6 +44,7 @@ class TypeBuilderVisitor:
         for program_class in node.classes:
             if not self.visit(program_class, errors):
                 return False
+        return True
 
     @visitor.when(ast.ClassNode)
     def visit(self, node, errors):
@@ -90,6 +91,8 @@ class TypeBuilderVisitor:
 
 #Todo: tengo que verificar que el ProgramNode tiene una claseMain la cual tiene un metodo main()
 class TypeCheckerVisitor:
+    def __init__(self):
+        self.current_class_name = ''
 
     def check_class_hierarchy(self,context,errors):
         classes = context._classes_global_field()
@@ -125,6 +128,9 @@ class TypeCheckerVisitor:
 
     @visitor.when(ast.ClassNode)
     def visit(self, node,scope, errors):
+
+        self.current_class_name = node.name
+
         for attr in node.attributes:
             if not self.visit(attr,scope,errors):
                 return False
@@ -144,6 +150,9 @@ class TypeCheckerVisitor:
             if vinfo is None:
                 errors.append(NameError(node.line,node.index,"Error in method {}: parameter {}".format(node.id,param_name)))
                 return False
+
+        # Añadimos el objeto self del tipo current type
+        scope.define_variable('self', self.current_class_name)
 
         # Verificamos si está definido el tipo de retorno
         # return_type = scope.get_type(node.return_type)
@@ -548,7 +557,7 @@ class TypeCheckerVisitor:
         if not scope.is_defined(node.id):
             errors.append(NameError(node.line,node.index,"Error, object {} does not exist".format(node.id)))
             return False
-        node.computed_type = scope.get_variable_info(node.id)[1]
+        node.computed_type = scope.get_variable_info(node.id).vtype
         return True
 
     @visitor.when(ast.BlockNode)

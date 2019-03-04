@@ -1,7 +1,8 @@
 import ply.yacc as yacc
 from coolex import *
 from NodosAST import *
-
+from error import SyntacticError
+ERROR = None
 
 def p_program(p):
     '''program : class SEMICOLON program
@@ -419,7 +420,7 @@ def p_empty(p):
 
 
 def p_error(p):
-    print("Syntax error in input")
+    ERROR = SyntacticError(0, 0, 'SyntaxError')
 
 # precedence = (
 #     ('right','ASSIGN'),

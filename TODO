@@ -43,8 +43,15 @@ Todo a preguntar
     2- dice el libro que solamente enteros para las operaciones binarias y unarias,
     en el caso de '=' entre int bool y str tienen que serambos del mismo tipo, en otro caso
     no tiene por qué)
-- Que devuelve el metodo main de la clase Main
 
+Preguntas sobre la clase Main
+- En que momento busco por la clase Main
+- En que lugar se pone el (new Main).main() para poder ejecutar el programa.
+- Que devuelve el metodo main de la clase Main,que sucede si ponen a heredar.
+
+Preguntas sobre los errores
+-Como verificar los errores en el lexer
+-Como verificar los errores en el parser
 
 TypeCheckerVisitor
  - en cada nodo verificar si todas las operaciones que se realizan son correctas:

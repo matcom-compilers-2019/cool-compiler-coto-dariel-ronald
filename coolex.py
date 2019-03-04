@@ -112,7 +112,14 @@ lexer = lex.lex()
 
 
 data = '''
-class Cons inherits List {
+
+class B  {
+    xcar2 : Int;
+};
+class A inherits B{
+    xcar1 : Int;
+};
+class Cons inherits A{
     xcar : Int;
     xcdr : String;
     isNil() : Bool { false };

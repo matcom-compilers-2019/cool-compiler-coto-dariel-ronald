@@ -46,7 +46,7 @@ class SyntacticError(Error):
     '''
     Errores detectados por el parser
     '''
-    error_type = "LexicographicError"
+    error_type = "SyntacticError"
 
 
 class NameError(Error):
