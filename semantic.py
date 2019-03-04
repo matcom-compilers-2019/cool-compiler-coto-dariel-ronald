@@ -185,7 +185,9 @@ class TypeCheckerVisitor:
         if vinfo is None:
             errors.append(NameError(node.line,node.index,'Error while assinging '+ node.variable.id + 'not defined'))
             return False
-
+        if vinfo.name == 'self':
+            errors.append(TypeError(node.line,node.index,'self object can not be assign'))
+            return False
         if not self.visit(node.expression,scope,errors):
             return False
         node.computed_type = vinfo.vtype

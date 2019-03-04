@@ -52,6 +52,7 @@ Preguntas sobre la clase Main
 Preguntas sobre los errores
 -Como verificar los errores en el lexer
 -Como verificar los errores en el parser
+-Arreglar el tema del # de la columna al presentar el error
 
 TypeCheckerVisitor
  - en cada nodo verificar si todas las operaciones que se realizan son correctas:

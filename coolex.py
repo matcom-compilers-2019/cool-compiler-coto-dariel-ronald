@@ -146,7 +146,10 @@ class A inherits B {
 a : Int;
 b : B <- new B;
 f(x:Int) : Int {
-x+a
+{
+self <- new B;
+x+a;
+}
 };
 };
 '''
