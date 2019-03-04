@@ -111,25 +111,43 @@ lexer = lex.lex()
 #     '''
 
 
+# data = '''
+#
+# class B  {
+#     xcar2 : Int;
+# };
+# class A inherits B{
+#     xcar1 : Int;
+# };
+# class Cons inherits A{
+#     xcar : Int;
+#     xcdr : String;
+#     isNil() : Bool { false };
+#     init(hd : Int, tl : String) : Cons {
+#         {
+#             xcar <- hd;
+#             xcdr <- tl;
+#             self;
+#         }
+#     };
+# };
+# '''
 data = '''
-
-class B  {
-    xcar2 : Int;
+class B {
+s : String <- "Hello";
+g (y:String) : Int {
+y.concat(s)
 };
-class A inherits B{
-    xcar1 : Int;
+f (x:Int) : Int {
+x+1
 };
-class Cons inherits A{
-    xcar : Int;
-    xcdr : String;
-    isNil() : Bool { false };
-    init(hd : Int, tl : String) : Cons {
-        {
-            xcar <- hd;
-            xcdr <- tl;
-            self;
-        }
-    };
+};
+class A inherits B {
+a : Int;
+b : B <- new B;
+f(x:Int) : Int {
+x+a
+};
 };
 '''
 # data = '''

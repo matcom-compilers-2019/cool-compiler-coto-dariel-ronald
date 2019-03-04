@@ -217,11 +217,11 @@ class TypeCheckerVisitor:
             return False
 
         dispatch_type = node.left_expression.computed_type
-        if not scope.is_defined(dispatch_type):
+        if dispatch_type is None:
             errors.append(TypeError(node.line,node.index,'Error type {} not defined in dispatch'.format(dispatch_type)))
             return False
 
-        method = scope.get_params_from_method(dispatch_type,node.func_id)
+        method = scope.get_params_from_method(dispatch_type.name,node.func_id)
         for i, param in enumerate(node.parameters):
             if not self.visit(param,scope,errors):
                 return False

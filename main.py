@@ -6,7 +6,7 @@ from error import ErrorLogger,SyntacticError
 
 
 def compile_cool():
-    ast = parser.parse(data, lexer)
+    ast = parser.parse(data, lexer,True)
     if ast is None:
         print(ErrorLogger([SyntacticError(0,0,'SyntaxError')]))
         return
