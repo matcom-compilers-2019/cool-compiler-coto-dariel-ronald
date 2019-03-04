@@ -4,7 +4,7 @@ from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisito
 from utils import Scope
 from error import ErrorLogger
 
-ast = parser.parse(data,lexer,True)
+ast = parser.parse(data,lexer)
 scope = Scope()
 tcv = TypeCollectorVisitor(scope)
 errors = []
@@ -14,9 +14,11 @@ tbv = TypeBuilderVisitor(scope)
 tbv.visit(ast,errors)
 
 tchecv = TypeCheckerVisitor()
+tchecv.check_class_hierarchy(scope,errors)
+#
 tchecv.visit(ast,scope,errors)
 
-print(ErrorLogger(errors))
+print(str(ErrorLogger(errors)))
 
 
 

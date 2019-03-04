@@ -9,7 +9,7 @@ class ProgramNode(Node):
 
 
 class ClassNode(Node):
-    def __init__(self,type,inherit,features=[]):
+    def __init__(self,type, inherit, features=[]):
         self.name = type
         self.inherit = inherit
         self.methods = []

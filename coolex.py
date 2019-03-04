@@ -86,7 +86,7 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 t_ignore = ' \t'
-
+from error import LexicographicError
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
@@ -111,31 +111,31 @@ lexer = lex.lex()
 #     '''
 
 
-# data = '''
-# class Cons inherits List {
-#     xcar : Int;
-#     xcdr : List;
-#     isNil() : Bool { false };
-#     init(hd : Int, tl : List) : Cons {
-#         {
-#             xcar <- hd;
-#             xcdr <- tl;
-#             self;
-#         }
-#     };
-# };
-# '''
 data = '''
-class A {
-       funk():Type {
-            case 1 of
-                x:Int => 10;
-                x:String => 9;
-                x:Guru => 8;
-            esac
-       };
+class Cons inherits List {
+    xcar : Int;
+    xcdr : String;
+    isNil() : Bool { false };
+    init(hd : Int, tl : String) : Cons {
+        {
+            xcar <- hd;
+            xcdr <- tl;
+            self;
+        }
     };
+};
 '''
+# data = '''
+# class A {
+#        funk(): Int {
+#             case 1 of
+#                 x:Int => 10;
+#                 x:String => "s";
+#                 x:Bool => true;
+#             esac
+#        };
+#     };
+# '''
 
 # lexer.input(data)
 # for tok in lexer:

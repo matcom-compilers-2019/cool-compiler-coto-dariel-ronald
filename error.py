@@ -7,13 +7,14 @@ class ErrorLogger:
 
     def __str__(self):
 
-        header = '''Name: {} Version: {}\n 
-                    Copyright: {}\n'''.format(NAME,VERSION,COPYRIGHT)
+        header = '''{} Version: {}\n{}\n'''.format(NAME,VERSION,COPYRIGHT)
         body = ''.join(self.body_errors)
+        return header+body
 
 
 class Error:
     error_type = 'Error'
+
     def __init__(self,line,index,error_message):
         self.error_message = error_message
         self.line = line

@@ -12,6 +12,9 @@ class VariableInfo:
 
 # a lo mejor sería buena idea hacer que se pueda instanciar una sola vez.
 class Type:
+    def __hash__(self):
+        return hash(self.name)+hash(len(self.methods))+hash(len(self.attrs))
+
     def cal_height(self):
         if self.height != 0:
             return
@@ -54,7 +57,7 @@ class Type:
 
 
 
-    def __init__(self,name:str,line:int,index:int,attrs={},methods={},parent_type='Object'):
+    def __init__(self,name:str,line:int,index:int,parent_type='Object'):
         '''
 
         :param name: Nombre de la clase
@@ -65,8 +68,8 @@ class Type:
         self.index = index
         self.line = line
         self.name = name
-        self.attrs = attrs
-        self.methods = methods
+        self.attrs = {}
+        self.methods = {}
         self._parent_type_name = parent_type
         self.parent_type = None
         self._checking_for_cycle = False
@@ -106,8 +109,10 @@ class Type:
         list_of_types = set()
         object_obj = classes_dictionary['Object']
         while other_type != object_obj:
+            # print('object class',object_obj,' othertype',other_type)
             list_of_types.add(other_type)
             other_type = other_type.parent_type
+            # print('object class', object_obj, ' othertype', other_type)
         # Agregamos a la clase object
         list_of_types.add(other_type)
 
@@ -129,7 +134,10 @@ class Type:
         self.attrs[name] = new_attr
 
     def define_parent(self,context):
-        self.parent_type = context.scope_classes_dictionary[self._parent_type_name]
+        if self._parent_type_name in context.scope_classes_dictionary:
+            self.parent_type = context.scope_classes_dictionary[self._parent_type_name]
+            return True
+        return False
 
     def define_method(self,name,return_type,arguments=[]):
         '''
@@ -162,15 +170,20 @@ class Methodinfo:
                len(other.arguments) == len(self.arguments)
 
 
-Str_Class = Type('String')
-Bool_Class = Type("Bool")
-Int_Class = Type("Int")
-Object_Class = Type('Object',parent_type=None)
-IO_Class = Type("IO")
+Str_Class = Type('String',line=0,index=0)
+Bool_Class = Type("Bool",line=0,index=0)
+Int_Class = Type("Int",line=0,index=0)
+Object_Class = Type('Object',parent_type=None,line=0,index=0)
+IO_Class = Type("IO",line=0,index=0)
+
+Str_Class.parent_type = Object_Class
+Bool_Class.parent_type = Object_Class
+Int_Class.parent_type = Object_Class
+IO_Class.parent_type = Object_Class
 
 Str_Class.define_method('length',Int_Class)
-Str_Class.define_method('concat',Str_Class,[('s',Str_Class)])
-Str_Class.define_method('substr',Str_Class,[('i',Int_Class),('l',Int_Class)])
+Str_Class.define_method('concat',Str_Class, [('s',Str_Class)])
+Str_Class.define_method('substr',Str_Class, [('i',Int_Class),('l',Int_Class)])
 
 Object_Class.define_method('abort',Object_Class)
 Object_Class.define_method('type_name',Str_Class)
