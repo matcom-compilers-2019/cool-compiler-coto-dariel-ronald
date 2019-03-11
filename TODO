@@ -54,6 +54,12 @@ Preguntas sobre los errores
 -Como verificar los errores en el parser
 -Arreglar el tema del # de la columna al presentar el error
 
+-como se llaman a los attr de una clase
+-verificar el llamado a attr que no puede hacerse deesde una instancia
+-si no redefino el metodo de una clase padre, tengo que usar dispatch?
+
+
+
 TypeCheckerVisitor
  - en cada nodo verificar si todas las operaciones que se realizan son correctas:
     -guardar en el scope correspondiente las declaraciones de variables:

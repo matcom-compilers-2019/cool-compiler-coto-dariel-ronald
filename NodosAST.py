@@ -59,7 +59,6 @@ class AttributeNode(FeatureNode):
 
 class ExpressionNode(Node):
     computed_type = None
-    pass
 
 
 class AtomNode(ExpressionNode):
@@ -103,6 +102,7 @@ class LoopNode(AtomNode):
 class LetVarNode(AtomNode):
     def __init__(self,declarations,in_expr):
         self.in_expression = in_expr
+        # [((id,type),value)]
         self.declarations = declarations
 
 
@@ -184,10 +184,8 @@ class ObjectNode(AtomNode):
         self.id = id
 
 
-class IsVoidNode(AtomNode):
-    def __init__(self,expr):
-        self.expression = expr
-
+class IsVoidNode(UnaryOperatorNode):
+    pass
 
 class BlockNode(AtomNode):
     def __init__(self,exprs):
@@ -212,10 +210,6 @@ class StrNode(AtomNode):
 class BoolNode(AtomNode):
     def __init__(self,value):
         self.value = value
-
-
-class AtomNode(ExpressionNode):
-   pass
 
 #
 # class ImplicationNode(ExpressionNode):
