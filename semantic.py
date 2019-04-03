@@ -94,6 +94,14 @@ class TypeCheckerVisitor:
     def __init__(self):
         self.current_class_name = ''
 
+    def look_for_Main_Class(self,context,errors):
+        main_type = context.type_is_defined('Main')
+        if main_type is not None:
+            errors.append(
+                NameError(0, 0, "Can not find Main class "))
+            return False
+    #     revisar q tipo tiene que devolver la clase main
+
     def check_class_hierarchy(self,context,errors):
         classes = context._classes_global_field()
 

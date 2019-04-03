@@ -22,6 +22,12 @@ def compile_cool():
         return
 
     tchecv = TypeCheckerVisitor()
+    if not tchecv.look_for_Main_Class(scope, errors):
+        errors.append('Exited code 1')
+        print(str(ErrorLogger(errors)))
+        return
+
+    tchecv = TypeCheckerVisitor()
     if not tchecv.check_class_hierarchy(scope, errors):
         errors.append('Exited code 1')
         print(str(ErrorLogger(errors)))

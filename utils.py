@@ -103,7 +103,11 @@ class Type:
             :param name: name es un str del nombre del metodo a buscar
             :return: Method
             '''
-        return self.methods[name]
+        try:
+            method = self.methods[name]
+        except KeyError:
+            return None
+
     def get_lca(self, other_type):
         list_of_types = set()
         object_obj = classes_dictionary['Object']
@@ -284,6 +288,7 @@ class Scope:
         :param symbol:
         :return:
         '''
+        pass
 
     def create_type(self,name,inherit_type_name,line,index):
         new_type = Type(name,line=line,index=index,parent_type=inherit_type_name)
