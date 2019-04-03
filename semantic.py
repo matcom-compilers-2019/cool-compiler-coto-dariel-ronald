@@ -295,31 +295,26 @@ class TypeCheckerVisitor:
         lcas = []
 
         for id_type,expr in node.implications:
-            if not self.visit(expr,scope,errors):
+            child_scope = scope.create_child_scope()
+            if child_scope.define_variable(*id_type) is None:
+                errors.append(TypeError(node.line, node.index, 'Variable definition {} not valid'.format(id_type)))
+                return False
+
+            if not self.visit(expr,child_scope,errors):
                 return False
 
             implication_type = scope.get_type(id_type[1])
             if implication_type is None:
-                errors.append(TypeError(node.line,node.index,'Ímplication type %s is not defined'%id_type[1]))
+                errors.append(TypeError(node.line, node.index, 'Implication type %s is not defined' % id_type[1]))
                 return False
-            if not expr.computed_type.lower_equals(implication_type):
-                errors.append(TypeError(node.line, node.index,
-                                        'Error in case node, type {} is not lower than {}'.format(
-                                            id_type[1],
-                                            expr.computed_type.name)))
-                return False
-            vtype = scope.get_type(id_type[1])
-            if vtype is None:
-                errors.append(TypeError(node.line,node.index,'Error in case expression, type {} not defined'.format(id_type[1])))
-                return False
-            lcas.append(case_expression_type.get_lca(vtype))
+            lcas.append(implication_type.get_lca(case_expression_type))
 
         lca_joined = scope.get_type('Object')
         for lca in lcas:
             if lca.height > lca_joined.height:
                 lca_joined = lca
-
-        node.computed_type = lca_joined
+        i = lcas.index(lca_joined)
+        node.computed_type = node.implications[i][1].computed_type
         return True
 
 

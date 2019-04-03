@@ -45,8 +45,6 @@ Todo a preguntar
     no tiene por qué)
 
 Preguntas sobre la clase Main
-- En que momento busco por la clase Main
-- En que lugar se pone el (new Main).main() para poder ejecutar el programa.
 - Que devuelve el metodo main de la clase Main,que sucede si ponen a heredar.
 
 Preguntas sobre los errores
@@ -58,6 +56,10 @@ Preguntas sobre los errores
 -verificar el llamado a attr que no puede hacerse deesde una instancia
 -si no redefino el metodo de una clase padre, tengo que usar dispatch?
 
+
+todo:
+-arreglar lo del case.
+-verificar q existe una clase main con un metodo main
 
 
 TypeCheckerVisitor

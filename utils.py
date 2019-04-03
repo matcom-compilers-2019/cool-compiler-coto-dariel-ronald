@@ -104,7 +104,6 @@ class Type:
             :return: Method
             '''
         return self.methods[name]
-
     def get_lca(self, other_type):
         list_of_types = set()
         object_obj = classes_dictionary['Object']
