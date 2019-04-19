@@ -52,7 +52,7 @@ class TypeBuilderVisitor:
         if not self._current_type.define_parent(self.context):
             errors.append(TypeError(node.line,node.index,'Type %s is not defined'% self._current_type._parent_type_name))
             return False
-
+        # todo verificar que no existan metodos repetidos(con el mismo nombre)
         for methoddef in node.methods:
             if not self.visit(methoddef,errors):
                 return False
@@ -70,11 +70,17 @@ class TypeBuilderVisitor:
             errors.append(TypeError(node.line, node.index, 'Return Type %s not defined' % return_type))
             return False
         params = []
+        param_names = set()
         for id, type_name in node.parameters:
             type_class = self.context.get_type(type_name)
             if type_class is None:
                 errors.append(TypeError(node.line,node.index,'Param Type %s not defined' % type_name))
                 return False
+            if id in param_names:
+                errors.append(TypeError(node.line, node.index, 'Param Name %s already defined' % id))
+                return False
+            param_names.add(id)
+
             params.append((id, type_class))
         self._current_type.define_method(node.id,return_type,params)
         return True
@@ -172,6 +178,12 @@ class TypeCheckerVisitor:
         if not self.visit(node.expressions,scope,errors):
             return False
 
+        if node.expressions[-1].computed_type.lower_equals(node.return_type):
+            errors.append(
+                TypeError(node.line, node.index, "Error in method {}: return static type expected {}, founded:{}".
+                          format(node.id,node.return_type,node.expressions[-1].computed_type)))
+            return
+
         return True
 
 
@@ -206,6 +218,7 @@ class TypeCheckerVisitor:
             return False
 
         return True
+
     @visitor.when(ast.DispatchNode)
     def visit(self, node,scope, errors):
         '''
@@ -230,7 +243,7 @@ class TypeCheckerVisitor:
         if dispatch_type is None:
             errors.append(TypeError(node.line,node.index,'Error type {} not defined in dispatch'.format(dispatch_type)))
             return False
-
+        # verificar primero que exista el metodo,luego q tenga la misma cnt de argumentos, verificar su tipo
         method = scope.get_params_from_method(dispatch_type.name,node.func_id)
         for i, param in enumerate(node.parameters):
             if not self.visit(param,scope,errors):
@@ -295,14 +308,16 @@ class TypeCheckerVisitor:
         return True
 
     @visitor.when(ast.CaseNode)
-    def visit(self, node,scope, errors):
+    def visit(self, node, scope, errors):
         if not self.visit(node.case_expression,scope,errors):
             return False
-
-        case_expression_type = node.case_expression.computed_type
+        id_s_types = set()
         lcas = []
-
-        for id_type,expr in node.implications:
+        for id_type, expr in node.implications:
+            if id_type[1] in id_s_types:
+                errors.append(TypeError(node.line, node.index, 'Type {} already defined on Case Node'.format(id_type[1])))
+                return False
+            id_s_types.add(id_type[1])
             child_scope = scope.create_child_scope()
             if child_scope.define_variable(*id_type) is None:
                 errors.append(TypeError(node.line, node.index, 'Variable definition {} not valid'.format(id_type)))
@@ -310,19 +325,14 @@ class TypeCheckerVisitor:
 
             if not self.visit(expr,child_scope,errors):
                 return False
+            lcas.append(expr.computed_type)
 
-            implication_type = scope.get_type(id_type[1])
-            if implication_type is None:
-                errors.append(TypeError(node.line, node.index, 'Implication type %s is not defined' % id_type[1]))
-                return False
-            lcas.append(implication_type.get_lca(case_expression_type))
-
-        lca_joined = scope.get_type('Object')
+        lca_joined = lcas[0]
         for lca in lcas:
+            
             if lca.height > lca_joined.height:
                 lca_joined = lca
-        i = lcas.index(lca_joined)
-        node.computed_type = node.implications[i][1].computed_type
+        node.computed_type = lca_joined
         return True
 
 
