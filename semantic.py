@@ -21,7 +21,12 @@ class TypeCollectorVisitor:
 
     @visitor.when(ast.ProgramNode)
     def visit(self, node, errors):
+        classes_names = set()
         for program_class in node.classes:
+            if program_class.name in classes_names:
+                errors.append(TypeError(node.line, node.index, 'Type %s already defined' % program_class.name))
+                return False
+            classes_names.add(program_class.name)
             self.visit(program_class,errors)
 
     @visitor.when(ast.ClassNode)
@@ -53,11 +58,20 @@ class TypeBuilderVisitor:
             errors.append(TypeError(node.line,node.index,'Type %s is not defined'% self._current_type._parent_type_name))
             return False
         # todo verificar que no existan metodos repetidos(con el mismo nombre)
+        methods_names= set()
         for methoddef in node.methods:
+            if methoddef.id in methods_names:
+                errors.append(TypeError(node.line, node.index, 'Method %s already defined' % methoddef.id))
+                return False
+            methods_names.add(methoddef.id)
             if not self.visit(methoddef,errors):
                 return False
-
+        attr_names = set()
         for attrdef in node.attributes:
+            if attrdef.id in attr_names:
+                errors.append(TypeError(node.line, node.index, 'Attr %s already defined' % attrdef.id))
+                return False
+            attr_names.add(attrdef.id)
             if not self.visit(attrdef,errors):
                 return False
 
