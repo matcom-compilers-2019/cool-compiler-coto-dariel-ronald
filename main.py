@@ -1,45 +1,40 @@
-from coolex import lexer, data
+from coolex import lexer
 from coolyacc import parser
 from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
 from utils import Scope
-from error import ErrorLogger,SyntacticError
+import fileinput
+from error import CoolErrorLogger
+from tqdm import tqdm
 
 
-def compile_cool():
+def main():
+    print(CoolErrorLogger([]))
+    print('Loading data...')
+    data = ''
+    for line in tqdm(fileinput.input()):
+        data += line
+
+    compile_cool(data)
+
+
+def compile_cool(data):
     ast = parser.parse(data, lexer,True)
-    if ast is None:
-        print(ErrorLogger([SyntacticError(0,0,'SyntaxError')]))
-        return
+
     scope = Scope()
     tcv = TypeCollectorVisitor(scope)
-    errors = []
-    tcv.visit(ast, errors)
+    tcv.visit(ast)
 
     tbv = TypeBuilderVisitor(scope)
-    if not tbv.visit(ast, errors):
-        errors.append('Exited code 1')
-        print(str(ErrorLogger(errors)))
-        return
+    tbv.visit(ast)
 
     tchecv = TypeCheckerVisitor()
-    if not tchecv.look_for_Main_Class(scope, errors):
-        errors.append('Exited code 1')
-        print(str(ErrorLogger(errors)))
-        return
+    tchecv.look_for_Main_Class(scope)
 
     tchecv = TypeCheckerVisitor()
-    if not tchecv.check_class_hierarchy(scope, errors):
-        errors.append('Exited code 1')
-        print(str(ErrorLogger(errors)))
-        return
-    #
-    if not tchecv.visit(ast, scope, errors):
-        errors.append('Exited code 1')
-        print(str(ErrorLogger(errors)))
-        return
+    tchecv.check_class_hierarchy(scope)
+    tchecv.visit(ast, scope)
 
-    print(str(ErrorLogger(['Exited code 0'])))
-compile_cool()
+
 
 
 

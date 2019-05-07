@@ -57,7 +57,7 @@ class Type:
 
 
 
-    def __init__(self,name:str,line:int,index:int,parent_type='Object'):
+    def __init__(self,name:str,line:int,index:int,parent_type_name='Object'):
         '''
 
         :param name: Nombre de la clase
@@ -70,7 +70,7 @@ class Type:
         self.name = name
         self.attrs = {}
         self.methods = {}
-        self._parent_type_name = parent_type
+        self._parent_type_name = parent_type_name
         self.parent_type = None
         self._checking_for_cycle = False
         self._checked_for_cycle = False
@@ -178,6 +178,9 @@ Bool_Class = Type("Bool",line=0,index=0)
 Int_Class = Type("Int",line=0,index=0)
 Object_Class = Type('Object',parent_type=None,line=0,index=0)
 IO_Class = Type("IO",line=0,index=0)
+
+builtins_classes = {Str_Class, Bool_Class, Int_Class, Object_Class, IO_Class}
+builtins_classes_names = {Str_Class.name, Bool_Class.name, Int_Class.name, Object_Class.name, IO_Class.name}
 
 Str_Class.parent_type = Object_Class
 Bool_Class.parent_type = Object_Class
@@ -290,8 +293,8 @@ class Scope:
         '''
         pass
 
-    def create_type(self,name,inherit_type_name,line,index):
-        new_type = Type(name,line=line,index=index,parent_type=inherit_type_name)
+    def create_type(self, name, inherit_type_name, line, index):
+        new_type = Type(name, line=line, index=index, parent_type_name=inherit_type_name)
         self.scope_classes_dictionary[name] = new_type
 
     def get_params_from_method(self, type_name, method_name):
@@ -301,6 +304,8 @@ class Scope:
 
         if method_name in thetype.methods:
             return thetype.methods[method_name]
+        elif thetype.name != 'Object':
+            return self.get_params_from_method(thetype._parent_type_name,method_name)
         return None
 
     def get_type_from_attr(self,type_name,attr_name):

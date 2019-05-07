@@ -3,11 +3,11 @@ import sys
 
 
 def throw_exception(error_type,*args):
-    print(CoolError([error_type(*args)]))
+    print(error_type(*args))
     sys.exit(-1)
 
 
-class CoolError():
+class CoolErrorLogger():
     def __init__(self, body_errors: list):
         self.body_errors = [str(i) for i in body_errors]
 
