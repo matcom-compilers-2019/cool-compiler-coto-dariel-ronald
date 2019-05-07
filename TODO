@@ -26,10 +26,11 @@ cycles.
     -In addition to Object, Cool has four other basic classes: Int, String, Bool, and IO.
 
 Todo on checksemanticks:
-    - recorrer el ast buscando todos los tipos y agregandolos al contexto(Buscar definiciones de tipos)
-    - recorrer el ast agregando a cada clase los atributos y los metodos(asociar metodos y atributos)
-    - entrar en el cuerpo de los metodos...(semantica)
     - Tema de la recuperacion de errores
+    - Nadie puede heredar de Main,
+    - Al iterar por las clases tengo q poner q no se revisen las clases builtin
+    - A la Hora de buscar si existe un metodo en un tipo, buscar de forma recursiva por todos sus padres,
+        al igual q conlos atributos de la clase.
 
 Todo a preguntar
 - Cómo va a ser el tema de la recuperación de errores
@@ -57,25 +58,13 @@ Preguntas sobre los errores
 -si no redefino el metodo de una clase padre, tengo que usar dispatch?
 
 
-todo:
--arreglar lo del case.(visitar todos los exprk y el tipo de retorno es el lca de todos los tipos de exprk, no de los idk)
--verificar q existe una clase main con un metodo main
-
-
-TypeCheckerVisitor
- - en cada nodo verificar si todas las operaciones que se realizan son correctas:
-    -guardar en el scope correspondiente las declaraciones de variables:
-        - Los parámetros de los métodos
-        - Los atributos de la clase
-        - Las variables locales
-
-
 TODO: detalles importantes!
 - en los metodos los parametros con igual nombre que algun atributo lo esconde.
 - en los metodos los parametros deben tener nombres distintos
 - el tipo de retorno del metodo debe coincidir con lo que realmente devuelva.
 - para el staticdispatch: For this form of dispatch, the static type to the left of
 “@”must conform to the type specified to the right of “@”.
-- para la redefinicion de metodos heredados : If a class C inherits a method f from an ancestor class P, then C may override the inherited
+- para la redefinicion de metodos heredados : If a class C inherits a method f from an ancestor class P,
+then C may override the inherited
 definition of f provided the number of arguments, the types of the formal parameters, and the return
 type are exactly the same in both definitions.

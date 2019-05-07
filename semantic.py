@@ -55,9 +55,10 @@ class TypeBuilderVisitor:
     def visit(self, node, errors):
         self._current_type = self.context.get_type(node.name)
         if not self._current_type.define_parent(self.context):
-            errors.append(TypeError(node.line,node.index,'Type %s is not defined'% self._current_type._parent_type_name))
+            errors.append(TypeError(node.line,node.index,
+                                    'Type %s is not defined'% self._current_type._parent_type_name))
             return False
-        # todo verificar que no existan metodos repetidos(con el mismo nombre)
+
         methods_names= set()
         for methoddef in node.methods:
             if methoddef.id in methods_names:
@@ -114,13 +115,22 @@ class TypeCheckerVisitor:
     def __init__(self):
         self.current_class_name = ''
 
-    def look_for_Main_Class(self,context,errors):
-        main_type = context.type_is_defined('Main')
-        if main_type is not None:
-            errors.append(
-                NameError(0, 0, "Can not find Main class "))
-            return False
-    #     revisar q tipo tiene que devolver la clase main
+    # def check_methods_inheritence(self,scope):
+    #     types_ = scope.scope_classes_dictionary.values()
+    #     mask_types = {i:False for i in types_}
+    #
+    #     for _type in types_:
+    #
+    # def _checkup(self,_type:Type):
+    #     if _type.name == 'Object':
+    #
+    # def look_for_Main_Class(self,context,errors):
+    #     main_type = context.type_is_defined('Main')
+    #     if main_type is not None:
+    #         errors.append(
+    #             NameError(0, 0, "Can not find Main class "))
+    #         return False
+    # #     revisar q tipo tiene que devolver la clase main
 
     def check_class_hierarchy(self,context,errors):
         classes = context._classes_global_field()
@@ -182,13 +192,6 @@ class TypeCheckerVisitor:
         # Añadimos el objeto self del tipo current type
         scope.define_variable('self', self.current_class_name)
 
-        # Verificamos si está definido el tipo de retorno
-        # return_type = scope.get_type(node.return_type)
-        # if return_type is None:
-        #     errors.append(TypeError(node.line,node.index,"Error in method {}: return type {} not defined".format(node.id,node.return_type)))
-
-        # Recorremos el cuerpo del método
-        # print('Type: ------',node.expressions)
         if not self.visit(node.expressions,scope,errors):
             return False
 
