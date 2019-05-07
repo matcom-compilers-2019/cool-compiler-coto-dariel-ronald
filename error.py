@@ -1,8 +1,14 @@
 from comp_version_info import VERSION, COPYRIGHT, NAME
+import sys
 
 
-class ErrorLogger:
-    def __init__(self,body_errors: list):
+def throw_exception(error_type,*args):
+    print(CoolError([error_type(*args)]))
+    sys.exit(-1)
+
+
+class CoolError():
+    def __init__(self, body_errors: list):
         self.body_errors = [str(i) for i in body_errors]
 
     def __str__(self):
@@ -12,10 +18,10 @@ class ErrorLogger:
         return header+body
 
 
-class Error:
+class Error():
     error_type = 'Error'
 
-    def __init__(self,line,index,error_message):
+    def __init__(self, line, index, error_message):
         self.error_message = error_message
         self.line = line
         self.index = index

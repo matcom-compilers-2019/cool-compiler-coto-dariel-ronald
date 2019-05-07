@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 from coolex import *
 from NodosAST import *
-from error import SyntacticError
+from error import SyntacticError, throw_exception
 ERROR = None
 
 def p_program(p):
@@ -28,8 +28,6 @@ def p_inheritence(p):
         p[0] = p[2]
     else:
         p[0] = 'Object'
-
-
 
 
 def p_features(p):
@@ -420,7 +418,7 @@ def p_empty(p):
 
 
 def p_error(p):
-    ERROR = SyntacticError(0, 0, 'SyntaxError')
+    throw_exception(SyntacticError,0, 0, 'SyntaxError: %s'%str(p))
 
 # precedence = (
 #     ('right','ASSIGN'),
