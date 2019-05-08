@@ -3,7 +3,7 @@ from coolyacc import parser
 from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
 from utils import Scope
 import fileinput
-from error import CoolErrorLogger
+from cool_errors import CoolErrorLogger
 from tqdm import tqdm
 
 
@@ -28,11 +28,11 @@ def compile_cool(data):
     tbv.visit(ast)
 
     tchecv = TypeCheckerVisitor()
-    tchecv.look_for_Main_Class(scope)
-
-    tchecv = TypeCheckerVisitor()
     tchecv.check_class_hierarchy(scope)
+    tchecv.look_for_Main_Class(scope)
     tchecv.visit(ast, scope)
+
+
 
 
 

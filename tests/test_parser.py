@@ -1,49 +1,22 @@
 from coolyacc import parser
 from NodosAST import *
 import json
+from .tools_for_testing import verify_asts
 
-
-class MyEncoder(json.JSONEncoder):
-    def default(self,obj):
-        if isinstance(obj,Node):
-            new_dict = obj.__dict__.copy()
-            for field in new_dict:
-                field_value = new_dict[field]
-                if isinstance(field_value,Node):
-                    field_value = self.default(field_value)
-                elif isinstance(field_value,list) or isinstance(field_value,tuple):
-                    new_field = [self.default(item)for item in field_value]
-                    field_value = new_field if isinstance(field_value,list) else tuple(new_field)
-                else:
-                    field_value = json.dumps(field_value)
-                new_dict[field] = field_value
-            return json.dumps(new_dict)
-        elif isinstance(obj,list) or isinstance(obj,tuple):
-            new_field = [self.default(item)for item in obj]
-            new_obj = new_field if isinstance(obj,list) else tuple(new_field)
-            return json.dumps(new_obj)
-        return json.dumps(obj)
 
 
 def test_empty_class_definition():
     program = "class A { };"
     expected = ProgramNode([ClassNode('A', 'Object')])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                                      json.dumps(expected,cls=MyEncoder)
-    assert parser_result == expected, \
-                'Expected: "{}" and found "{}" '.format(expected, parser_result)
+    verify_asts(expected, parser_result, Node)
 
 
-#
 def test_class_definition_with_inherits():
     program = "class A inherits Top { };"
     expected = ProgramNode([ClassNode('A', 'Top')])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                                      json.dumps(expected,cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
+    verify_asts(expected, parser_result, Node)
 
 #
 def test_class_with_uninitialized_attributes():
@@ -59,9 +32,7 @@ def test_class_with_uninitialized_attributes():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                                      json.dumps(expected,cls=MyEncoder)
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
+    verify_asts(expected, parser_result, Node)
 
 #
 def test_class_with_initialized_attributes():
@@ -77,11 +48,7 @@ def test_class_with_initialized_attributes():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                                      json.dumps(expected,cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_class_with_method_without_formals():
     program = """class A { funk():ReturnType { returnvalue }; };"""
@@ -91,11 +58,7 @@ def test_class_with_method_without_formals():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_class_with_method_with_formals():
     program = """class A { funk(x:X, y:Y):ReturnType { x }; };"""
@@ -105,11 +68,7 @@ def test_class_with_method_with_formals():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_class_with_method_returning_int():
     program = """class A { funk():ReturnType { 12 }; };"""
@@ -120,10 +79,7 @@ def test_class_with_method_returning_int():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
+    verify_asts(expected, parser_result, Node)
 
 #Todo: me coge los strings como doble strings '"blabla"' en vez de "blabla"
 def test_class_with_method_returning_str():
@@ -134,10 +90,7 @@ def test_class_with_method_returning_str():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
+    verify_asts(expected, parser_result, Node)
 
 
 def test_class_with_method_with_block():
@@ -155,11 +108,7 @@ def test_class_with_method_with_block():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_simple_dispatch_with_no_args():
     program = """
@@ -174,11 +123,7 @@ def test_simple_dispatch_with_no_args():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_simple_dispatch_with_one_arg():
     program = """
@@ -193,10 +138,7 @@ def test_simple_dispatch_with_one_arg():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
+    verify_asts(expected, parser_result, Node)
 
 
 def test_simple_dispatch_with_multiple_args():
@@ -214,11 +156,7 @@ def test_simple_dispatch_with_multiple_args():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_static_dispatch_with_no_args():
     program = """
@@ -233,10 +171,7 @@ def test_static_dispatch_with_no_args():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected, 'Expected: "{}" and found "{}" '.format(expected,parser_result)
+    verify_asts(expected, parser_result, Node)
 
 # Este está comentado pq no se si por fin hay que implementar el self
 # esto tengo q preguntárselo a juan pablo
@@ -274,11 +209,7 @@ def test_if_statements():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert  parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 
 def test_while_statements():
     program = """
@@ -295,11 +226,7 @@ def test_while_statements():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_let_statement():
     program = """
@@ -316,11 +243,7 @@ def test_let_statement():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_let_statement_with_assignment():
     program = """
@@ -338,11 +261,7 @@ def test_let_statement_with_assignment():
                 )])
 
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_let_statement_with_two_vars():
     program = """
@@ -364,11 +283,7 @@ def test_let_statement_with_two_vars():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_let_statement_with_three_vars():
     program = """
@@ -392,11 +307,7 @@ def test_let_statement_with_three_vars():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 #
 # def test_let_statement_with_two_vars_error_in_first():
 #     program = """
@@ -435,11 +346,7 @@ def test_new():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert  parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 #
 def test_isvoid():
     program = """
@@ -456,10 +363,7 @@ def test_isvoid():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
+    verify_asts(expected, parser_result, Node)
 
 #
 def test_case():
@@ -485,11 +389,7 @@ def test_case():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 
 def test_neg():
     program = """
@@ -503,18 +403,14 @@ def test_neg():
     expected = ProgramNode([ClassNode('A', 'Object',
                 [
                     MethodNode('funk', [], 'Type',
-                        CaseNode(NegationNode(IntNode(1)),
+                        CaseNode(IntegerComplementNode(IntNode(1)),
                          [(('x', 'Int'), IntNode(10))]
                          )
                      ),
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 
 def test_not():
     program = """
@@ -535,11 +431,7 @@ def test_not():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 
 def test_two_classes_defined():
     program = """
@@ -565,11 +457,7 @@ def test_two_classes_defined():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 
 def test_operator_precedence_in_if_statements():
     program = """
@@ -586,9 +474,5 @@ def test_operator_precedence_in_if_statements():
                 ]
                 )])
     parser_result = parser.parse(program)
-    parser_result, expected = json.dumps(parser_result, cls=MyEncoder), \
-                              json.dumps(expected, cls=MyEncoder)
-
-    assert parser_result == expected
-
+    verify_asts(expected, parser_result, Node)
 

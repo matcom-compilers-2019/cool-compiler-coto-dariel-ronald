@@ -3,7 +3,7 @@ import itertools as itl
 import NodosAST as ast
 import visitor
 from utils import *
-from error import *
+from cool_errors import *
 
 ERROR = 0
 INTEGER = 1
@@ -73,9 +73,14 @@ class TypeBuilderVisitor:
 
     @visitor.when(ast.MethodNode)
     def visit(self, node):
-        return_type = self.context.get_type(node.return_type)
+        if node.return_type == 'SELF_TYPE':
+            return_type = self._current_type
+        else:
+            return_type = self.context.get_type(node.return_type)
+
         if return_type is None:
             throw_exception(TypeError,node.line, node.index, 'Return Type %s not defined' % return_type)
+
         params = []
         param_names = set()
         for id, type_name in node.parameters:
@@ -102,27 +107,22 @@ class TypeCheckerVisitor:
     def __init__(self):
         self.current_class_name = ''
 
-    # def check_methods_inheritence(self,scope):
-    #     types_ = scope.scope_classes_dictionary.values()
-    #     mask_types = {i:False for i in types_}
-    #
-    #     for _type in types_:
-    #
-    # def _checkup(self,_type:Type):
-    #     if _type.name == 'Object':
-    #
     def look_for_Main_Class(self,context):
         main_type = context.type_is_defined('Main')
         if main_type is not None:
             throw_exception(
                 NameError,0, 0, "Can not find Main class")
 
-        if main_type.parent_type_name != 'Object':
+        if main_type.parent_type_name != 'IO':
             throw_exception(TypeError, 0, 0, "Class Main can't inherits from other class")
 
         main_method = main_type.get_method('main')
         if main_method is None:
             throw_exception(TypeError, 0, 0, "Class Main does't have a main method")
+
+        if len(main_method.params) > 0:
+            throw_exception(TypeError, 0, 0, "Class Main does't receive params")
+
 
 
     def check_class_hierarchy(self,context):
@@ -223,9 +223,14 @@ class TypeCheckerVisitor:
         :param errors:
         :return:
         '''
-        self.visit(node.left_expression,scope)
+        if node.left_expression is not None:
+            # si el método se llama de la forma expr.id(params) .
+            self.visit(node.left_expression,scope)
+            dispatch_type = node.left_expression.computed_type
+        else:
+            # si el método se llama de la forma id(params)
+            dispatch_type = scope.get_type(self.current_class_name)
 
-        dispatch_type = node.left_expression.computed_type
         if dispatch_type is None:
             throw_exception(TypeError, node.line,node.index,'Error type {} not defined in dispatch'.format(dispatch_type))
         # verificar primero que exista el metodo subiendo por el árbol de la jerarquía

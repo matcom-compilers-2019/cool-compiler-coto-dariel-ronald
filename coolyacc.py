@@ -1,8 +1,10 @@
 import ply.yacc as yacc
-from coolex import *
+from coolex import lexer, tokens
 from NodosAST import *
-from error import SyntacticError, throw_exception
+
+from cool_errors import SyntacticError, throw_exception
 ERROR = None
+
 
 def p_program(p):
     '''program : class SEMICOLON program
@@ -20,6 +22,7 @@ def p_class(p):
 
     class_declaration = ClassNode(p[2],p[3],p[5])
     p[0] = class_declaration
+
 
 def p_inheritence(p):
     '''inheritence : INHERITS TYPE
@@ -378,7 +381,7 @@ def p_dispatch(p):
         p[0].line = p.lineno(3)
         p[0].index = p.lexpos(3)
     else:
-        p[0] = DispatchNode(p[4][0],p[4][1],None)
+        p[0] = DispatchNode(p[1][0],p[1][1], None)
         p[0].line = p.lineno(1)
         p[0].index = p.lexpos(1)
 
@@ -418,7 +421,7 @@ def p_empty(p):
 
 
 def p_error(p):
-    throw_exception(SyntacticError,0, 0, 'SyntaxError: %s'%str(p))
+    throw_exception(SyntacticError,p.lineno, p.lexpos,str(p))
 
 # precedence = (
 #     ('right','ASSIGN'),
@@ -445,6 +448,7 @@ precedence = (
     ('left','DOT')
 )
 
+from coolex import data, lexer
 
 parser = yacc.yacc()
 # parser.parse(data,lexer,True)

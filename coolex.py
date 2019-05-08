@@ -87,7 +87,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 t_ignore = ' \t'
 
-from .error import throw_exception,LexicographicError
+from cool_errors import throw_exception, LexicographicError
 
 def t_error(t):
     throw_exception(LexicographicError,0,0,"Illegal character '%s'" % t.value[0])
