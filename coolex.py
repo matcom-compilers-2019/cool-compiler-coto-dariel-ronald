@@ -45,8 +45,9 @@ t_LETHAN = r'<='
 t_LTHAN = r'<'
 t_EQUALS = r'='
 t_DISP = r'@'
-# me faltan por agregar simbolos y otras cosas
-t_STRING = r'\"[a-zA-Z_][a-zA-Z_0-9]*\"'
+# TODO: buscar una expresion regular responsable
+# t_STRING = r'\"[a-zA-Z_][a-zA-Z_0-9]*\"'
+t_STRING = r'\"(.)*\"'
 t_TYPE = r'[A-Z][a-zA-Z_0-9]*'
 
 reserved = {

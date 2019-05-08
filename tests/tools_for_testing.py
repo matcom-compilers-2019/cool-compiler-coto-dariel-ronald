@@ -45,26 +45,3 @@ def ast_checker(node1, node2, root_class):
     if not result:
         logging.error(f'{node1} is not equals to {node2}')
     return result
-
-#
-# class MyEncoder(json.JSONEncoder):
-#     def default(self,obj):
-#         if isinstance(obj,Node):
-#             new_dict = obj.__dict__.copy()
-#             for field in new_dict:
-#                 field_value = new_dict[field]
-#                 if isinstance(field_value,Node):
-#                     field_value = self.default(field_value)
-#                 elif isinstance(field_value,list) or isinstance(field_value,tuple):
-#                     new_field = [self.default(item)for item in field_value]
-#                     field_value = new_field if isinstance(field_value,list) else tuple(new_field)
-#                 else:
-#                     field_value = json.dumps(field_value)
-#                 new_dict[field] = field_value
-#             return json.dumps(new_dict)
-#         elif isinstance(obj,list) or isinstance(obj,tuple):
-#             new_field = [self.default(item)for item in obj]
-#             new_obj = new_field if isinstance(obj,list) else tuple(new_field)
-#             return json.dumps(new_obj)
-#         return json.dumps(obj)
-#

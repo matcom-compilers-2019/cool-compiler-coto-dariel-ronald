@@ -16,9 +16,7 @@ def main():
 
     compile_cool(data)
 
-
-def compile_cool(data):
-    ast = parser.parse(data, lexer,True)
+def check_semantic(ast):
 
     scope = Scope()
     tcv = TypeCollectorVisitor(scope)
@@ -32,6 +30,11 @@ def compile_cool(data):
     tchecv.look_for_Main_Class(scope)
     tchecv.visit(ast, scope)
 
+
+def compile_cool(data):
+    ast = parser.parse(data, lexer, True)
+
+    check_semantic(ast)
 
 
 

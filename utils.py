@@ -105,6 +105,7 @@ class Type:
             '''
         try:
             method = self.methods[name]
+            return method
         except KeyError:
             return None
 
@@ -176,7 +177,7 @@ class Methodinfo:
 Str_Class = Type('String',line=0,index=0)
 Bool_Class = Type("Bool",line=0,index=0)
 Int_Class = Type("Int",line=0,index=0)
-Object_Class = Type('Object',parent_type=None,line=0,index=0)
+Object_Class = Type('Object',parent_type_name=None,line=0,index=0)
 IO_Class = Type("IO",line=0,index=0)
 
 builtins_classes = {Str_Class, Bool_Class, Int_Class, Object_Class, IO_Class}
@@ -203,10 +204,11 @@ IO_Class.define_method('in_int',Int_Class)
 Object_Class.define_method('copy',Object_Class)
 # en este diccionario se va a mapear el nombre del tipo
 # a la instancia del mismo que contendrá todos sus metodos y attributos
-classes_dictionary = {'Int':Int_Class,
-                      'String':Str_Class,
-                      'Bool':Bool_Class,
-                      'Object':Object_Class
+classes_dictionary = {'Int': Int_Class,
+                      'String': Str_Class,
+                      'Bool': Bool_Class,
+                      'Object': Object_Class,
+                      'IO': IO_Class
                       }
 
 

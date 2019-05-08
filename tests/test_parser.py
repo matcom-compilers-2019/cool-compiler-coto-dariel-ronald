@@ -1,8 +1,6 @@
 from coolyacc import parser
 from NodosAST import *
-import json
 from .tools_for_testing import verify_asts
-
 
 
 def test_empty_class_definition():
@@ -18,7 +16,7 @@ def test_class_definition_with_inherits():
     parser_result = parser.parse(program)
     verify_asts(expected, parser_result, Node)
 
-#
+
 def test_class_with_uninitialized_attributes():
     program = """
     class A {

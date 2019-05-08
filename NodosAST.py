@@ -32,7 +32,7 @@ class MethodNode(FeatureNode):
         # aqui se guardan los formal (id,type)
         self.parameters = parameters
         self.return_type = return_type
-        self.expressions = expr
+        self.expression = expr
 
     def __eq__(self, other):
         return isinstance(other,MethodNode) and \

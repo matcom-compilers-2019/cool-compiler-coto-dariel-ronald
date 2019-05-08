@@ -8,7 +8,6 @@ from cool_errors import *
 ERROR = 0
 INTEGER = 1
 
-# Todo: antes que todo,tengo que instalar los tipos fundamentales de cool al scope que le pase al primer visitor
 
 
 class TypeCollectorVisitor:
@@ -30,7 +29,8 @@ class TypeCollectorVisitor:
 
     @visitor.when(ast.ClassNode)
     def visit(self, node):
-        if node.inherit != 'Object' and node.inherit in builtins_classes_names:
+        # por ahora tengo puesto q se puede heredar de IO
+        if node.inherit != 'Object' and node.inherit in builtins_classes_names and node.inherit != 'IO':
             throw_exception(TypeError, node.line, node.index, "Builtin type %s can't not be inherited" % node.inherit)
         if node.inherit == 'Main':
             throw_exception(TypeError, node.line, node.index, "Main class can't be inherited")
@@ -109,18 +109,18 @@ class TypeCheckerVisitor:
 
     def look_for_Main_Class(self,context):
         main_type = context.type_is_defined('Main')
-        if main_type is not None:
+        if main_type is None:
             throw_exception(
                 NameError,0, 0, "Can not find Main class")
 
-        if main_type.parent_type_name != 'IO':
+        if main_type._parent_type_name != 'IO':
             throw_exception(TypeError, 0, 0, "Class Main can't inherits from other class")
 
         main_method = main_type.get_method('main')
         if main_method is None:
             throw_exception(TypeError, 0, 0, "Class Main does't have a main method")
 
-        if len(main_method.params) > 0:
+        if len(main_method.arguments) > 0:
             throw_exception(TypeError, 0, 0, "Class Main does't receive params")
 
 
@@ -177,11 +177,12 @@ class TypeCheckerVisitor:
         # Añadimos el objeto self del tipo current type
         scope.define_variable('self', self.current_class_name)
 
-        self.visit(node.expressions,scope)
+        self.visit(node.expression,scope)
 
-        if node.expressions[-1].computed_type.lower_equals(node.return_type):
-            throw_exception(TypeError, node.line, node.index, "Error in method {}: return static type expected {}, founded:{}".
-                          format(node.id,node.return_type,node.expressions[-1].computed_type))
+        if node.expression.computed_type.lower_equals(node.return_type):
+            throw_exception(TypeError, node.line, node.index,
+                            "Error in method {}: return static type expected {}, founded:{}".
+                            format(node.id,node.return_type,node.expressions[-1].computed_type))
 
     @visitor.when(ast.AttributeNode)
     def visit(self, node, scope):
