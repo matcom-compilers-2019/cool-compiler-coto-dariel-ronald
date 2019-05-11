@@ -53,6 +53,7 @@ class Type:
                     return False
                 else:
                     return True
+            the_highest = the_highest.parent_type
         return False
 
 
@@ -300,8 +301,9 @@ class Scope:
         self.scope_classes_dictionary[name] = new_type
 
     def get_params_from_method(self, type_name, method_name):
-        thetype = self.scope_classes_dictionary[type_name]
-        if thetype is None:
+        try:
+            thetype = self.scope_classes_dictionary[type_name]
+        except KeyError:
             return None
 
         if method_name in thetype.methods:
@@ -318,4 +320,10 @@ class Scope:
         if attr_name in thetype.attrs:
             return thetype.attrs[attr_name]
         return None
+
+    def get_method_from_type(self, typeName, method_name):
+        type = self.get_type(typeName)
+        if type is None:
+            return None
+        return type.get_method(method_name)
 

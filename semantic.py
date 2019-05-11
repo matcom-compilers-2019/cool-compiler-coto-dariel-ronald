@@ -29,7 +29,7 @@ class TypeCollectorVisitor:
 
     @visitor.when(ast.ClassNode)
     def visit(self, node):
-        # por ahora tengo puesto q se puede heredar de IO
+        # por ahora tengo puesto q se puede heredar de IO pero no de lotras clases bultins
         if node.inherit != 'Object' and node.inherit in builtins_classes_names and node.inherit != 'IO':
             throw_exception(TypeError, node.line, node.index, "Builtin type %s can't not be inherited" % node.inherit)
         if node.inherit == 'Main':
@@ -177,12 +177,15 @@ class TypeCheckerVisitor:
         # Añadimos el objeto self del tipo current type
         scope.define_variable('self', self.current_class_name)
 
-        self.visit(node.expression,scope)
+        self.visit(node.expression, scope)
 
-        if node.expression.computed_type.lower_equals(node.return_type):
+        method_info = scope.get_method_from_type(self.current_class_name, node.id)
+        return_type = method_info.return_type
+
+        if not node.expression.computed_type.lower_equals(return_type):
             throw_exception(TypeError, node.line, node.index,
                             "Error in method {}: return static type expected {}, founded:{}".
-                            format(node.id,node.return_type,node.expressions[-1].computed_type))
+                            format(node.id, return_type.name, node.expression.computed_type.name))
 
     @visitor.when(ast.AttributeNode)
     def visit(self, node, scope):

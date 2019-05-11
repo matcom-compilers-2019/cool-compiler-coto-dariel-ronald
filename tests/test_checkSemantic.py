@@ -23,12 +23,12 @@ def check_semantic(ast):
 
 def test_first():
     program_ast = ProgramNode([ClassNode('Main', features=[
-        MethodNode('main', [], 'SELF_TYPE',DispatchNode('out_string', [StrNode('"Hello, World"')], None))
+        MethodNode('main', [], 'IO',DispatchNode('out_string', [StrNode('"Hello, World"')], None))
     ], inherit='IO')])
     program_code = '''
     
     class Main inherits IO {
-         main(): SELF_TYPE {
+         main(): IO {
 	        out_string("Hello, World")
     };
 };
