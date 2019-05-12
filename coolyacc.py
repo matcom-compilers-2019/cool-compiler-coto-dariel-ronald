@@ -214,7 +214,7 @@ def p_atom(p):
             | BCOMPLEMENT expression
             '''
     if len(p) == 4:
-        p[0] = BlockNode(p[2])
+        p[0] = p[2]
     elif len(p) == 3:
         if p[1] == 'isvoid':
             p[0] = IsVoidNode(p[2])
@@ -449,7 +449,7 @@ precedence = (
     ('left','DOT')
 )
 
-from coolex import data, lexer
+# from coolex import data, lexer
 
 parser = yacc.yacc()
 # parser.parse(data,lexer,True)

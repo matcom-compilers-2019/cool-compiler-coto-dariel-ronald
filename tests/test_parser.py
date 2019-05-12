@@ -289,7 +289,7 @@ def test_let_statement_with_three_vars():
        funk():Type {
             let x:TypeX,
                 y:TypeY <- 3,
-                z:ZType <- (2+2) * 5
+                z:ZType <- (2 + 2) * 5
                 in x + 1
        };
     };"""
@@ -298,7 +298,8 @@ def test_let_statement_with_three_vars():
                     MethodNode('funk', [], 'Type',
                         LetVarNode([(('x', 'TypeX'), None),
                                     (('y', 'TypeY'), IntNode(3)),
-                                    (('z', 'ZType'), StarNode(PlusNode(IntNode(2), IntNode(2)), IntNode(5)))],
+                                    # (('z', 'ZType'), PlusNode(IntNode(2),StarNode(IntNode(2),IntNode(5))))],
+                                    (('z', 'ZType'), StarNode(PlusNode(IntNode(2),IntNode(2)), IntNode(5)))],
                                     PlusNode(ObjectNode('x'), IntNode(1))
                                 )
                      ),

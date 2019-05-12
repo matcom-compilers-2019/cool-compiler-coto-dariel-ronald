@@ -1,7 +1,7 @@
 from NodosAST import *
 from coolyacc import parser
 from .tools_for_testing import verify_asts
-
+from coolex import lexer
 from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
 from utils import Scope
 
@@ -33,7 +33,7 @@ def test_hello_world():
     };
 };
     '''
-    parser_result = parser.parse(program_code)
+    parser_result = parser.parse(program_code,lexer=lexer)
     verify_asts(program_ast, parser_result, Node)
     check_semantic(program_ast)
 
@@ -58,7 +58,7 @@ def test_new_type_node_and_let_node():
     };
 };
     '''
-    parser_result = parser.parse(program_code)
+    parser_result = parser.parse(program_code,lexer=lexer)
     verify_asts(program_ast, parser_result, Node)
     check_semantic(program_ast)
 
@@ -77,8 +77,9 @@ def test_new_type_node_and_let_node2():
             ]))
     ]),
          ClassNode('A',features=[
-                MethodNode('funk',[('a','Int')],'Int',
-                            LetVarNode([(('x','Int'),None)],PlusNode(ObjectNode('x'),IntNode(1)))
+                MethodNode('funk',[('a','Bool')],'Int',
+                            LetVarNode([(('x','Int'),None)],
+                                       PlusNode(ObjectNode('x'),IntNode(1)))
                            )
             ])
          ])
@@ -98,7 +99,7 @@ def test_new_type_node_and_let_node2():
     };
 
     '''
-    parser_result = parser.parse(program_code)
+    parser_result = parser.parse(program_code,lexer=lexer)
     # verify_asts(program_ast, parser_result, Node)
     check_semantic(program_ast)
 

@@ -549,6 +549,7 @@ class TypeCheckerVisitor:
 
         node.computed_type = node.expressions[-1].computed_type
 
+
     @visitor.when(ast.LetVarNode)
     def visit(self, node, scope):
         '''
