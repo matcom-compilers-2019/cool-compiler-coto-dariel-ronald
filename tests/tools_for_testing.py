@@ -34,7 +34,9 @@ def ast_checker(node1, node2, root_class):
                 return False
         return True
     elif is_an_iterable:
-
+        if len(node1) !=len(node2):
+            logging.error(f'{node1} has different len than {node2}')
+            return False
         for i, value1 in enumerate(node1):
 
             value2 = node2[i]

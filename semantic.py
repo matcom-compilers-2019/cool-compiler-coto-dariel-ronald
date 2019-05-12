@@ -361,8 +361,7 @@ class TypeCheckerVisitor:
         else:
             node.computed_type = new_intance_type
 
-    @visitor.when(ast.BAritmeticOperationNode)
-    def visit(self, node,scope):
+    def _visit_BAritmeticOperationNode(self, node,scope):
         '''
         <expr1> y <expr2> tienen que tener tipo Int
         :param node:
@@ -376,50 +375,52 @@ class TypeCheckerVisitor:
                         node.right_expression.computed_type == scope.get_type('Int'):
             node.computed_type = scope.get_type('Int')
             return
+        left_type = node.left_expression.computed_type.name
+        right_type = node.right_expression.computed_type.name
+        throw_exception(TypeError, node.line,node.index,f'Left expression and right '
+                                                        f'expressions must have type Int,founded: \nleft:{left_type}\n'
+                                                        f'right:{right_type}')
 
-        throw_exception(TypeError, node.line,node.index,"Error while checking types")
+    @visitor.when(ast.PlusNode)
+    def visit(self, node,scope):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es Int
+        '''
 
+        self._visit_BAritmeticOperationNode(node,scope)
 
-    # @visitor.when(ast.PlusNode)
-    # def visit(self, node):
-    #     '''
-    #     <expr1> y <expr2> tienen que tener tipo Int
-    #     :param node:
-    #     :param errors:
-    #     :return: el resultado es Int
-    #     '''
-    #
-    #     pass
-    #
-    # @visitor.when(ast.StarNode)
-    # def visit(self, node):
-    #     '''
-    #     <expr1> y <expr2> tienen que tener tipo Int
-    #     :param node:
-    #     :param errors:
-    #     :return: el resultado es Int
-    #     '''
-    #     pass
-    #
-    # @visitor.when(ast.MinusNode)
-    # def visit(self, node):
-    #     '''
-    #     <expr1> y <expr2> tienen que tener tipo Int
-    #     :param node:
-    #     :param errors:
-    #     :return: el resultado es Int
-    #     '''
-    #     pass
-    #
-    # @visitor.when(ast.DivNode)
-    # def visit(self, node):
-    #     '''
-    #     <expr1> y <expr2> tienen que tener tipo Int
-    #     :param node:
-    #     :param errors:
-    #     :return: el resultado es Int
-    #     '''
-    #     pass
+    @visitor.when(ast.StarNode)
+    def visit(self, node, scope):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es Int
+        '''
+        self._visit_BAritmeticOperationNode(node, scope)
+
+    @visitor.when(ast.MinusNode)
+    def visit(self, node, scope):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es Int
+        '''
+        self._visit_BAritmeticOperationNode(node, scope)
+
+    @visitor.when(ast.DivNode)
+    def visit(self, node, scope):
+        '''
+        <expr1> y <expr2> tienen que tener tipo Int
+        :param node:
+        :param errors:
+        :return: el resultado es Int
+        '''
+        self._visit_BAritmeticOperationNode(node, scope)
 
     @visitor.when(ast.NegationNode)
     def visit(self, node, scope):
@@ -557,6 +558,7 @@ class TypeCheckerVisitor:
         :param errors:
         :return:
         '''
+
         child_scope = scope.create_child_scope()
         for id_type, expr in node.declarations:
             vtype = scope.get_type(id_type[1])
