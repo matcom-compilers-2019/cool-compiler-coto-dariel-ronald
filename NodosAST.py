@@ -187,6 +187,7 @@ class ObjectNode(AtomNode):
 class IsVoidNode(UnaryOperatorNode):
     pass
 
+
 class BlockNode(AtomNode):
     def __init__(self,exprs):
         self.expressions = exprs

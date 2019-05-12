@@ -214,7 +214,7 @@ def p_atom(p):
             | BCOMPLEMENT expression
             '''
     if len(p) == 4:
-        p[0] = p[2]
+        p[0] = BlockNode(p[2])
     elif len(p) == 3:
         if p[1] == 'isvoid':
             p[0] = IsVoidNode(p[2])
@@ -309,12 +309,61 @@ def p_e_factor(p):
         p[0] = NegationNode(p[2])
         p[0].line = p.lineno(1)
         p[0].index = p.lexpos(1)
+def p_dispatch(p):
+    '''dispatch : expression especific DOT dispatch_call
+                | dispatch_call'''
+    if len(p) == 5:
+        if p[2] is None:
+            p[0] = DispatchNode(p[4][0],p[4][1],p[1])
+        else:
+            p[0] = StaticDispatchNode(p[4][0], p[4][1], p[1], p[2])
+        p[0].line = p.lineno(3)
+        p[0].index = p.lexpos(3)
+    else:
+        p[0] = DispatchNode(p[1][0],p[1][1], None)
+        p[0].line = p.lineno(1)
+        p[0].index = p.lexpos(1)
+
+
+def p_especific(p):
+    '''especific : DISP TYPE
+                 | empty'''
+    if len(p) == 3:
+        p[0] = p[2]
+    else:
+        p[0] = None
+
+
+def p_dispatch_call(p):
+    'dispatch_call : ID LBRACKET params_expression RBRACKET'
+    p[0] = (p[1],p[3])
+
+
+def p_params_expression(p):
+    '''params_expression : expression
+                            | expression COMMA params_expression
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[3].insert(0, p[1])
+        p[0] = p[3]
+
+
+def p_params_expression_empty(p):
+    '''params_expression : empty'''
+    p[0] = []
+
+
+def p_empty(p):
+    'empty :'
 
 
 def p_let_expression(p):
     'let_expression : LET declaration_list IN expression'
     p[0] = LetVarNode(p[2],p[4])
-
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_declaration_list(p):
     '''declaration_list : attribute COMMA declaration_list
@@ -370,54 +419,6 @@ def p_implication(p):
     p[0] = (p[1],p[3])
 
 
-def p_dispatch(p):
-    '''dispatch : expression especific DOT dispatch_call
-                | dispatch_call'''
-    if len(p) == 5:
-        if p[2] is None:
-            p[0] = DispatchNode(p[4][0],p[4][1],p[1])
-        else:
-            p[0] = StaticDispatchNode(p[4][0], p[4][1], p[1], p[2])
-        p[0].line = p.lineno(3)
-        p[0].index = p.lexpos(3)
-    else:
-        p[0] = DispatchNode(p[1][0],p[1][1], None)
-        p[0].line = p.lineno(1)
-        p[0].index = p.lexpos(1)
-
-
-def p_especific(p):
-    '''especific : DISP TYPE
-                 | empty'''
-    if len(p) == 3:
-        p[0] = p[2]
-    else:
-        p[0] = None
-
-
-def p_dispatch_call(p):
-    'dispatch_call : ID LBRACKET params_expression RBRACKET'
-    p[0] = (p[1],p[3])
-
-
-def p_params_expression(p):
-    '''params_expression : expression
-                            | expression COMMA params_expression
-    '''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[3].insert(0, p[1])
-        p[0] = p[3]
-
-
-def p_params_expression_empty(p):
-    '''params_expression : empty'''
-    p[0] = []
-
-
-def p_empty(p):
-    'empty :'
 
 
 def p_error(p):
@@ -441,7 +442,7 @@ precedence = (
     ('nonassoc','LTHAN','LETHAN','EQUALS'),
     ('left','PLUS','MINUS'),
     ('left','TIMES','DIVIDE'),
-    ('right','UMINUS'),#Unary minus operator
+    ('right','UMINUS'), #Unary minus operator
     ('right','ISVOID'),
     ('right','BCOMPLEMENT'),
     ('left','DISP'),

@@ -1,92 +1,161 @@
 import ply.yacc as yacc
 from coolex import tokens
+from NodosAST import *
 
 def p_program(p):
     '''program : class SEMICOLON program
                | class SEMICOLON'''
-    if len(p)>3:
-        p[0] = ("Programs declaration",p[1],p[2],p[3])
-    else:
-        p[0] = ("Program declaration",p[1],p[2])
 
-    print(p[:])
+    if len(p) == 4:
+        p[3].classes.insert(0,p[1])
+        p[0] = p[3]
+    else:
+        p[0] = ProgramNode([p[1]])
 
 def p_class(p):
     'class : CLASS TYPE inheritence LBRACE features RBRACE'
-    p[0] = ("Class declaration",p[1],p[2],p[3],p[4],p[5],p[6])
-    print(p[:])
+
+    class_declaration = ClassNode(p[2],p[3],p[5])
+    p[0] = class_declaration
+
 
 
 def p_inheritence(p):
     '''inheritence : INHERITS TYPE
                     | empty'''
-    if len(p)==3:
-        p[0]=("inherits",p[1],p[2])
+    if len(p) == 3:
+        p[0] = p[2]
     else:
-        p[0]=("empty")
-
-    print(p[:])
+        p[0] = 'Object'
 
 def p_features(p):
     '''features : feature SEMICOLON features
                 | empty'''
-    if len(p)==4:
-        p[0] = ("features",p[1],p[2],p[3])
-    else:
-        p[0]=("empty")
-    print(p[:])
 
-def p_feature(p):
+    if len(p) == 4:
+        p[3].insert(0, p[1])
+        p[0] = p[3]
+    else:
+        p[0] = []
+
+def p_feature_method_declaration(p):
     '''feature : method_declaration
-               | attribute'''
-    p[0] = ("feature",p[1])        
-    print(p[:])
+               '''
+    p[0] = p[1]
+
+def p_feature_attribute(p):
+    '''feature : attribute'''
+    p[0] = AttributeNode(p[1][0][0], p[1][0][1], p[1][1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_attribute(p):
     '''attribute : id_type
                 | id_type ASSIGN expression'''
-    if len(p) == 2:
-        p[0]= ("attribute", p[1])
-    else:
-        p[0] = ("atribute", p[1],p[2],p[3])
-    print(p[:])
+    #  esto devuelve una tupla((id,type),value)
+    new_attr = (p[1], None)
+    if len(p) == 4:
+        new_attr = (p[1], p[3])
+    p[0] = new_attr
 
 
 def p_id_type(p):
     'id_type : ID TDOTS TYPE'
-    p[0] = ("id_type",p[1],p[2],p[3])
-    print(p[:])
+    # esto lo que devuelve es(id,type)
+    p[0] = (p[1],p[3])
 
 def p_method_declaration(p):
-    'method_declaration : ID LBRACKET formals RBRACKET TDOTS TYPE block'
-    p[0] = ("method_declaration",p[1],p[2],p[3],p[4],p[5],p[6],p[7])
-    print(p[:])
+    'method_declaration : ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression RBRACE'
 
-def p_block(p):
-    'block : LBRACE expression_list RBRACE'
-    p[0] = ("block",p[1],p[2],p[3])
-    print(p[:])
+    new_method = MethodNode(p[1],p[3],p[6],p[8])
+    p[0] = new_method
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
 
 def p_formals(p):
     '''formals : id_type COMMA formals
-                | id_type
-                | empty'''
-    if len(p) > 2:
-        p[0] = ("formals",p[1],p[2],p[3])
-    elif len(p) == 2:
-        p[0] = ("formal",p[1])
+                | id_type'''
+
+    if len(p) == 4:
+        # aqui devolvemos una lista de id_type, que es una tupla (id,type)
+        p[3].insert(0, p[1])
+        p[0] = p[3]
     else:
-        p[0] = ("empty")
-    print(p[:])
+        p[0] = [p[1]]
+
+def p_formals_empty(p):
+    '''formals : empty'''
+    p[0] = []
+
 
 def p_expression_list(p):
     '''expression_list : expression SEMICOLON expression_list
                         | expression SEMICOLON'''
     if len(p) == 4:
-        p[0] = ("expression_list", p[1],p[2],p[3])
+        p[3].insert(0, p[1])
+        p[0] = p[3]
     else:
-        p[0] = ("expression_list", p[1],p[2])
-    print(p[:])
+        p[0] = [p[1]]
+
+def p_expression_case(p):
+    'expression : case'
+    p[0] = CaseNode(p[2],p[4])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+
+def p_expression_dispatch(p):
+    'expression : dispatch'
+
+def p_expression_conditional(p):
+    'expression : conditional'
+    p[0] = ConditionalNode(p[2], p[4], p[6])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+def p_expression_loop(p):
+    'expression : loop'
+    p[0] = LoopNode(p[2],p[4])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+def p_expression_let(p):
+    'expression: let_expression'
+
+def p_let_expression(p):
+    'let_expression : LET declaration_list IN expression'
+    p[0] = LetVarNode(p[2],p[4])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+def p_declaration_list(p):
+    '''declaration_list : attribute COMMA declaration_list
+                        | attribute'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[3].insert(0,p[1])
+        p[0] = p[3]
+
+def p_expression_id(p):
+    'expression : ID'
+    p[0] = ObjectNode(p[1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+def p_expression_integer(p):
+    'expression : INTEGER'
+    p[0] = IntNode(p[1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+
+def p_expression_string(p):
+    'expression : STRING'
+    p[0] = StrNode(p[1])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_expression(p):
     '''expression : assign
@@ -113,13 +182,43 @@ def p_expression(p):
                     | STRING
                     | TRUE
                     | FALSE'''
-    if len(p) == 4:
-        p[0] = ("expressions",p[1],p[2],p[3])
+
+    if p[1] == 'true' or p[1] == 'false':
+        p[0] = BoolNode(p[1])
+    elif p[1] == 'new':
+        p[0] = NewTypeNode(p[2])
+    elif p[1] == 'not':
+        p[0] = NotNode(p[2])
+    elif p[1] == '~':
+        p[0] = IntegerComplementNode(p[2])
+    elif p[1] == 'isvoid':
+        p[0] = IsVoidNode(p[2])
+    elif len(p) == 4:
+        if p[2] == '<':
+            p[0] = LowerThanNode(p[1], p[3])
+        elif p[2] == '<=':
+            p[0] = LowerEqualThanNode(p[1], p[3])
+        elif p[2] == '=':
+            p[0] = EqualThanNode(p[1], p[3])
+        elif p[2] == '*':
+            p[0] = StarNode(p[1], p[3])
+        elif p[2] == '/':
+            p[0] = DivNode(p[1], p[3])
+        elif p[2] == '+':
+            p[0] = PlusNode(p[1], p[3])
+        elif p[2] == '-':
+            p[0] = MinusNode(p[1], p[3])
+
+        elif p[1] == '{':
+            p[0] = BlockNode(p[2])
+
     elif len(p) == 3:
         p[0] = ("expression",p[1],p[2])
     else:
         p[0] = ("expression",p[1])
-    print(p[:])
+
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 def p_assign(p):
     'assign : ID ASSIGN expression'

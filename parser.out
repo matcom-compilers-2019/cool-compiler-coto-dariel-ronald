@@ -63,69 +63,69 @@ Rule 57    e_term -> e_term DIVIDE e_factor
 Rule 58    e_term -> e_factor
 Rule 59    e_factor -> MINUS e_factor
 Rule 60    e_factor -> let_expression
-Rule 61    let_expression -> LET declaration_list IN expression
-Rule 62    declaration_list -> attribute COMMA declaration_list
-Rule 63    declaration_list -> attribute
-Rule 64    conditional -> IF expression THEN expression ELSE expression FI
-Rule 65    loop -> WHILE expression LOOP expression POOL
-Rule 66    case -> CASE expression OF implications ESAC
-Rule 67    implications -> implication SEMICOLON implications
-Rule 68    implications -> implication SEMICOLON
-Rule 69    implication -> id_type IMPLY expression
-Rule 70    dispatch -> expression especific DOT dispatch_call
-Rule 71    dispatch -> dispatch_call
-Rule 72    especific -> DISP TYPE
-Rule 73    especific -> empty
-Rule 74    dispatch_call -> ID LBRACKET params_expression RBRACKET
-Rule 75    params_expression -> expression
-Rule 76    params_expression -> expression COMMA params_expression
-Rule 77    params_expression -> empty
-Rule 78    empty -> <empty>
+Rule 61    dispatch -> expression especific DOT dispatch_call
+Rule 62    dispatch -> dispatch_call
+Rule 63    especific -> DISP TYPE
+Rule 64    especific -> empty
+Rule 65    dispatch_call -> ID LBRACKET params_expression RBRACKET
+Rule 66    params_expression -> expression
+Rule 67    params_expression -> expression COMMA params_expression
+Rule 68    params_expression -> empty
+Rule 69    empty -> <empty>
+Rule 70    let_expression -> LET declaration_list IN expression
+Rule 71    declaration_list -> attribute COMMA declaration_list
+Rule 72    declaration_list -> attribute
+Rule 73    conditional -> IF expression THEN expression ELSE expression FI
+Rule 74    loop -> WHILE expression LOOP expression POOL
+Rule 75    case -> CASE expression OF implications ESAC
+Rule 76    implications -> implication SEMICOLON implications
+Rule 77    implications -> implication SEMICOLON
+Rule 78    implication -> id_type IMPLY expression
 
 Terminals, with rules where they appear
 
 ASSIGN               : 11 29
 BCOMPLEMENT          : 45
-CASE                 : 66
+CASE                 : 75
 CLASS                : 3
-COMMA                : 14 62 76
-DISP                 : 72
+COMMA                : 14 67 71
+DISP                 : 63
 DIVIDE               : 34 57
-DOT                  : 70
-ELSE                 : 64
+DOT                  : 61
+ELSE                 : 73
 EQUALS               : 25
-ESAC                 : 66
+ESAC                 : 75
 FALSE                : 51
-FI                   : 64
-ID                   : 12 13 29 47 74
-IF                   : 64
-IMPLY                : 69
-IN                   : 61
+FI                   : 73
+ID                   : 12 13 29 47 65
+IF                   : 73
+IMPLY                : 78
+IN                   : 70
 INHERITS             : 4
 INTEGER              : 48
 ISVOID               : 39
 LBRACE               : 3 13 46
-LBRACKET             : 13 38 74
-LET                  : 61
+LBRACKET             : 13 38 65
+LET                  : 70
 LETHAN               : 24
-LOOP                 : 65
+LOOP                 : 74
 LTHAN                : 23
 MINUS                : 31 36 54 59
 NEW                  : 52
 NOT                  : 21
-OF                   : 66
+OF                   : 75
 PLUS                 : 30 53
-POOL                 : 65
+POOL                 : 74
 RBRACE               : 3 13 46
-RBRACKET             : 13 38 74
-SEMICOLON            : 1 2 6 17 18 67 68
+RBRACKET             : 13 38 65
+SEMICOLON            : 1 2 6 17 18 76 77
 STRING               : 49
 TDOTS                : 12 13
-THEN                 : 64
+THEN                 : 73
 TIMES                : 33 56
 TRUE                 : 50
-TYPE                 : 3 4 12 13 52 72
-WHILE                : 65
+TYPE                 : 3 4 12 13 52 63
+WHILE                : 74
 error                : 
 
 Nonterminals, with rules where they appear
@@ -133,35 +133,35 @@ Nonterminals, with rules where they appear
 arith                : 27 30 31 53 54
 assign               : 19
 atom                 : 37
-attribute            : 9 62 63
+attribute            : 9 71 72
 block                : 40
 case                 : 43
 class                : 1 2
 conditional          : 41
-declaration_list     : 61 62
+declaration_list     : 70 71
 dispatch             : 44
-dispatch_call        : 70 71
+dispatch_call        : 61 62
 e_arith              : 28
 e_factor             : 56 57 58 59
 e_term               : 53 54 55 56 57
-empty                : 5 7 16 73 77
-especific            : 70
-expression           : 11 13 17 18 29 38 39 45 61 64 64 64 65 65 66 69 70 75 76
+empty                : 5 7 16 64 68
+especific            : 61
+expression           : 11 13 17 18 29 38 39 45 61 66 67 70 73 73 73 74 74 75 78
 expression_list      : 17 46
 factor               : 33 34 35 36
 feature              : 6
 features             : 3 6
 formals              : 13 14
-id_type              : 10 11 14 15 69
-implication          : 67 68
-implications         : 66 67
+id_type              : 10 11 14 15 78
+implication          : 76 77
+implications         : 75 76
 inheritence          : 3
 k_arith              : 23 23 24 24 25 25 26
 let_expression       : 60
 loop                 : 42
 method_declaration   : 8
 operator_non         : 22
-params_expression    : 74 76
+params_expression    : 65 67
 program              : 1 0
 term                 : 30 31 32 33 34
 upper_non            : 20 21
@@ -220,10 +220,10 @@ state 5
     (3) class -> CLASS TYPE . inheritence LBRACE features RBRACE
     (4) inheritence -> . INHERITS TYPE
     (5) inheritence -> . empty
-    (78) empty -> .
+    (69) empty -> .
 
     INHERITS        shift and go to state 8
-    LBRACE          reduce using rule 78 (empty -> .)
+    LBRACE          reduce using rule 69 (empty -> .)
 
     inheritence                    shift and go to state 7
     empty                          shift and go to state 9
@@ -263,13 +263,13 @@ state 10
     (7) features -> . empty
     (8) feature -> . method_declaration
     (9) feature -> . attribute
-    (78) empty -> .
+    (69) empty -> .
     (13) method_declaration -> . ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression RBRACE
     (10) attribute -> . id_type
     (11) attribute -> . id_type ASSIGN expression
     (12) id_type -> . ID TDOTS TYPE
 
-    RBRACE          reduce using rule 78 (empty -> .)
+    RBRACE          reduce using rule 69 (empty -> .)
     ID              shift and go to state 17
 
     features                       shift and go to state 12
@@ -355,13 +355,13 @@ state 20
     (7) features -> . empty
     (8) feature -> . method_declaration
     (9) feature -> . attribute
-    (78) empty -> .
+    (69) empty -> .
     (13) method_declaration -> . ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression RBRACE
     (10) attribute -> . id_type
     (11) attribute -> . id_type ASSIGN expression
     (12) id_type -> . ID TDOTS TYPE
 
-    RBRACE          reduce using rule 78 (empty -> .)
+    RBRACE          reduce using rule 69 (empty -> .)
     ID              shift and go to state 17
 
     feature                        shift and go to state 13
@@ -378,10 +378,10 @@ state 21
     (15) formals -> . id_type
     (16) formals -> . empty
     (12) id_type -> . ID TDOTS TYPE
-    (78) empty -> .
+    (69) empty -> .
 
     ID              shift and go to state 25
-    RBRACKET        reduce using rule 78 (empty -> .)
+    RBRACKET        reduce using rule 69 (empty -> .)
 
     formals                        shift and go to state 26
     id_type                        shift and go to state 27
@@ -438,14 +438,14 @@ state 23
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -536,16 +536,16 @@ state 29
 state 30
 
     (11) attribute -> id_type ASSIGN expression .
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     SEMICOLON       reduce using rule 11 (attribute -> id_type ASSIGN expression .)
     COMMA           reduce using rule 11 (attribute -> id_type ASSIGN expression .)
     IN              reduce using rule 11 (attribute -> id_type ASSIGN expression .)
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -606,7 +606,7 @@ state 33
 
     (29) assign -> ID . ASSIGN expression
     (47) atom -> ID .
-    (74) dispatch_call -> ID . LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> ID . LBRACKET params_expression RBRACKET
 
     ASSIGN          shift and go to state 70
     TIMES           reduce using rule 47 (atom -> ID .)
@@ -673,16 +673,16 @@ state 34
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
 
     NOT             shift and go to state 34
@@ -900,16 +900,16 @@ state 40
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -1150,14 +1150,14 @@ state 46
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1240,14 +1240,14 @@ state 47
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1460,14 +1460,14 @@ state 53
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1619,9 +1619,9 @@ state 58
 
 state 59
 
-    (61) let_expression -> LET . declaration_list IN expression
-    (62) declaration_list -> . attribute COMMA declaration_list
-    (63) declaration_list -> . attribute
+    (70) let_expression -> LET . declaration_list IN expression
+    (71) declaration_list -> . attribute COMMA declaration_list
+    (72) declaration_list -> . attribute
     (10) attribute -> . id_type
     (11) attribute -> . id_type ASSIGN expression
     (12) id_type -> . ID TDOTS TYPE
@@ -1678,14 +1678,14 @@ state 60
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1727,7 +1727,7 @@ state 60
 
 state 61
 
-    (64) conditional -> IF . expression THEN expression ELSE expression FI
+    (73) conditional -> IF . expression THEN expression ELSE expression FI
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -1769,14 +1769,14 @@ state 61
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1817,7 +1817,7 @@ state 61
 
 state 62
 
-    (65) loop -> WHILE . expression LOOP expression POOL
+    (74) loop -> WHILE . expression LOOP expression POOL
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -1859,14 +1859,14 @@ state 62
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1907,7 +1907,7 @@ state 62
 
 state 63
 
-    (66) case -> CASE . expression OF implications ESAC
+    (75) case -> CASE . expression OF implications ESAC
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -1949,14 +1949,14 @@ state 63
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -1997,28 +1997,28 @@ state 63
 
 state 64
 
-    (71) dispatch -> dispatch_call .
+    (62) dispatch -> dispatch_call .
 
-    TIMES           reduce using rule 71 (dispatch -> dispatch_call .)
-    DIVIDE          reduce using rule 71 (dispatch -> dispatch_call .)
-    PLUS            reduce using rule 71 (dispatch -> dispatch_call .)
-    MINUS           reduce using rule 71 (dispatch -> dispatch_call .)
-    LTHAN           reduce using rule 71 (dispatch -> dispatch_call .)
-    LETHAN          reduce using rule 71 (dispatch -> dispatch_call .)
-    EQUALS          reduce using rule 71 (dispatch -> dispatch_call .)
-    DISP            reduce using rule 71 (dispatch -> dispatch_call .)
-    DOT             reduce using rule 71 (dispatch -> dispatch_call .)
-    SEMICOLON       reduce using rule 71 (dispatch -> dispatch_call .)
-    COMMA           reduce using rule 71 (dispatch -> dispatch_call .)
-    IN              reduce using rule 71 (dispatch -> dispatch_call .)
-    RBRACKET        reduce using rule 71 (dispatch -> dispatch_call .)
-    THEN            reduce using rule 71 (dispatch -> dispatch_call .)
-    LOOP            reduce using rule 71 (dispatch -> dispatch_call .)
-    OF              reduce using rule 71 (dispatch -> dispatch_call .)
-    ELSE            reduce using rule 71 (dispatch -> dispatch_call .)
-    POOL            reduce using rule 71 (dispatch -> dispatch_call .)
-    RBRACE          reduce using rule 71 (dispatch -> dispatch_call .)
-    FI              reduce using rule 71 (dispatch -> dispatch_call .)
+    TIMES           reduce using rule 62 (dispatch -> dispatch_call .)
+    DIVIDE          reduce using rule 62 (dispatch -> dispatch_call .)
+    PLUS            reduce using rule 62 (dispatch -> dispatch_call .)
+    MINUS           reduce using rule 62 (dispatch -> dispatch_call .)
+    LTHAN           reduce using rule 62 (dispatch -> dispatch_call .)
+    LETHAN          reduce using rule 62 (dispatch -> dispatch_call .)
+    EQUALS          reduce using rule 62 (dispatch -> dispatch_call .)
+    DISP            reduce using rule 62 (dispatch -> dispatch_call .)
+    DOT             reduce using rule 62 (dispatch -> dispatch_call .)
+    SEMICOLON       reduce using rule 62 (dispatch -> dispatch_call .)
+    COMMA           reduce using rule 62 (dispatch -> dispatch_call .)
+    IN              reduce using rule 62 (dispatch -> dispatch_call .)
+    RBRACKET        reduce using rule 62 (dispatch -> dispatch_call .)
+    THEN            reduce using rule 62 (dispatch -> dispatch_call .)
+    LOOP            reduce using rule 62 (dispatch -> dispatch_call .)
+    OF              reduce using rule 62 (dispatch -> dispatch_call .)
+    ELSE            reduce using rule 62 (dispatch -> dispatch_call .)
+    POOL            reduce using rule 62 (dispatch -> dispatch_call .)
+    RBRACE          reduce using rule 62 (dispatch -> dispatch_call .)
+    FI              reduce using rule 62 (dispatch -> dispatch_call .)
 
 
 state 65
@@ -2035,10 +2035,10 @@ state 66
     (15) formals -> . id_type
     (16) formals -> . empty
     (12) id_type -> . ID TDOTS TYPE
-    (78) empty -> .
+    (69) empty -> .
 
     ID              shift and go to state 25
-    RBRACKET        reduce using rule 78 (empty -> .)
+    RBRACKET        reduce using rule 69 (empty -> .)
 
     id_type                        shift and go to state 27
     formals                        shift and go to state 98
@@ -2046,23 +2046,23 @@ state 66
 
 state 67
 
-    (70) dispatch -> expression especific . DOT dispatch_call
+    (61) dispatch -> expression especific . DOT dispatch_call
 
     DOT             shift and go to state 99
 
 
 state 68
 
-    (72) especific -> DISP . TYPE
+    (63) especific -> DISP . TYPE
 
     TYPE            shift and go to state 100
 
 
 state 69
 
-    (73) especific -> empty .
+    (64) especific -> empty .
 
-    DOT             reduce using rule 73 (especific -> empty .)
+    DOT             reduce using rule 64 (especific -> empty .)
 
 
 state 70
@@ -2109,14 +2109,14 @@ state 70
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -2157,13 +2157,13 @@ state 70
 
 state 71
 
-    (74) dispatch_call -> ID LBRACKET . params_expression RBRACKET
-    (75) params_expression -> . expression
-    (76) params_expression -> . expression COMMA params_expression
-    (77) params_expression -> . empty
+    (65) dispatch_call -> ID LBRACKET . params_expression RBRACKET
+    (66) params_expression -> . expression
+    (67) params_expression -> . expression COMMA params_expression
+    (68) params_expression -> . empty
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (78) empty -> .
+    (69) empty -> .
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2203,16 +2203,16 @@ state 71
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
-    RBRACKET        reduce using rule 78 (empty -> .)
+    RBRACKET        reduce using rule 69 (empty -> .)
     ID              shift and go to state 33
     NOT             shift and go to state 34
     MINUS           shift and go to state 40
@@ -2286,13 +2286,13 @@ state 72
 
 state 73
 
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -2300,7 +2300,7 @@ state 73
 state 74
 
     (47) atom -> ID .
-    (74) dispatch_call -> ID . LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> ID . LBRACKET params_expression RBRACKET
     (29) assign -> ID . ASSIGN expression
 
     DISP            reduce using rule 47 (atom -> ID .)
@@ -2362,16 +2362,16 @@ state 75
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2452,16 +2452,16 @@ state 76
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2542,16 +2542,16 @@ state 77
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2625,16 +2625,16 @@ state 78
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2716,16 +2716,16 @@ state 79
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2799,14 +2799,14 @@ state 80
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2830,7 +2830,7 @@ state 80
     (58) e_term -> . e_factor
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
 
     MINUS           shift and go to state 40
     LBRACKET        shift and go to state 46
@@ -2889,14 +2889,14 @@ state 81
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -2920,7 +2920,7 @@ state 81
     (58) e_term -> . e_factor
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
 
     MINUS           shift and go to state 40
     LBRACKET        shift and go to state 46
@@ -3052,7 +3052,7 @@ state 84
     (56) e_term -> e_term TIMES . e_factor
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
 
     MINUS           shift and go to state 115
     LET             shift and go to state 59
@@ -3065,7 +3065,7 @@ state 85
     (57) e_term -> e_term DIVIDE . e_factor
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
 
     MINUS           shift and go to state 115
     LET             shift and go to state 59
@@ -3076,14 +3076,14 @@ state 85
 state 86
 
     (38) atom -> LBRACKET expression . RBRACKET
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     RBRACKET        shift and go to state 117
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -3091,10 +3091,10 @@ state 86
 state 87
 
     (39) atom -> ISVOID expression .
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
   ! reduce/reduce conflict for DOT resolved using rule 39 (atom -> ISVOID expression .)
     TIMES           reduce using rule 39 (atom -> ISVOID expression .)
@@ -3119,7 +3119,7 @@ state 87
     DISP            shift and go to state 68
 
   ! DISP            [ reduce using rule 39 (atom -> ISVOID expression .) ]
-  ! DOT             [ reduce using rule 78 (empty -> .) ]
+  ! DOT             [ reduce using rule 69 (empty -> .) ]
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -3127,10 +3127,10 @@ state 87
 state 88
 
     (45) atom -> BCOMPLEMENT expression .
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
   ! reduce/reduce conflict for DOT resolved using rule 45 (atom -> BCOMPLEMENT expression .)
     TIMES           reduce using rule 45 (atom -> BCOMPLEMENT expression .)
@@ -3155,7 +3155,7 @@ state 88
     DISP            shift and go to state 68
 
   ! DISP            [ reduce using rule 45 (atom -> BCOMPLEMENT expression .) ]
-  ! DOT             [ reduce using rule 78 (empty -> .) ]
+  ! DOT             [ reduce using rule 69 (empty -> .) ]
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -3188,18 +3188,18 @@ state 89
 
 state 90
 
-    (61) let_expression -> LET declaration_list . IN expression
+    (70) let_expression -> LET declaration_list . IN expression
 
     IN              shift and go to state 118
 
 
 state 91
 
-    (62) declaration_list -> attribute . COMMA declaration_list
-    (63) declaration_list -> attribute .
+    (71) declaration_list -> attribute . COMMA declaration_list
+    (72) declaration_list -> attribute .
 
     COMMA           shift and go to state 119
-    IN              reduce using rule 63 (declaration_list -> attribute .)
+    IN              reduce using rule 72 (declaration_list -> attribute .)
 
 
 state 92
@@ -3213,59 +3213,59 @@ state 93
 
     (17) expression_list -> expression . SEMICOLON expression_list
     (18) expression_list -> expression . SEMICOLON
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     SEMICOLON       shift and go to state 121
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 94
 
-    (64) conditional -> IF expression . THEN expression ELSE expression FI
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (73) conditional -> IF expression . THEN expression ELSE expression FI
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     THEN            shift and go to state 122
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 95
 
-    (65) loop -> WHILE expression . LOOP expression POOL
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (74) loop -> WHILE expression . LOOP expression POOL
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     LOOP            shift and go to state 123
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 96
 
-    (66) case -> CASE expression . OF implications ESAC
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (75) case -> CASE expression . OF implications ESAC
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     OF              shift and go to state 124
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -3286,8 +3286,8 @@ state 98
 
 state 99
 
-    (70) dispatch -> expression especific DOT . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (61) dispatch -> expression especific DOT . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 127
 
@@ -3295,18 +3295,18 @@ state 99
 
 state 100
 
-    (72) especific -> DISP TYPE .
+    (63) especific -> DISP TYPE .
 
-    DOT             reduce using rule 72 (especific -> DISP TYPE .)
+    DOT             reduce using rule 63 (especific -> DISP TYPE .)
 
 
 state 101
 
     (29) assign -> ID ASSIGN expression .
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
   ! reduce/reduce conflict for DOT resolved using rule 29 (assign -> ID ASSIGN expression .)
     DOT             reduce using rule 29 (assign -> ID ASSIGN expression .)
@@ -3331,40 +3331,40 @@ state 101
     DISP            shift and go to state 68
 
   ! DISP            [ reduce using rule 29 (assign -> ID ASSIGN expression .) ]
-  ! DOT             [ reduce using rule 78 (empty -> .) ]
+  ! DOT             [ reduce using rule 69 (empty -> .) ]
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 102
 
-    (74) dispatch_call -> ID LBRACKET params_expression . RBRACKET
+    (65) dispatch_call -> ID LBRACKET params_expression . RBRACKET
 
     RBRACKET        shift and go to state 128
 
 
 state 103
 
-    (75) params_expression -> expression .
-    (76) params_expression -> expression . COMMA params_expression
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (66) params_expression -> expression .
+    (67) params_expression -> expression . COMMA params_expression
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
-    RBRACKET        reduce using rule 75 (params_expression -> expression .)
+    RBRACKET        reduce using rule 66 (params_expression -> expression .)
     COMMA           shift and go to state 129
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 104
 
-    (77) params_expression -> empty .
+    (68) params_expression -> empty .
 
-    RBRACKET        reduce using rule 77 (params_expression -> empty .)
+    RBRACKET        reduce using rule 68 (params_expression -> empty .)
 
 
 state 105
@@ -3780,7 +3780,7 @@ state 115
     (59) e_factor -> MINUS . e_factor
     (59) e_factor -> . MINUS e_factor
     (60) e_factor -> . let_expression
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
 
     MINUS           shift and go to state 115
     LET             shift and go to state 59
@@ -3842,7 +3842,7 @@ state 117
 
 state 118
 
-    (61) let_expression -> LET declaration_list IN . expression
+    (70) let_expression -> LET declaration_list IN . expression
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -3884,14 +3884,14 @@ state 118
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -3932,9 +3932,9 @@ state 118
 
 state 119
 
-    (62) declaration_list -> attribute COMMA . declaration_list
-    (62) declaration_list -> . attribute COMMA declaration_list
-    (63) declaration_list -> . attribute
+    (71) declaration_list -> attribute COMMA . declaration_list
+    (71) declaration_list -> . attribute COMMA declaration_list
+    (72) declaration_list -> . attribute
     (10) attribute -> . id_type
     (11) attribute -> . id_type ASSIGN expression
     (12) id_type -> . ID TDOTS TYPE
@@ -4018,14 +4018,14 @@ state 121
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     RBRACE          reduce using rule 18 (expression_list -> expression SEMICOLON .)
     ID              shift and go to state 33
@@ -4068,7 +4068,7 @@ state 121
 
 state 122
 
-    (64) conditional -> IF expression THEN . expression ELSE expression FI
+    (73) conditional -> IF expression THEN . expression ELSE expression FI
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -4110,14 +4110,14 @@ state 122
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -4158,7 +4158,7 @@ state 122
 
 state 123
 
-    (65) loop -> WHILE expression LOOP . expression POOL
+    (74) loop -> WHILE expression LOOP . expression POOL
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -4200,14 +4200,14 @@ state 123
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -4248,10 +4248,10 @@ state 123
 
 state 124
 
-    (66) case -> CASE expression OF . implications ESAC
-    (67) implications -> . implication SEMICOLON implications
-    (68) implications -> . implication SEMICOLON
-    (69) implication -> . id_type IMPLY expression
+    (75) case -> CASE expression OF . implications ESAC
+    (76) implications -> . implication SEMICOLON implications
+    (77) implications -> . implication SEMICOLON
+    (78) implication -> . id_type IMPLY expression
     (12) id_type -> . ID TDOTS TYPE
 
     ID              shift and go to state 25
@@ -4269,72 +4269,72 @@ state 125
 
 state 126
 
-    (70) dispatch -> expression especific DOT dispatch_call .
+    (61) dispatch -> expression especific DOT dispatch_call .
 
-    TIMES           reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    DIVIDE          reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    PLUS            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    MINUS           reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    LTHAN           reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    LETHAN          reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    EQUALS          reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    DISP            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    DOT             reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    SEMICOLON       reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    COMMA           reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    IN              reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    RBRACKET        reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    THEN            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    LOOP            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    OF              reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    ELSE            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    POOL            reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    RBRACE          reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
-    FI              reduce using rule 70 (dispatch -> expression especific DOT dispatch_call .)
+    TIMES           reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    DIVIDE          reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    PLUS            reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    MINUS           reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    LTHAN           reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    LETHAN          reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    EQUALS          reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    DISP            reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    DOT             reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    SEMICOLON       reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    COMMA           reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    IN              reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    RBRACKET        reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    THEN            reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    LOOP            reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    OF              reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    ELSE            reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    POOL            reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    RBRACE          reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
+    FI              reduce using rule 61 (dispatch -> expression especific DOT dispatch_call .)
 
 
 state 127
 
-    (74) dispatch_call -> ID . LBRACKET params_expression RBRACKET
+    (65) dispatch_call -> ID . LBRACKET params_expression RBRACKET
 
     LBRACKET        shift and go to state 71
 
 
 state 128
 
-    (74) dispatch_call -> ID LBRACKET params_expression RBRACKET .
+    (65) dispatch_call -> ID LBRACKET params_expression RBRACKET .
 
-    TIMES           reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    DIVIDE          reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    PLUS            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    MINUS           reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    LTHAN           reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    LETHAN          reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    EQUALS          reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    DISP            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    DOT             reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    SEMICOLON       reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    COMMA           reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    IN              reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    RBRACKET        reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    THEN            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    LOOP            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    OF              reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    ELSE            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    POOL            reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    RBRACE          reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
-    FI              reduce using rule 74 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    TIMES           reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    DIVIDE          reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    PLUS            reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    MINUS           reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    LTHAN           reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    LETHAN          reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    EQUALS          reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    DISP            reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    DOT             reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    SEMICOLON       reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    COMMA           reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    IN              reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    RBRACKET        reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    THEN            reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    LOOP            reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    OF              reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    ELSE            reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    POOL            reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    RBRACE          reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
+    FI              reduce using rule 65 (dispatch_call -> ID LBRACKET params_expression RBRACKET .)
 
 
 state 129
 
-    (76) params_expression -> expression COMMA . params_expression
-    (75) params_expression -> . expression
-    (76) params_expression -> . expression COMMA params_expression
-    (77) params_expression -> . empty
+    (67) params_expression -> expression COMMA . params_expression
+    (66) params_expression -> . expression
+    (67) params_expression -> . expression COMMA params_expression
+    (68) params_expression -> . empty
     (19) expression -> . assign
     (20) expression -> . upper_non
-    (78) empty -> .
+    (69) empty -> .
     (29) assign -> . ID ASSIGN expression
     (21) upper_non -> . NOT upper_non
     (22) upper_non -> . operator_non
@@ -4374,16 +4374,16 @@ state 129
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
-    RBRACKET        reduce using rule 78 (empty -> .)
+    RBRACKET        reduce using rule 69 (empty -> .)
     ID              shift and go to state 33
     NOT             shift and go to state 34
     MINUS           shift and go to state 40
@@ -4451,46 +4451,46 @@ state 130
 
 state 131
 
-    (61) let_expression -> LET declaration_list IN expression .
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (70) let_expression -> LET declaration_list IN expression .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
   ! shift/reduce conflict for DISP resolved as shift
-  ! reduce/reduce conflict for DOT resolved using rule 61 (let_expression -> LET declaration_list IN expression .)
-    TIMES           reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    DIVIDE          reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    LTHAN           reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    LETHAN          reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    EQUALS          reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    DOT             reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    SEMICOLON       reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    COMMA           reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    IN              reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    RBRACKET        reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    PLUS            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    MINUS           reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    THEN            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    LOOP            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    OF              reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    ELSE            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    POOL            reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    RBRACE          reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
-    FI              reduce using rule 61 (let_expression -> LET declaration_list IN expression .)
+  ! reduce/reduce conflict for DOT resolved using rule 69 (empty -> .)
+    TIMES           reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    DIVIDE          reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    LTHAN           reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    LETHAN          reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    EQUALS          reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    SEMICOLON       reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    COMMA           reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    IN              reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    RBRACKET        reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    PLUS            reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    MINUS           reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    THEN            reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    LOOP            reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    OF              reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    ELSE            reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    POOL            reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    RBRACE          reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
+    FI              reduce using rule 70 (let_expression -> LET declaration_list IN expression .)
     DISP            shift and go to state 68
+    DOT             reduce using rule 69 (empty -> .)
 
-  ! DISP            [ reduce using rule 61 (let_expression -> LET declaration_list IN expression .) ]
-  ! DOT             [ reduce using rule 78 (empty -> .) ]
+  ! DISP            [ reduce using rule 70 (let_expression -> LET declaration_list IN expression .) ]
+  ! DOT             [ reduce using rule 70 (let_expression -> LET declaration_list IN expression .) ]
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 132
 
-    (62) declaration_list -> attribute COMMA declaration_list .
+    (71) declaration_list -> attribute COMMA declaration_list .
 
-    IN              reduce using rule 62 (declaration_list -> attribute COMMA declaration_list .)
+    IN              reduce using rule 71 (declaration_list -> attribute COMMA declaration_list .)
 
 
 state 133
@@ -4502,52 +4502,52 @@ state 133
 
 state 134
 
-    (64) conditional -> IF expression THEN expression . ELSE expression FI
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (73) conditional -> IF expression THEN expression . ELSE expression FI
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     ELSE            shift and go to state 141
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 135
 
-    (65) loop -> WHILE expression LOOP expression . POOL
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (74) loop -> WHILE expression LOOP expression . POOL
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     POOL            shift and go to state 142
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 136
 
-    (66) case -> CASE expression OF implications . ESAC
+    (75) case -> CASE expression OF implications . ESAC
 
     ESAC            shift and go to state 143
 
 
 state 137
 
-    (67) implications -> implication . SEMICOLON implications
-    (68) implications -> implication . SEMICOLON
+    (76) implications -> implication . SEMICOLON implications
+    (77) implications -> implication . SEMICOLON
 
     SEMICOLON       shift and go to state 144
 
 
 state 138
 
-    (69) implication -> id_type . IMPLY expression
+    (78) implication -> id_type . IMPLY expression
 
     IMPLY           shift and go to state 145
 
@@ -4596,14 +4596,14 @@ state 139
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -4644,14 +4644,14 @@ state 139
 
 state 140
 
-    (76) params_expression -> expression COMMA params_expression .
+    (67) params_expression -> expression COMMA params_expression .
 
-    RBRACKET        reduce using rule 76 (params_expression -> expression COMMA params_expression .)
+    RBRACKET        reduce using rule 67 (params_expression -> expression COMMA params_expression .)
 
 
 state 141
 
-    (64) conditional -> IF expression THEN expression ELSE . expression FI
+    (73) conditional -> IF expression THEN expression ELSE . expression FI
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -4693,14 +4693,14 @@ state 141
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -4741,66 +4741,66 @@ state 141
 
 state 142
 
-    (65) loop -> WHILE expression LOOP expression POOL .
+    (74) loop -> WHILE expression LOOP expression POOL .
 
-    TIMES           reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    DIVIDE          reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    PLUS            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    MINUS           reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    LTHAN           reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    LETHAN          reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    EQUALS          reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    DISP            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    DOT             reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    SEMICOLON       reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    COMMA           reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    IN              reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    RBRACKET        reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    THEN            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    LOOP            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    OF              reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    ELSE            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    POOL            reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    RBRACE          reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
-    FI              reduce using rule 65 (loop -> WHILE expression LOOP expression POOL .)
+    TIMES           reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    DIVIDE          reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    PLUS            reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    MINUS           reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    LTHAN           reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    LETHAN          reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    EQUALS          reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    DISP            reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    DOT             reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    SEMICOLON       reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    COMMA           reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    IN              reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    RBRACKET        reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    THEN            reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    LOOP            reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    OF              reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    ELSE            reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    POOL            reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    RBRACE          reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
+    FI              reduce using rule 74 (loop -> WHILE expression LOOP expression POOL .)
 
 
 state 143
 
-    (66) case -> CASE expression OF implications ESAC .
+    (75) case -> CASE expression OF implications ESAC .
 
-    TIMES           reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    DIVIDE          reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    PLUS            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    MINUS           reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    LTHAN           reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    LETHAN          reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    EQUALS          reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    DISP            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    DOT             reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    SEMICOLON       reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    COMMA           reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    IN              reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    RBRACKET        reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    THEN            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    LOOP            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    OF              reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    ELSE            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    POOL            reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    RBRACE          reduce using rule 66 (case -> CASE expression OF implications ESAC .)
-    FI              reduce using rule 66 (case -> CASE expression OF implications ESAC .)
+    TIMES           reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    DIVIDE          reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    PLUS            reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    MINUS           reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    LTHAN           reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    LETHAN          reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    EQUALS          reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    DISP            reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    DOT             reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    SEMICOLON       reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    COMMA           reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    IN              reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    RBRACKET        reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    THEN            reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    LOOP            reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    OF              reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    ELSE            reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    POOL            reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    RBRACE          reduce using rule 75 (case -> CASE expression OF implications ESAC .)
+    FI              reduce using rule 75 (case -> CASE expression OF implications ESAC .)
 
 
 state 144
 
-    (67) implications -> implication SEMICOLON . implications
-    (68) implications -> implication SEMICOLON .
-    (67) implications -> . implication SEMICOLON implications
-    (68) implications -> . implication SEMICOLON
-    (69) implication -> . id_type IMPLY expression
+    (76) implications -> implication SEMICOLON . implications
+    (77) implications -> implication SEMICOLON .
+    (76) implications -> . implication SEMICOLON implications
+    (77) implications -> . implication SEMICOLON
+    (78) implication -> . id_type IMPLY expression
     (12) id_type -> . ID TDOTS TYPE
 
-    ESAC            reduce using rule 68 (implications -> implication SEMICOLON .)
+    ESAC            reduce using rule 77 (implications -> implication SEMICOLON .)
     ID              shift and go to state 25
 
     implication                    shift and go to state 137
@@ -4809,7 +4809,7 @@ state 144
 
 state 145
 
-    (69) implication -> id_type IMPLY . expression
+    (78) implication -> id_type IMPLY . expression
     (19) expression -> . assign
     (20) expression -> . upper_non
     (29) assign -> . ID ASSIGN expression
@@ -4851,14 +4851,14 @@ state 145
     (50) atom -> . TRUE
     (51) atom -> . FALSE
     (52) atom -> . NEW TYPE
-    (61) let_expression -> . LET declaration_list IN expression
+    (70) let_expression -> . LET declaration_list IN expression
     (46) block -> . LBRACE expression_list RBRACE
-    (64) conditional -> . IF expression THEN expression ELSE expression FI
-    (65) loop -> . WHILE expression LOOP expression POOL
-    (66) case -> . CASE expression OF implications ESAC
-    (70) dispatch -> . expression especific DOT dispatch_call
-    (71) dispatch -> . dispatch_call
-    (74) dispatch_call -> . ID LBRACKET params_expression RBRACKET
+    (73) conditional -> . IF expression THEN expression ELSE expression FI
+    (74) loop -> . WHILE expression LOOP expression POOL
+    (75) case -> . CASE expression OF implications ESAC
+    (61) dispatch -> . expression especific DOT dispatch_call
+    (62) dispatch -> . dispatch_call
+    (65) dispatch_call -> . ID LBRACKET params_expression RBRACKET
 
     ID              shift and go to state 33
     NOT             shift and go to state 34
@@ -4900,51 +4900,51 @@ state 145
 state 146
 
     (13) method_declaration -> ID LBRACKET formals RBRACKET TDOTS TYPE LBRACE expression . RBRACE
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     RBRACE          shift and go to state 150
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 147
 
-    (64) conditional -> IF expression THEN expression ELSE expression . FI
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (73) conditional -> IF expression THEN expression ELSE expression . FI
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
     FI              shift and go to state 151
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
 
 state 148
 
-    (67) implications -> implication SEMICOLON implications .
+    (76) implications -> implication SEMICOLON implications .
 
-    ESAC            reduce using rule 67 (implications -> implication SEMICOLON implications .)
+    ESAC            reduce using rule 76 (implications -> implication SEMICOLON implications .)
 
 
 state 149
 
-    (69) implication -> id_type IMPLY expression .
-    (70) dispatch -> expression . especific DOT dispatch_call
-    (72) especific -> . DISP TYPE
-    (73) especific -> . empty
-    (78) empty -> .
+    (78) implication -> id_type IMPLY expression .
+    (61) dispatch -> expression . especific DOT dispatch_call
+    (63) especific -> . DISP TYPE
+    (64) especific -> . empty
+    (69) empty -> .
 
-    SEMICOLON       reduce using rule 69 (implication -> id_type IMPLY expression .)
+    SEMICOLON       reduce using rule 78 (implication -> id_type IMPLY expression .)
     DISP            shift and go to state 68
-    DOT             reduce using rule 78 (empty -> .)
+    DOT             reduce using rule 69 (empty -> .)
 
     especific                      shift and go to state 67
     empty                          shift and go to state 69
@@ -4958,28 +4958,28 @@ state 150
 
 state 151
 
-    (64) conditional -> IF expression THEN expression ELSE expression FI .
+    (73) conditional -> IF expression THEN expression ELSE expression FI .
 
-    TIMES           reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    DIVIDE          reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    PLUS            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    MINUS           reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    LTHAN           reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    LETHAN          reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    EQUALS          reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    DISP            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    DOT             reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    SEMICOLON       reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    COMMA           reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    IN              reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    RBRACKET        reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    THEN            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    LOOP            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    OF              reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    ELSE            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    POOL            reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    RBRACE          reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
-    FI              reduce using rule 64 (conditional -> IF expression THEN expression ELSE expression FI .)
+    TIMES           reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    DIVIDE          reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    PLUS            reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    MINUS           reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    LTHAN           reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    LETHAN          reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    EQUALS          reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    DISP            reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    DOT             reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    SEMICOLON       reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    COMMA           reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    IN              reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    RBRACKET        reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    THEN            reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    LOOP            reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    OF              reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    ELSE            reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    POOL            reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    RBRACE          reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
+    FI              reduce using rule 73 (conditional -> IF expression THEN expression ELSE expression FI .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -5024,5 +5024,5 @@ WARNING: reduce/reduce conflict in state 112 resolved using rule (term -> term T
 WARNING: rejected rule (term -> factor) in state 112
 WARNING: reduce/reduce conflict in state 113 resolved using rule (term -> term DIVIDE factor)
 WARNING: rejected rule (term -> factor) in state 113
-WARNING: reduce/reduce conflict in state 131 resolved using rule (let_expression -> LET declaration_list IN expression)
-WARNING: rejected rule (empty -> <empty>) in state 131
+WARNING: reduce/reduce conflict in state 131 resolved using rule (empty -> <empty>)
+WARNING: rejected rule (let_expression -> LET declaration_list IN expression) in state 131

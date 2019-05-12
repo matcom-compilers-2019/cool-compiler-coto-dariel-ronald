@@ -21,7 +21,7 @@ def check_semantic(ast):
     tchecv.visit(ast, scope)
 
 
-def test_first():
+def test_hello_world():
     program_ast = ProgramNode([ClassNode('Main', features=[
         MethodNode('main', [], 'IO',DispatchNode('out_string', [StrNode('"Hello, World"')], None))
     ], inherit='IO')])
@@ -35,7 +35,32 @@ def test_first():
     '''
     parser_result = parser.parse(program_code)
     verify_asts(program_ast, parser_result, Node)
-
     check_semantic(program_ast)
+
+
+def test_new_type_node_and_let_node():
+    program_ast = ProgramNode([ClassNode('Main', features=[
+        MethodNode('main', [], 'Int',
+                   BlockNode([
+                        LetVarNode([(('io','IO'),NewTypeNode('IO'))],
+                                   DispatchNode('out_string',
+                                                [StrNode('"Hello World"')],ObjectNode('io'))),
+                        IntNode(0)
+        ]))
+    ])])
+    program_code = '''
+   class Main {
+    main() : Int {
+	{
+	    let io: IO <- new IO in io.out_string("Hello World");
+	    0;
+	}
+    };
+};
+    '''
+    parser_result = parser.parse(program_code)
+    verify_asts(program_ast, parser_result, Node)
+    check_semantic(program_ast)
+
 
 

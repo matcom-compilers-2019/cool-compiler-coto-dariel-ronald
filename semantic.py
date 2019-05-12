@@ -113,8 +113,8 @@ class TypeCheckerVisitor:
             throw_exception(
                 NameError,0, 0, "Can not find Main class")
 
-        if main_type._parent_type_name != 'IO':
-            throw_exception(TypeError, 0, 0, "Class Main can't inherits from other class")
+        # if main_type._parent_type_name != 'IO':
+        #     throw_exception(TypeError, 0, 0, "Class Main can't inherits from other class")
 
         main_method = main_type.get_method('main')
         if main_method is None:
@@ -558,7 +558,7 @@ class TypeCheckerVisitor:
         :return:
         '''
         child_scope = scope.create_child_scope()
-        for id_type, expr in node.declaration_list:
+        for id_type, expr in node.declarations:
             vtype = scope.get_type(id_type[1])
             if vtype is None:
                 throw_exception(TypeError, node.line,node.index,'Error in let. Type %s not defined'% id_type[1])
