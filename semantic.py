@@ -303,9 +303,9 @@ class TypeCheckerVisitor:
         self.visit(node.case_expression,scope)
 
         id_s_types = set()
-        lcas = []
+        branches_types = []
         for id_typeName, expr in node.implications:
-            implication_id_type = scope.get_type(id_typeName)
+            implication_id_type = scope.get_type(id_typeName[1])
             if implication_id_type is None:
                 throw_exception(TypeError, node.line, node.index,
                                 'Type {} not defined'.format(id_typeName[1]))
@@ -320,10 +320,10 @@ class TypeCheckerVisitor:
                                 .format(id_typeName))
 
             self.visit(expr,child_scope)
-            lcas.append(expr.computed_type)
+            branches_types.append(expr.computed_type)
 
-        lca_joined = lcas[0]
-        for lca in lcas[1:]:
+        lca_joined = branches_types[0]
+        for lca in branches_types[1:]:
             
             if lca.height > lca_joined.height:
                 lca_joined = lca
@@ -334,7 +334,7 @@ class TypeCheckerVisitor:
         self.visit(node.while_expression,scope)
 
         if node.while_expression.computed_type != scope.get_type('Bool'):
-            throw_exception(TypeError, node.line,node.index,'Error in while Condition expression')
+            throw_exception(TypeError, node.line,node.index,'Error in while Condition expression, is not type boolean.')
 
         child_scope = scope.create_child_scope()
         self.visit(node.loop_expression,child_scope)

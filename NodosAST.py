@@ -72,7 +72,7 @@ class AssignNode(ExpressionNode):
 
 
 class DispatchNode(AtomNode):
-    def __init__(self,func_id,params,left_expr):
+    def __init__(self,func_id,params=[],left_expr=None):
         self.left_expression = left_expr
         self.func_id = func_id
         self.parameters = params

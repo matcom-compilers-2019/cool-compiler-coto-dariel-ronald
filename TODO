@@ -25,12 +25,16 @@ class inherits from Object by default.
 cycles.
     -In addition to Object, Cool has four other basic classes: Int, String, Bool, and IO.
 
-Todo on checksemanticks:
+Todo in checksemanticks:
     - Tema de la recuperacion de errores
     - Nadie puede heredar de Main,
     - Al iterar por las clases tengo q poner q no se revisen las clases builtin
     - A la Hora de buscar si existe un metodo en un tipo, buscar de forma recursiva por todos sus padres,
         al igual q conlos atributos de la clase.
+
+Todo in CIL
+    - es en cil donde se agregan los metodos y las clases bultins
+    - agregar los atributos en el data.
 
 Todo a preguntar
 - Cómo va a ser el tema de la recuperación de errores
