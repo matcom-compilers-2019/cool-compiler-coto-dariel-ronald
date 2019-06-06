@@ -122,16 +122,16 @@ def test_conditional():
         program_code = '''
        class Main {
             main() : IO {
-                       {
-                       
-                            if 2<=3 then let io: IO <- new IO in io.out_string("True") 
-                            else let io: IO <- new IO in io.out_string("False") fi;
-                       }
+                   {
+                   
+                        if 2<=3 then let io: IO <- new IO in io.out_string("True") 
+                        else let io: IO <- new IO in io.out_string("False") fi;
+                   }
             };
         };
 
         '''
-        parser_result = parser.parse(program_code, lexer=lexer, debug=True)
+        parser_result = parser.parse(program_code, lexer=lexer)
         verify_asts(program_ast, parser_result, Node)
         check_semantic(program_ast)
 
@@ -177,7 +177,7 @@ def test_loop_check():
             };
         };
     '''
-    parser_result = parser.parse(program_code, lexer=lexer, debug=True)
+    parser_result = parser.parse(program_code, lexer=lexer)
     verify_asts(program_ast, parser_result, Node)
     check_semantic(program_ast)
 
@@ -266,6 +266,6 @@ def test_case():
             };
         };
     '''
-    parser_result = parser.parse(program_code, lexer=lexer, debug=True)
+    parser_result = parser.parse(program_code, lexer=lexer)
     verify_asts(program_ast, parser_result, Node)
     check_semantic(program_ast)
