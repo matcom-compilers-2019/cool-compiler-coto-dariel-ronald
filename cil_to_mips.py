@@ -20,43 +20,33 @@ class CollectMipsVtablesVisitor:
 
     @visitor.when(cil_hierarchy.CILProgramNode)
     def visit(self, node: cil_hierarchy.CILProgramNode):
-        self.emit('@@types_definitions: ')
+        self.emit('__vtables: ')
 
         cil_context = MipsTypeContext()
         cil_context.add_nodes(node.dottypes)
         cil_context.define_nodes_parent()
+        cil_context.update_methods_inheritence()
 
         for node_type in node.dottypes:
             self.visit(node_type)
 
     # Type definition example
-    # type_X:
-    # .word(tamaño de definicion)
-    # .byte(tamaño a reservar por cada instancia)
-    # .word type_X(direccion del mismo tipo)
-    # .byte(cantidad de attrs)
-    # # attr1
-    # .byte(len attrname1)
-    # .asciiz(name)
-    # .space 4(value)
+    # __vtable_X:
+    # .byte (cnt_methods)
+    # #method1
+    # .byte (longitud del nombre del metodo)
+    # .asciiz (nombre del metodo)
+    # .word (puntero al metodo)
 
     @visitor.when(cil_hierarchy.CILTypeNode)
     def visit(self, node: cil_hierarchy.CILTypeNode):
-        self.emit(f'type_{node.name}: ')
-        type_space_in_bytes = sum([len(attr_name)for attr_name in node.attributes]) + len(node.attributes)*5
-        # type space
-        self.emit(f'.word {type_space_in_bytes}')
+        self.emit(f'__vtable_{node.name}: ')
+        self.emit(f'.byte {len(node.methods)}')
 
-        self.emit(f'.byte {type_space_in_bytes - 4}')
-        # vtableDirection
-        self.emit(f'.word __vtable_{node.name}')
-        self.emit(f'.byte {len(node.attributes)}')
-
-        for attr in node.attributes:
-            self.emit(f'.byte {len(attr)}')
-            self.emit(f'.asciiz "{attr}"')
-            self.emit(f'.space 4')
-
+        for method_name in node.methods:
+            method_real_name = method_name.split('_', maxsplit=1)[1]
+            self.emit(f'.asciiz "{method_real_name}"')
+            self.emit(f'.word {method_name}')
 
 class CollectMipsTypesDefinitionsVisitor:
     def __init__(self):
@@ -89,7 +79,7 @@ class CollectMipsTypesDefinitionsVisitor:
     # .word(tamaño de definicion)
     # .byte(tamaño a reservar por cada instancia)
     # .word type_X(direccion del mismo tipo)
-    # .word vtable_X
+    # .word __vtable_{node.name}
     # .byte(cantidad de attrs)
     # # attr1
     # .byte(len attrname1)
@@ -153,6 +143,14 @@ class CILtoMIPSVisitor:
     def visit(self, node: cil_hierarchy.CILProgramNode):
         self.emit('.data')
         self.visit(node.dotdata)
+        type_definition_creator = CollectMipsTypesDefinitionsVisitor()
+        type_definition_creator.visit(node)
+        self.output += type_definition_creator.output
+
+        vtable_creator = CollectMipsVtablesVisitor()
+        vtable_creator.visit(node)
+        self.output += vtable_creator.output
+
         self.emit('.text')
         for i in range(len(node.dottypes)):
             self.visit(node.dotcode[i])
