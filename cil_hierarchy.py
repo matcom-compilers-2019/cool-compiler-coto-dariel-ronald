@@ -74,11 +74,6 @@ class CILFunctionNode(CILNode):
             self.instructions = instructions
 
 
-class CILParamNode(CILNode):
-    def __init__(self, vinfo):
-        self.vinfo = vinfo
-
-
 class CILLocalNode(CILNode):
     def __init__(self, vinfo):
         self.vinfo = vinfo
@@ -170,14 +165,17 @@ class CILGotoIfNode(CILInstructionNode):
 
 
 class CILStaticCallNode(CILInstructionNode):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, localv,fid):
+        self.localv = localv
+        self.fid = fid
 
 
 class CILDinamicCallNode(CILInstructionNode):
-    def __init__(self, id, parent_type):
-        self.id = id
-        self.parent_type = parent_type
+    def __init__(self, localv, fid, fType, params):
+        self.localv = localv
+        self.fid = fid
+        self.params = params
+        self.fType = fType
 
 
 class CILGetParentNode(CILInstructionNode):
@@ -300,5 +298,5 @@ class CILEqualThanNode(CILInstructionNode):
 
 
 class CILCopyNode(CILInstructionNode):
-    def __init__(self, type_to_copy):
-        self.type_to_copy = type_to_copy
+    def __init__(self, variable):
+        self.variable = variable

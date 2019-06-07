@@ -145,10 +145,13 @@ class CILtoMIPSVisitor:
         self.visit(node.dotdata)
         type_definition_creator = CollectMipsTypesDefinitionsVisitor()
         type_definition_creator.visit(node)
+        # add types definitions
         self.output += type_definition_creator.output
 
         vtable_creator = CollectMipsVtablesVisitor()
         vtable_creator.visit(node)
+
+        # add vtables definitions
         self.output += vtable_creator.output
 
         self.emit('.text')
@@ -157,7 +160,7 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILAbortNode)
     def visit(self,node: cil_hierarchy.CILAbortNode):
-        self.emit(f'la $a0, {node.msg}')
+        self.emit(f'la $a0, {node}') #arreglar esto
         self.emit(f'li $v0, 4')
         self.emit('syscall')
         self.emit(f'li $v0, 10')
@@ -165,11 +168,22 @@ class CILtoMIPSVisitor:
     
 
     @visitor.when(cil_hierarchy.CILAllocateNode)
-    def visit(self,node:cil_hierarchy.CILAllocateNode):
+    def visit(self, node: cil_hierarchy.CILAllocateNode):
+        '''
+        el nodo contiene la propiedad type_id que contiene el nombre del tipo de la instancia que se quiere crear.
+        Lo que hay que hacer es ir a la direccion de memoria del tipo, leer un byte a partir del 4to byte, reservar la
+        cantidad de bytes que dice ese valor, y copiar byte a byte de una direccion de memoria a otra.
+        :param node:
+        :return:
+        '''
+        self.emit(f'')
+
+    @visitor.when(cil_hierarchy.CILCopyNode)
+    def visit(self, node: cil_hierarchy.CILCopyNode):
         pass
 
     @visitor.when(cil_hierarchy.CILArrayNode)
-    def visit(self,node:cil_hierarchy.CILArrayNode):
+    def visit(self,node: cil_hierarchy.CILArrayNode):
         self.emit('li $v0, 9')
         self.emit(f'lw $a0, {node.size}')
         self.emit('syscall')
@@ -198,10 +212,48 @@ class CILtoMIPSVisitor:
     def visit(self, node: cil_hierarchy.CILDataElementNode):
         self.emit(f'{node.vname}: .asciiz "{node.value}\n"')
 
+    def save_string(self, name):
+        # reservar el espacio del string, se guarda en $v0
+        self.emit(f'li $v0, 9')
+        self.emit(f'li $a0, {len(name)+1}')
+        self.emit(f'syscall')
+
+        for i,char in enumerate(name):
+            self.emit(f'li $t1, {char}')
+            self.emit(f'sb $t1, {i}($v0)')
+        self.emit(f'sb $0, {len(name)}($v0)')
 
     @visitor.when(cil_hierarchy.CILDinamicCallNode)
     def visit(self,node:cil_hierarchy.CILDinamicCallNode):
-        pass
+        # resolve method address
+        # call find_method_address function
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.save_string(node.fid)
+        self.emit('move $fp, $sp')
+        # guardamos en $t1 la direccion de memoria de la vtable del tipo node.ftype
+        self.emit(f'lw $t1, {node.fType} + 9')
+        self.macro_push('$v0')
+        self.macro_push('$t1')
+        # saltar a la funcion que busca el puntero al metodo correcto
+        self.emit('jal resolve_method')
+
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
+
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit(f'mov $t0, $fp')
+        self.emit(f'mov $fp, $sp')
+        for param in node.params:
+            param_index = self.get_local_var_or_param_index(param)
+            self.emit(f'lw $a0, {4*param_index}($t0)')
+            self.macro_push('$a0')
+
+
+
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILDivNode)
     def visit(self,node:cil_hierarchy.CILDivNode):
@@ -223,7 +275,7 @@ class CILtoMIPSVisitor:
         self.emit('move $v0, $t3')
 
     @visitor.when(cil_hierarchy.CILErrorMessage)
-    def visit(self,node:cil_hierarchy.CILErrorMessage):
+    def visit(self, node: cil_hierarchy.CILErrorMessage):
         self.emit(f'la $a0, {node.msg}')
         self.emit('li $v0, 4')
         self.emit('syscall')
@@ -295,9 +347,9 @@ class CILtoMIPSVisitor:
         self.emit(f'(add $t3, $t0, $t2)')
         self.emit('move $v0, $t3')
 
-    @visitor.when(cil_hierarchy.CILParamNode)
-    def visit(self,node:cil_hierarchy.CILParamNode):
-        self.macro_push(node.vinfo.name)
+    # @visitor.when(cil_hierarchy.CILParamNode)
+    # def visit(self,node: cil_hierarchy.CILParamNode):
+    #     self.macro_push(node.vinfo.name)
 
     @visitor.when(cil_hierarchy.CILPlusNode)
     def visit(self,node:cil_hierarchy.CILPlusNode):
@@ -356,7 +408,16 @@ class CILtoMIPSVisitor:
         self.emit('syscall')
 
     @visitor.when(cil_hierarchy.CILReturnNode)
-    def visit(self,node:cil_hierarchy.CILReturnNode):
+    def visit(self,node: cil_hierarchy.CILReturnNode):
+        '''
+        Carga lo que está en la direccion de memoria que le pasan a return
+        y lo escribe en $v0
+        :param node:
+        :return:
+        '''
+        if node.value is not None:
+            local_index = self.get_local_var_or_param_index(node.value)
+            self.emit('lw $v0, {}')
         self.emit('jr $ra')
 
     @visitor.when(cil_hierarchy.CILSetAttributeNode)
