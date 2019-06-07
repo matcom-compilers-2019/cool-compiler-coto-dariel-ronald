@@ -165,9 +165,10 @@ class CILGotoIfNode(CILInstructionNode):
 
 
 class CILStaticCallNode(CILInstructionNode):
-    def __init__(self, localv,fid):
+    def __init__(self, localv,fid,params):
         self.localv = localv
         self.fid = fid
+        self.params = params
 
 
 class CILDinamicCallNode(CILInstructionNode):

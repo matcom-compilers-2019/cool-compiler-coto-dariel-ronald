@@ -223,21 +223,129 @@ class CILtoMIPSVisitor:
             self.emit(f'sb $t1, {i}($v0)')
         self.emit(f'sb $0, {len(name)}($v0)')
 
-    @visitor.when(cil_hierarchy.CILDinamicCallNode)
-    def visit(self,node:cil_hierarchy.CILDinamicCallNode):
+    def add_compare_strings_funct(self):
+        '''
+        Dado dos direcciones de memoria de strings, devuelve 1 si son iguales, 0 en otro caso.
+        :return:
+        '''
+
+        self.emit('''
+        __compare_strings:
+        lw $s2, -4($fp)
+        lw $s3, -8($fp)
+        
+        cmploop:
+        lb $t2, ($s2)
+        lb $t3, ($s3)
+        bne $t2,$t3, cmpne
+
+        beq $t2, $zero, cmpeq
+
+        addi $s2, $s2, 1
+        addi $s3, $s3, 1
+        j cmploop
+
+        cmpne:
+        li $v0, 0
+        jr $ra
+
+        cmpeq:
+        li $v0, 1
+        jr $ra
+        ''')
+
+    def add_resolve_name_function(self):
+        '''
+        Este metodo resuelve dado una direccion de memoria de un string y de un vtable, devuelve el
+        puntero donde se encuentra el metodo correcto a llamar.
+        :return:
+        '''
+        self.emit('''
+            __resolve_name:
+            # guardamos en $a0 la direccion del string
+            lw $a0, -4($fp)
+            # guardamos en $a1 la direccion del vtable
+            lw $a1, -8($fp)
+            
+            # cargamos la longitud del array de metodos en $t0
+            lb $t0, 0($a1)
+            
+            # t1 es el indice que se movera por el array
+            li $t1, 0
+            
+            addu $a1, $a1, 1
+            
+            analize_method_name:
+            li $t2, 0
+            # nos paramos sobre el nombre del metodo
+            addu $t2, $a1, 1
+            
+        ''')
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit('move $fp, $sp')
+        self.macro_push('$a0')
+        self.macro_push('$t2')
+        self.emit('jal __compare_strings')
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
+        self.emit('''
+            bnez $v0, founded_method
+            
+            move_next:
+            
+            # guardamos en $t3 la longitud del nombre del metodo
+            lb $t3, 0($a0)
+            addu $t3, $t3, 5
+            # nos movemos al proximo metodo
+            addu $a1, $a1, $t3 
+            addu $t1,$t1,1
+            bge $t1, $t0, end__resolve_name
+            j analize_method_name
+            
+            end__resolve_name:
+            li $v0, 0
+            jr $ra
+            
+            founded_method:
+            lb $t3, 0($a0)
+            addu $t3, $t3, 1
+            lw $v0, 0($t3)
+            
+        ''')
+        # instance_x
+        # .word (type pointer)
+        # .word (vtable pointer)
+        # .byte (cntattrs)
+        #   .byte (attr1Namelen)
+        #   .asciiz Name
+        #   .word value
+        #  ...
+
+    @visitor.when(cil_hierarchy.CILStaticCallNode)
+    def visit(self, node: cil_hierarchy.CILStaticCallNode):
+        #     load instance pointer
+        instance_index = self.get_local_var_or_param_index(node.localv)
+        # cargamos en $t1 el puntero a la instancia
+        self.emit(f'lw $t1, {-4*instance_index}($fp)')
+        self.emit('addu $t1,$t1,4')
+        self.emit(f'lwr $t1, $t1')
         # resolve method address
         # call find_method_address function
         self.macro_push('$ra')
         self.macro_push('$fp')
+        # ponemos en $v0 la direccion del string
         self.save_string(node.fid)
+        # seteamos el frame del metodo que vamos a pasar
         self.emit('move $fp, $sp')
-        # guardamos en $t1 la direccion de memoria de la vtable del tipo node.ftype
-        self.emit(f'lw $t1, {node.fType} + 9')
+        # pasamos los parametros a la funcion
         self.macro_push('$v0')
         self.macro_push('$t1')
         # saltar a la funcion que busca el puntero al metodo correcto
-        self.emit('jal resolve_method')
-
+        self.emit('jal __resolve_name')
+        # tenemos en $v0 el puntero al metodo correcto
+        self.emit('move $sp, $fp')
         self.macro_pop('$fp')
         self.macro_pop('$ra')
 
@@ -245,13 +353,56 @@ class CILtoMIPSVisitor:
         self.macro_push('$fp')
         self.emit(f'mov $t0, $fp')
         self.emit(f'mov $fp, $sp')
+        # pasamos los parametros del metodo
         for param in node.params:
             param_index = self.get_local_var_or_param_index(param)
             self.emit(f'lw $a0, {4*param_index}($t0)')
             self.macro_push('$a0')
 
+        # llamamos al metodo
+        self.emit(f'jalr $v0')
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
 
 
+
+    @visitor.when(cil_hierarchy.CILDinamicCallNode)
+    def visit(self, node: cil_hierarchy.CILDinamicCallNode):
+        # resolve method address
+        # call find_method_address function
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        # ponemos en $v0 la direccion del string
+        self.save_string(node.fid)
+        # seteamos el frame del metodo que vamos a pasar
+        self.emit('move $fp, $sp')
+        # guardamos en $t1 la direccion de memoria de la vtable del tipo node.ftype
+        self.emit(f'lw $t1, type_{node.fType} + 9')
+        # pasamos los parametros a la funcion
+        self.macro_push('$v0')
+        self.macro_push('$t1')
+        # saltar a la funcion que busca el puntero al metodo correcto
+        self.emit('jal __resolve_name')
+        # tenemos en $v0 el puntero al metodo correcto
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
+        # ya tenemos en $v0 el metodo correcto!.
+
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit(f'mov $t0, $fp')
+        self.emit(f'mov $fp, $sp')
+        # pasamos los parametros del metodo
+        for param in node.params:
+            param_index = self.get_local_var_or_param_index(param)
+            self.emit(f'lw $a0, {4*param_index}($t0)')
+            self.macro_push('$a0')
+        # llamamos al metodo
+        self.emit(f'jalr $v0')
+
+        self.emit('move $sp, $fp')
         self.macro_pop('$fp')
         self.macro_pop('$ra')
 
@@ -447,12 +598,7 @@ class CILtoMIPSVisitor:
         self.emit(f'(mul $t3, $t0, $t2)')
         self.emit('move $v0, $t3')
 
-    @visitor.when(cil_hierarchy.CILStaticCallNode)
-    def visit(self,node:cil_hierarchy.CILStaticCallNode):
-        self.emit(f'jal, {node.id}')
-        self.emit('move $sp, $fp')
-        self.macro_pop('$ra')
-        self.macro_pop('$fp')
+
 
     @visitor.when(cil_hierarchy.CILSubstringNode)
     def visit(self,node:cil_hierarchy.CILSubstringNode):
