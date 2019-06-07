@@ -176,7 +176,31 @@ class CILtoMIPSVisitor:
         :param node:
         :return:
         '''
-        self.emit(f'')
+        self.emit(f'la $t0, type_{node.type_id}')
+        self.emit('addu $t0, $t0, 4')
+        # cargamos en $t1 el tamaño de la instancia
+        self.emit('lb $t1, 0($t0)')
+
+        # ponemos en $t0 el lugar a partir del cual se debe copiar
+        # para crear una instancia
+        self.emit('addu $t0, $t0, 1')
+        self.emit('li $v0, 9')
+        self.emit('mov $a0, $t1')
+        self.emit('syscall')
+
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit('move $fp,$sp')
+
+        self.macro_push('$v0')
+        self.macro_push('$t0')
+        self.macro_push('$t1')
+
+        self.emit('jal __copy_byte_by_byte')
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
+
 
     def add_copy_byte_by_byte(self):
         '''
@@ -211,9 +235,11 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILCopyNode)
     def visit(self, node: cil_hierarchy.CILCopyNode):
         local_var_index = self.get_local_var_or_param_index(node.variable)
-        # guardamos en $a0 el puntero al obeto que se quiere copiar
+        # guardamos en $a0 el puntero al objeto que se quiere copiar
         self.emit(f'lw $a0, {-4*local_var_index}($fp)')
+        # accedemos al tipo
         self.emit('lw $a1, 0($a0)')
+        # nos movemos hasta el campo que contiene el tamaño de cada instancia
         self.emit('addu $a1, $a1,4')
         self.emit('li $t0, 0')
         # guardamos en $t0 la cantidad que hay que reservar para crear una instancia del tipo deseado
