@@ -30,7 +30,7 @@ class CollectMipsVtablesVisitor:
         for node_type in node.dottypes:
             self.visit(node_type)
 
-    # Type definition example
+    # Vtable definition example
     # __vtable_X:
     # .byte (cnt_methods)
     # #method1
@@ -178,14 +178,68 @@ class CILtoMIPSVisitor:
         '''
         self.emit(f'')
 
+    def add_copy_byte_by_byte(self):
+        '''
+        Esta funcion recibe como primer parametro el lugar donde se va a copiar,
+        como segundo de donde se va a copiar y
+        como tercero cuantos bytes se vana copiar.
+        :return:
+        '''
+        self.emit('''
+        __copy_byte_by_byte:
+        lw $a0, -4($fp)
+        lw $a1, -8($fp)
+        lw $a2, -12($fp)
+        
+        move $v0, $a0
+        
+        __while_copy:
+        bnez $a2, __end_copy
+        
+        lb $t0, 0($a1)
+        sb 0($a0), $t0
+        
+        subu $a2, $a2,1
+        addu $a0, $a0,1
+        addu $a1, $a1,1
+        j __while_copy
+        
+        __end_copy:
+        jr $ra
+        ''')
+
     @visitor.when(cil_hierarchy.CILCopyNode)
     def visit(self, node: cil_hierarchy.CILCopyNode):
-        pass
+        local_var_index = self.get_local_var_or_param_index(node.variable)
+        # guardamos en $a0 el puntero al obeto que se quiere copiar
+        self.emit(f'lw $a0, {-4*local_var_index}($fp)')
+        self.emit('lw $a1, 0($a0)')
+        self.emit('addu $a1, $a1,4')
+        self.emit('li $t0, 0')
+        # guardamos en $t0 la cantidad que hay que reservar para crear una instancia del tipo deseado
+        self.emit('lb $t0, 0($a1)')
+
+        self.emit('li $v0, 9')
+        self.emit('move $a0, $t0')
+        self.emit('syscall')
+
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit('move $fp, $sp')
+
+        # pasamos el puntero del nuevo objeto como primer parametro
+        self.macro_push('$v0')
+        self.macro_push('$a0')
+        self.macro_push('$t0')
+        self.emit('jal __copy_byte_by_byte')
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILArrayNode)
     def visit(self,node: cil_hierarchy.CILArrayNode):
         self.emit('li $v0, 9')
-        self.emit(f'lw $a0, {node.size}')
+        self.emit(f'li $a0, {node.size}')
         self.emit('syscall')
 
     @visitor.when(cil_hierarchy.CILAssignNode)
@@ -330,7 +384,7 @@ class CILtoMIPSVisitor:
         # cargamos en $t1 el puntero a la instancia
         self.emit(f'lw $t1, {-4*instance_index}($fp)')
         self.emit('addu $t1,$t1,4')
-        self.emit(f'lwr $t1, $t1')
+        self.emit(f'lw $t1, 0($t1)')
         # resolve method address
         # call find_method_address function
         self.macro_push('$ra')
@@ -364,8 +418,6 @@ class CILtoMIPSVisitor:
         self.emit('move $sp, $fp')
         self.macro_pop('$fp')
         self.macro_pop('$ra')
-
-
 
     @visitor.when(cil_hierarchy.CILDinamicCallNode)
     def visit(self, node: cil_hierarchy.CILDinamicCallNode):
@@ -568,7 +620,7 @@ class CILtoMIPSVisitor:
         '''
         if node.value is not None:
             local_index = self.get_local_var_or_param_index(node.value)
-            self.emit('lw $v0, {}')
+            self.emit(f'lw $v0, {-4*local_index}($fp)')
         self.emit('jr $ra')
 
     @visitor.when(cil_hierarchy.CILSetAttributeNode)
