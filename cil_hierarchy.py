@@ -171,6 +171,12 @@ class CILStaticCallNode(CILInstructionNode):
         self.params = params
 
 
+class CILBuiltinCallNode(CILInstructionNode):
+    def __init__(self,fid, params):
+        self.fid = fid
+        self.params = params
+
+
 class CILDinamicCallNode(CILInstructionNode):
     def __init__(self, localv, fid, fType, params):
         self.localv = localv
@@ -270,9 +276,10 @@ class CILErrorMessage(CILInstructionNode):
 class CILAbortNode(CILInstructionNode):
     pass
 
-
 class CILTypeNameNode(CILInstructionNode):
-    pass
+    def __init__(self,localv):
+        self.localv = localv
+
 
 
 class CILNegationNode(CILInstructionNode):

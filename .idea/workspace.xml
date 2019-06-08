@@ -4,8 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/utils.py" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="">
+    <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="Implementamos el allocateNode en mips">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cil_hierarchy.py" afterPath="$PROJECT_DIR$/cil_hierarchy.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cil_to_mips.py" afterPath="$PROJECT_DIR$/cil_to_mips.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -84,8 +85,8 @@
           <file leaf-file-name="cil_to_mips.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="732">
-                  <caret line="201" column="29" lean-forward="true" selection-start-line="201" selection-start-column="29" selection-end-line="201" selection-end-column="29" />
+                <state relative-caret-position="1084">
+                  <caret line="756" column="35" lean-forward="true" selection-start-line="756" selection-start-column="35" selection-end-line="756" selection-end-column="35" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
                   </folding>
@@ -96,8 +97,8 @@
           <file leaf-file-name="cil_hierarchy.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="298">
-                  <caret line="300" column="6" lean-forward="false" selection-start-line="300" selection-start-column="6" selection-end-line="300" selection-end-column="6" />
+                <state relative-caret-position="152">
+                  <caret line="179" column="24" lean-forward="false" selection-start-line="179" selection-start-column="6" selection-end-line="179" selection-end-column="24" />
                   <folding />
                 </state>
               </provider>
@@ -144,8 +145,8 @@
           <file leaf-file-name="cil_to_mips.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-740">
-                  <caret line="32" column="12" lean-forward="false" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+                <state relative-caret-position="200">
+                  <caret line="79" column="10" lean-forward="false" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
                   </folding>
@@ -166,8 +167,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Condi</find>
-      <find>formals</find>
       <find>Error in method main: return static type expected</find>
       <find>Error in method</find>
       <find>E</find>
@@ -189,13 +188,15 @@
       <find>Param</find>
       <find>Dina</find>
       <find>call</find>
-      <find>Call</find>
       <find>resolve</find>
       <find>CallN</find>
       <find>Copy</find>
-      <find>Din</find>
       <find>lwr</find>
       <find>lw</find>
+      <find>Call</find>
+      <find>Abot</find>
+      <find>Type</find>
+      <find>Din</find>
     </findStrings>
     <replaceStrings>
       <replace>ClassNode(</replace>
@@ -900,7 +901,14 @@
       <option name="project" value="LOCAL" />
       <updated>1559949033880</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Implementamos el allocateNode en mips">
+      <created>1559951146625</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1559951146625</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1027,7 +1035,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Creamos una serie de errores en el checktypevisitor" />
     <MESSAGE value="Seguimos repasando los errores del checksemantics" />
     <MESSAGE value="Chequeamos el error detectar que no este definido el tipo padre" />
     <MESSAGE value="Agregamos en el scope de cada método una variable self de tipo current_class" />
@@ -1052,7 +1059,8 @@
     <MESSAGE value="working on mips dinamicCall" />
     <MESSAGE value="Implementamos los callNodes" />
     <MESSAGE value="Created copy_byte_by_byte_funct in mips" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created copy_byte_by_byte_funct in mips" />
+    <MESSAGE value="Implementamos el allocateNode en mips" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementamos el allocateNode en mips" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1432,16 +1440,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="300" column="6" lean-forward="false" selection-start-line="300" selection-start-column="6" selection-end-line="300" selection-end-column="6" />
+        <state relative-caret-position="152">
+          <caret line="179" column="24" lean-forward="false" selection-start-line="179" selection-start-column="6" selection-end-line="179" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="201" column="29" lean-forward="true" selection-start-line="201" selection-start-column="29" selection-end-line="201" selection-end-column="29" />
+        <state relative-caret-position="1084">
+          <caret line="756" column="35" lean-forward="true" selection-start-line="756" selection-start-column="35" selection-end-line="756" selection-end-column="35" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
