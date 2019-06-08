@@ -246,7 +246,7 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILCopyNode)
     def visit(self, node: cil_hierarchy.CILCopyNode):
-        local_var_index = self.get_local_var_or_param_index(node.variable)
+        local_var_index = self.get_local_var_or_param_index(node.type_to_copy)
         # guardamos en $a0 el puntero al objeto que se quiere copiar
         self.emit(f'lw $a0, {-4*local_var_index}($fp)')
         # accedemos al tipo

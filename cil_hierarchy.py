@@ -11,7 +11,7 @@ class CILProgramNode(CILNode):
 
 
 class CILTypeNode(CILNode):
-    def __init__(self, name, parent_name, attributes=None, methods=None):
+    def __init__(self,name, parent_name ,attributes = None, methods = None):
         self.name = name
         if attributes is None:
             self.attributes = []
@@ -24,10 +24,6 @@ class CILTypeNode(CILNode):
             self.methods = methods
 
         self.parent_name = parent_name
-
-        #fields for generating code
-        self.parent = None
-        self._visited = False
 
 
 class CILDataNode(CILNode):
@@ -48,7 +44,7 @@ class CILAllocateNode(CILNode):
 
 
 class CILCodeNode(CILNode):
-    def __init__(self, functs=None):
+    def __init__(self, functs = None):
         if functs is None:
             self.functions = []
         else:
@@ -56,7 +52,7 @@ class CILCodeNode(CILNode):
 
 
 class CILFunctionNode(CILNode):
-    def __init__(self, fname, params=None, localvars=None, instructions=None):
+    def __init__(self, fname, params = None, localvars = None, instructions = None):
         self.fname = fname
         if params is None:
             self.params = []
@@ -72,6 +68,11 @@ class CILFunctionNode(CILNode):
             self.instructions = []
         else:
             self.instructions = instructions
+
+
+class CILParamNode(CILNode):
+    def __init__(self,vinfo):
+        self.vinfo = vinfo
 
 
 class CILLocalNode(CILNode):
@@ -90,8 +91,7 @@ class CILAssignNode(CILInstructionNode):
 
 
 class CILArithmeticNode(CILInstructionNode):
-    def __init__(self, dest=None, left=None, right=None):
-        self.dest = dest
+    def __init__(self, left = None, right = None):
         self.left = left
         self.right = right
 
@@ -126,14 +126,14 @@ class CILSetAttributeNode(CILInstructionNode):
 
 
 class CILGetIndexNode(CILInstructionNode):
-    def __init__(self, id, index):
-        self.id = id
+    def __init__(self, localv, index):
+        self.localv = localv
         self.index = index
 
 
 class CILSetIndexNode(CILInstructionNode):
-    def __init__(self, id, index, value):
-        self.id = id
+    def __init__(self, localv, index, value):
+        self.localv = localv
         self.index = index
         self.value = value
 
@@ -154,49 +154,49 @@ class CILLabelNode(CILInstructionNode):
 
 
 class CILGotoNode(CILInstructionNode):
-    def __init__(self, label):
+    def __init__(self, label):      
         self.label = label
 
 
 class CILGotoIfNode(CILInstructionNode):
-    def __init__(self, compare, label):
+    def __init__(self, compare, label):   
         self.compare = compare
         self.label = label
 
 
+class CILDynamicCallNode(CILInstructionNode):
+    def __init__(self, fid, instance):
+        self.fid = fid
+        self.instance = instance
+        self.params = []
+
+
 class CILStaticCallNode(CILInstructionNode):
-    def __init__(self, localv,fid,params):
-        self.localv = localv
+    def __init__(self, fid, parent_type, instance):
         self.fid = fid
-        self.params = params
+        self.parent_type = parent_type
+        self.instance = instance
+        self.params = []
 
 
-class CILBuiltinCallNode(CILInstructionNode):
-    def __init__(self,fid, params):
+class CILBuiltInCallNode(CILInstructionNode):
+    def __init__(self, fid):
         self.fid = fid
-        self.params = params
-
-
-class CILDinamicCallNode(CILInstructionNode):
-    def __init__(self, localv, fid, fType, params):
-        self.localv = localv
-        self.fid = fid
-        self.params = params
-        self.fType = fType
+        self.params = []
 
 
 class CILGetParentNode(CILInstructionNode):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, parent_label):
+        self.parentLabel = parent_label
 
 
 class CILArgNode(CILInstructionNode):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, localv):
+        self.localv = localv
 
 
 class CILReturnNode(CILInstructionNode):
-    def __init__(self, value=None):
+    def __init__(self, value = None):
         self.value = value
 
 
@@ -206,14 +206,14 @@ class CILLoadNode(CILInstructionNode):
 
 
 class CILLengthNode(CILInstructionNode):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, localv):
+        self.localv = localv
 
 
 class CILConcatNode(CILInstructionNode):
     def __init__(self, s1, s2):
-        self.first = s1
-        self.second = s2
+        self.str1 = s1
+        self.str2 = s2
 
 
 class CILPrefixNode(CILInstructionNode):
@@ -222,11 +222,11 @@ class CILPrefixNode(CILInstructionNode):
         self.full_string = s2
 
 
+# todo: Aguien que me explique q quisieron hacer con esto
 class CILSubstringNode(CILInstructionNode):
-    def __init__(self, s, i, l):
-        self.s = s
-        self.i = i
-        self.l = l
+    def __init__(self, str1, str2):
+        self.str1 = str1
+        self.str2 = str2
 
 
 class CILToStrNode(CILInstructionNode):
@@ -254,37 +254,37 @@ class CILPrintStringNode(CILInstructionNode):
 
 
 class CILIsVoidNode(CILInstructionNode):
-    def __init__(self, is_void_value):
+    def __init__(self,is_void_value):
         self.is_void = is_void_value
 
 
 class CILIntegerComplementNode(CILInstructionNode):
-    def __init__(self, value):
+    def __init__(self,value):
         self.complement = value
 
 
 class CILNewTypeNode(CILInstructionNode):
-    def __init__(self, type):
+    def __init__(self,type):
         self.type = type
 
 
-class CILErrorMessage(CILInstructionNode):
-    def __init__(self, msg):
+class CILErrorMessageNode(CILInstructionNode):
+    def __init__(self,msg):
         self.msg = msg
 
 
 class CILAbortNode(CILInstructionNode):
     pass
 
-class CILTypeNameNode(CILInstructionNode):
-    def __init__(self,localv):
-        self.localv = localv
 
+class CILTypeNameNode(CILInstructionNode):
+    def __init__(self, type_to_get):
+        self.type_to_get = type_to_get
 
 
 class CILNegationNode(CILInstructionNode):
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, localv):
+        self.localv = localv
 
 
 class CILLowerThanNode(CILInstructionNode):
@@ -306,5 +306,5 @@ class CILEqualThanNode(CILInstructionNode):
 
 
 class CILCopyNode(CILInstructionNode):
-    def __init__(self, variable):
-        self.variable = variable
+    def __init__(self, type_to_copy):
+        self.type_to_copy = type_to_copy

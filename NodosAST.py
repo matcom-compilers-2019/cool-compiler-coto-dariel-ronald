@@ -72,10 +72,13 @@ class AssignNode(ExpressionNode):
 
 
 class DispatchNode(AtomNode):
-    def __init__(self,func_id,params=[],left_expr=None):
+    def __init__(self,func_id,params=None,left_expr=None):
         self.left_expression = left_expr
         self.func_id = func_id
         self.parameters = params
+
+        if params is None:
+            self.parameters = []
 
 
 class StaticDispatchNode(AtomNode):
@@ -83,7 +86,7 @@ class StaticDispatchNode(AtomNode):
         self.left_expression = left_expr
         self.func_id = func_id
         self.parameters = params
-        self.paren_type = parent_type
+        self.parent_type = parent_type
 
 
 class ConditionalNode(AtomNode):
