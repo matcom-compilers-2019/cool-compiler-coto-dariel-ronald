@@ -143,11 +143,15 @@ class CILtoMIPSVisitor:
         self.output = []
         self.currentfuncv = None
 
-    def get_mips_program_code(self):
+    def set_mips_main(self):
+        self.emit('main: ')
+        self.emit('jal Main_main')
 
+    def get_mips_program_code(self):
         result = ''
         for text in self.output:
             result += text
+
         return result
 
     def emit(self, msg):
@@ -196,6 +200,9 @@ class CILtoMIPSVisitor:
         for i in range(len(node.dottypes)):
             self.visit(node.dotcode[i])
         add_builtin_mips_functions(self.output)
+        self.add_compare_strings_funct()
+        self.add_resolve_name_function()
+        self.set_mips_main()
 
     @visitor.when(cil_hierarchy.CILAllocateNode)
     def visit(self, node: cil_hierarchy.CILAllocateNode):
@@ -221,7 +228,7 @@ class CILtoMIPSVisitor:
         # para crear una instancia
         self.emit('addu $t0, $t0, 1')
         self.emit('li $v0, 9')
-        self.emit('mov $a0, $t1')
+        self.emit('move $a0, $t1')
         self.emit('syscall')
 
         self.macro_push('$ra')
@@ -321,7 +328,7 @@ class CILtoMIPSVisitor:
         self.emit(f'syscall')
 
         for i, char in enumerate(name):
-            self.emit(f'li $t1, {char}')
+            self.emit(f"li $t1, '{char}'")
             self.emit(f'sb $t1, {i}($v0)')
         self.emit(f'sb $0, {len(name)}($v0)')
 
@@ -480,8 +487,8 @@ class CILtoMIPSVisitor:
 
         self.macro_push('$ra')
         self.macro_push('$fp')
-        self.emit(f'mov $t0, $fp')
-        self.emit(f'mov $fp, $sp')
+        self.emit(f'move $t0, $fp')
+        self.emit(f'move $fp, $sp')
         # pasamos los parametros del metodo
         for param in node.params:
             param_index = self.get_local_var_or_param_index(param)
@@ -525,8 +532,8 @@ class CILtoMIPSVisitor:
 
         self.macro_push('$ra')
         self.macro_push('$fp')
-        self.emit(f'mov $t0, $fp')
-        self.emit(f'mov $fp, $sp')
+        self.emit(f'move $t0, $fp')
+        self.emit(f'move $fp, $sp')
         # pasamos los parametros del metodo
         for param in node.params:
             param_index = self.get_local_var_or_param_index(param)
@@ -686,7 +693,7 @@ class CILtoMIPSVisitor:
     def visit(self, node: cil_hierarchy.CILPrintIntNode):
         try:
             v = self.get_local_var_or_param_index(node.int_addr)
-            self.emit(f'lw $t0, ($sp + 4*{v})')
+            self.emit(f'lw $t0, {-4*v}($fp)')
         except ValueError:
             self.emit(f'li $t0, {node.int_addr}')
         self.emit('move $a0, $t0')
@@ -769,7 +776,14 @@ class CILtoMIPSVisitor:
         # se asume q los valores que se pasan son labels
         local_index = self.get_local_var_or_param_index(node.localv)
         self.emit(f'lw $t0, {-4*local_index}($fp)')
-        self.emit(f'addu $t0, $t0, {node.index}')
+        if type(node.index) is int:
+            self.emit(f'li $t1, {node.index}')
+        else:
+            local_index = self.get_local_var_or_param_index(node.index)
+            self.emit(f'lw $t1, {-4*local_index}($fp)')
+
+        self.emit(f'addu $t0, $t0, $t1')
+
         self.emit(f'la $t1, {node.value}')
         self.emit(f'sw $t1, 0($t0)')
 
@@ -798,8 +812,18 @@ class CILtoMIPSVisitor:
         self.macro_push('$ra')
         local_index = self.get_local_var_or_param_index(node.str1)
         self.emit(f'lw $a0, {-4*local_index}($fp)')
-        self.emit(f'li $a1, {node.index}')
-        self.emit(f'li $a2, {node.length}')
+        if type(node.index) is int:
+            self.emit(f'li $a1, {node.index}')
+        else:
+            local_index = self.get_local_var_or_param_index(node.index)
+            self.emit(f'lw $a1, {-4*local_index}($fp)')
+
+        if type(node.length) is int:
+            self.emit(f'li $a2, {node.length}')
+        else:
+            local_index = self.get_local_var_or_param_index(node.length)
+            self.emit(f'lw $a2, {-4*local_index}($fp)')
+
         self.emit('jal __get_substring')
         self.macro_pop('$ra')
 

@@ -23,7 +23,7 @@ def mips_prefix(output):
             bne	 $t0, $t1, prefixFalse
             addu $a0,$a0,1
             addu $a1,$a1,1
-            b __get_if_its_prefix:
+            b __get_if_its_prefix
         prefixFalse:
             li $v0, 0
             j $ra
@@ -73,7 +73,7 @@ def mips_copy_byte_by_byte(output):
     bnez $a2, __end_copy
     
     lb $t0, 0($a1)
-    sb 0($a0), $t0
+    sb $t0, 0($a0), 
     
     subu $a2, $a2,1
     addu $a0, $a0,1
@@ -126,7 +126,7 @@ def mips_substring(output):
             subu $sp, $sp, 4
             sw $v0, 0($sp)                        
             subu $sp, $sp, 4
-            sw $$t5, 0($sp)
+            sw $t5, 0($sp)
             subu $sp, $sp, 4
             sw $t2, 0($sp)
             
@@ -166,7 +166,7 @@ def mips_concat(output):
         
         # guardamos en $t4, la longitud de str1
         move $t4, $v0
-        el str1
+        # el str1
         move $t5, $a0
         move $a0, $a1
         move $t8, $a1
