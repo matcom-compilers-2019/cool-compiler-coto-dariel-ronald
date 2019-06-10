@@ -72,6 +72,7 @@ def mips_copy_byte_by_byte(output):
     __while_copy:
     beqz $a2, __end_copy
     
+    xor $t0, $t0, $t0
     lb $t0, 0($a1)
     sb $t0, 0($a0), 
     
@@ -272,6 +273,7 @@ def add_built_in(cool_to_cil):
         cool_to_cil.define_internal_local()
         index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
         cool_to_cil.register_instruction(CILAssignNode, index, CILAllocateNode('Object'))
+        cool_to_cil.register_instruction(CILReturnNode, index)
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_abort",["self"]))
         cool_to_cil.current_function_name = "Object_abort"
@@ -303,10 +305,11 @@ def add_built_in(cool_to_cil):
         cool_to_cil.define_internal_local()
         index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
         cool_to_cil.register_instruction(CILAssignNode, index, CILAllocateNode('IO'))
+        cool_to_cil.register_instruction(CILReturnNode, index)
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_string", ["self"]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_string", ["self",'str']))
         cool_to_cil.current_function_name = "IO_out_string"
-        cool_to_cil.register_instruction(CILPrintStringNode, "self")
+        cool_to_cil.register_instruction(CILPrintStringNode, "str")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int", ["self"]))
