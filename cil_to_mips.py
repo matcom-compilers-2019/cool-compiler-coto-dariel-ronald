@@ -47,6 +47,8 @@ class CollectMipsVtablesVisitor:
 
         for method_name in node.methods:
             method_real_name = method_name.split('_', maxsplit=1)[1]
+            self.emit('# method')
+            self.emit(f'.byte {len(method_name)+1}')
             self.emit(f'.asciiz "{method_real_name}"')
             self.emit(f'.word {method_name}')
 
@@ -75,6 +77,7 @@ class CollectMipsTypesDefinitionsVisitor:
         cil_context.define_nodes_parent()
 
         for node_type in node.dottypes:
+            self.emit('')
             self.visit(node_type)
 
     # Type definition example
@@ -95,30 +98,40 @@ class CollectMipsTypesDefinitionsVisitor:
     @visitor.when(cil_hierarchy.CILTypeNode)
     def visit(self, node: cil_hierarchy.CILTypeNode):
         self.emit(f'type_{node.name}: ')
-        type_space_in_bytes = sum([len(attr_name)for attr_name in node.attributes]) + len(node.attributes)*5 + 18
+        type_space_in_bytes = sum([1+len(attr_name) + 1 + 4 for attr_name in node.attributes]) \
+                              + 9 + len(node.name) + 1 + 1 + 4 + 4 + 1
         # type space
+        self.emit('# espacio de definicion del tipo')
         self.emit(f'.word {type_space_in_bytes}')
         # parent pointer
+        self.emit('# puntero al padre en la jerarquia')
         if node.parent_name == 'None':
             self.emit(f'.word __void')
         else:
             self.emit(f'.word type_{node.parent_name}')
         # type Name length
-        self.emit(f'.byte {len(node.name)}')
+        self.emit('# longitud del nombre de la clase')
+        self.emit(f'.byte {len(node.name)+1}')
         # type Name
+        self.emit('# nombre de la clase')
         self.emit(f'.asciiz "{node.name}"')
         # instance space
-        self.emit(f'.byte {type_space_in_bytes - 5}')
+        self.emit('# espacio que ocupa una instancia de esta clase')
+        self.emit(f'.byte {type_space_in_bytes - 11 - len(node.name)}')
         # type pointer
+        self.emit('# puntero a la misma clase')
         self.emit(f'.word type_{node.name}')
         # vtableDirection pointer
+        self.emit('# direccion de la vtable de la clase')
         self.emit(f'.word __vtable_{node.name}')
         # cnt attrs
+        self.emit('# cantidad de atributos')
         self.emit(f'.byte {len(node.attributes)}')
 
         for attr in node.attributes:
+            self.emit('# attr')
             # length attr_name
-            self.emit(f'.byte {len(attr)}')
+            self.emit(f'.byte {len(attr)+1}')
             # attr_name
             self.emit(f'.asciiz "{attr}"')
             # value
