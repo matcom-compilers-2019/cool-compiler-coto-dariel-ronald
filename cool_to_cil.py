@@ -120,7 +120,6 @@ class COOLToCILVisitor:
         for x in writer.output:
             print(x)
 
-
         return result
 
     @visitor.when(ast.ClassNode)

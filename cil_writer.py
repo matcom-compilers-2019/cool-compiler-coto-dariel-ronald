@@ -1,6 +1,7 @@
 import cil_hierarchy as cil
 import visitor
 
+
 class CILWriterVisitor(object):
     def __init__(self):
         self.output = []
@@ -38,9 +39,8 @@ class CILWriterVisitor(object):
         for x in node.static_functions:
             self.visit(x)
 
-
     @visitor.when(cil.CILTypeNode)
-    def visit(self, node:cil.CILTypeNode):
+    def visit(self, node: cil.CILTypeNode):
         self.emit(f'    type {node.name}')
         self.emit("{")
         for x in node.attributes:
@@ -58,7 +58,7 @@ class CILWriterVisitor(object):
             self.visit(x)
 
     @visitor.when(cil.CILDataElementNode)
-    def visit(self, node:cil.CILDataNode):
+    def visit(self, node: cil.CILDataElementNode):
         self.emit(f'{node.vname} = {node.value}')
 
     @visitor.when(cil.CILFunctionNode)
@@ -88,7 +88,7 @@ class CILWriterVisitor(object):
         self.emit(f'  LOCAL {node.vinfo}')
 
     @visitor.when(cil.CILAssignNode)
-    def visit(self, node:cil.CILAssignNode):
+    def visit(self, node: cil.CILAssignNode):
         dest = None
         if type(node.dest) is cil.CILLocalNode:
             dest = node.dest.vinfo
@@ -127,20 +127,20 @@ class CILWriterVisitor(object):
         return f'  {left} / {right}'
 
     @visitor.when(cil.CILGetAttributeNode)
-    def visit(self, node:cil.CILGetAttributeNode):
-        return f'  GET_ATTR {node.id}'
+    def visit(self, node: cil.CILGetAttributeNode):
+        return f'  GET_ATTR {node.localv} {node.attrName}'
 
     @visitor.when(cil.CILSetAttributeNode)
     def visit(self, node:cil.CILSetAttributeNode):
-        self.emit(f'  SET_ATTR {node.id} {node.value}')
+        self.emit(f'  SET_ATTR {node.localv} {node.attrName} {node.value}')
 
     @visitor.when(cil.CILGetIndexNode)
     def visit(self, node: cil.CILGetIndexNode):
-        return f'  GET_INDEX {node.id} {node.index}'
+        return f'  GET_INDEX {node.localv} {node.index}'
 
     @visitor.when(cil.CILSetIndexNode)
     def visit(self, node: cil.CILSetIndexNode):
-        self.emit(f'  SET_INDEX {node.id} {node.index} {node.value}')
+        self.emit(f'  SET_INDEX {node.localv} {node.index} {node.value}')
 
     @visitor.when(cil.CILAllocateNode)
     def visit(self, node: cil.CILAllocateNode):
@@ -170,23 +170,19 @@ class CILWriterVisitor(object):
     def visit(self, node: cil.CILStaticCallNode):
         for x in node.params:
             self.emit(f'  PARAM {x}')
-        return  f'  CALL {node.id}'
+        return f'  SCALL {node.instance} {node.fid} {node.parent_type}'
 
-    @visitor.when(cil.CILDinamicCallNode)
-    def visit(self, node: cil.CILDinamicCallNode):
+    @visitor.when(cil.CILDynamicCallNode)
+    def visit(self, node: cil.CILDynamicCallNode):
         for x in node.params:
             self.emit(f'  PARAM {x}')
-        if type(node.parent_type) is cil.CILLocalNode:
-            value = node.parent_type.vinfo
-            return f'  VCALL {node.id} {value}'
-        else:
-            return f'  VCALL {node.id} {self.visit(node.parent_type)}'
+        return f'  DCALL {node.instance} {node.fid} '
 
     @visitor.when(cil.CILBuiltInCallNode)
     def visit(self, node: cil.CILBuiltInCallNode):
         for x in node.params:
             self.emit(f'  PARAM {x}')
-            return f'  BUILT_IN_CALL {node.id}'
+            return f'  BUILT_IN_CALL {node.fid}'
 
 
     @visitor.when(str)
@@ -199,7 +195,7 @@ class CILWriterVisitor(object):
 
     @visitor.when(cil.CILArgNode)
     def visit(self, node:cil.CILArgNode):
-        self.emit(f'  ARG {node.id}')
+        self.emit(f'  ARG {node.localv}')
 
     @visitor.when(cil.CILReturnNode)
     def visit(self, node:cil.CILReturnNode):
@@ -216,11 +212,11 @@ class CILWriterVisitor(object):
 
     @visitor.when(cil.CILLengthNode)
     def visit(self, node: cil.CILLengthNode):
-        return f'  LENGTH {node.id}'
+        return f'  LENGTH {node.localv}'
 
     @visitor.when(cil.CILConcatNode)
     def visit(self, node:cil.CILConcatNode):
-        return f'  CONCAT { node.first} {node.second}'
+        return f'  CONCAT { node.str1} {node.str2}'
 
     @visitor.when(cil.CILPrefixNode)
     def visit(self, node:cil.CILPrefixNode):
@@ -228,7 +224,7 @@ class CILWriterVisitor(object):
 
     @visitor.when(cil.CILSubstringNode)
     def visit(self, node:cil.CILSubstringNode):
-        return f'  SUBSTRING { node.s} {node.i} {node.l}'
+        return f'  SUBSTRING { node.str1} {node.index} {node.length}'
 
     @visitor.when(cil.CILToStrNode)
     def visit(self, node:cil.CILToStrNode):
@@ -266,7 +262,7 @@ class CILWriterVisitor(object):
 
     @visitor.when(cil.CILGetParentNode)
     def visit(self, node: cil.CILGetParentNode):
-        return f'  GET_PARENT {node.id}'
+        return f'  GET_PARENT {node.parentLabel}'
 
     @visitor.when(cil.CILErrorMessageNode)
     def visit(self, node: cil.CILErrorMessageNode):

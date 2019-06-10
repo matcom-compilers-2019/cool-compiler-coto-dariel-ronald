@@ -2,7 +2,11 @@ from cil_hierarchy import *
 
 
 def add_builtin_mips_functions(output):
-    pass
+    mips_concat(output)
+    mips_copy_byte_by_byte(output)
+    mips_prefix(output)
+    mips_strLen(output)
+    mips_substring(output)
 
 
 def mips_prefix(output):

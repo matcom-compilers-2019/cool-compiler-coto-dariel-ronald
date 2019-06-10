@@ -1,7 +1,7 @@
 import visitor
 import cil_hierarchy
 from mips_utils import *
-
+from built_in import add_builtin_mips_functions
 
 class CollectMipsVtablesVisitor:
     def __init__(self):
@@ -124,7 +124,14 @@ class CILtoMIPSVisitor:
     def __init__(self):
         self.output = []
         self.currentfuncv = None
-    
+
+    def get_mips_program_code(self):
+        
+        result = ''
+        for text in self.output:
+            result += text
+        return result
+
     def emit(self, msg):
         self.output.append(msg + '\n')
 
@@ -170,6 +177,7 @@ class CILtoMIPSVisitor:
         self.emit('.text')
         for i in range(len(node.dottypes)):
             self.visit(node.dotcode[i])
+        add_builtin_mips_functions(self.output)
 
     @visitor.when(cil_hierarchy.CILAllocateNode)
     def visit(self, node: cil_hierarchy.CILAllocateNode):

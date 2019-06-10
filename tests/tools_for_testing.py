@@ -2,6 +2,7 @@ import logging
 
 logging.basicConfig()
 
+
 def verify_asts(parser_result, expected, root_class):
     '''
     Recibe dos ast y realiza un dfs por ellos comparando campo por campo nodo por nodo, lanza una AssertionError
