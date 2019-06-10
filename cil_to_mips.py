@@ -583,6 +583,8 @@ class CILtoMIPSVisitor:
     def visit(self,node: cil_hierarchy.CILFunctionNode):
         self.currentfuncv = node
         self.emit(f'{node.fname}:')
+        for _ in node.localvars:
+            self.emit('subu $sp, $sp, 4')
         for inst in node.instructions:
             self.visit(inst)
 

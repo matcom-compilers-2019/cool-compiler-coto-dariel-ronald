@@ -70,7 +70,7 @@ def mips_copy_byte_by_byte(output):
     move $v0, $a0
     
     __while_copy:
-    bnez $a2, __end_copy
+    beqz $a2, __end_copy
     
     lb $t0, 0($a1)
     sb $t0, 0($a0), 
