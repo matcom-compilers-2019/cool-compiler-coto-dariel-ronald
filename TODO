@@ -1,9 +1,8 @@
 Todo: cosas a preguntarle a esta gente
--que me expliquen q hicieron con el  nodo de cil Substring, que significan esos parametros que
-le pasan y como interactuar con ellos.
--en el case,al principio esta definido una variable del usuario?????
--que cosa es eso de pasarle como argumento a los nodos bultins 'cool_to_cil'
+
+-que cosa es eso de pasarle como argumento a los nodos bultins 'cool_to_cil' (cambiar a self)
 -explicarme bien como es que funcionan todas las funciones builtins
+
 Todo Inheritence:
     -The semantics of C inherits P is that C has all of the features defined in P in addition to its own
     features.

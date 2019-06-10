@@ -141,8 +141,10 @@ class COOLToCILVisitor:
                     self.visit(attr.value)
                     self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, attr.value.holder)
                 else:
-                    if attr.type != "String":
+                    if attr.type == "Int" or attr.type == "Bool":
                         self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 0)
+                    elif attr.type == "String":
+                        self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 'void')
                     else:
                         self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, "")
 
@@ -191,20 +193,22 @@ class COOLToCILVisitor:
         if node.left_expression is not None:
             left_expression = node.left_expression.holder
 
-        #Se obtiene el tipo de la expresion izquierda
+        # Se obtiene el tipo de la expresion izquierda
         self.define_internal_local()
-        # local_expr0 = self.dotcode[-1].functions[-1].localvars[-1]
-        # self.register_instruction(CILAssignNode, local_expr0, CILTypeOfNode(left_expression))
-
-        my_call = CILDynamicCallNode(node.func_id, left_expression)
-
-        #aqui se ponen los params
+        if node.func_id == 'concat':
+            my_call = CILBuiltInCallNode('String_concat')
+        elif node.func_id == 'length':
+            my_call = CILBuiltInCallNode('String_length')
+        elif node.func_id == 'substr':
+            my_call = CILBuiltInCallNode('String_substr')
+        else:
+            my_call = CILDynamicCallNode(node.func_id, left_expression)
+        # aqui se ponen los params
         my_call.params.append(left_expression)
         for exp in node.parameters:
             my_call.params.append(exp.holder)
 
-
-        #Llamado a la funcion
+        # Llamado a la funcion
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, my_call)
@@ -303,7 +307,7 @@ class COOLToCILVisitor:
         arr = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, arr.vinfo, CILArrayNode(len(node.implications)))
         for i in range(0, len(node.implications)):
-            self.register_instruction(CILSetIndexNode, arr.vinfo, i, node.implications[i][0][1])
+            self.register_instruction(CILSetIndexNode, arr.vinfo, i, 'type_'+node.implications[i][0][1])
 
         #Aqui se obtiene el tipo del resultado de evaluar la expresion inicial del case
         self.define_internal_local()

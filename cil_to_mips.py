@@ -142,7 +142,7 @@ class CILtoMIPSVisitor:
         self.emit(f'sw {reg}, 0($sp)')
     
     def macro_pop(self,reg):
-        self.emit(f'lw {reg} 0($sp)')
+        self.emit(f'lw {reg}, 0($sp)')
         self.emit('addu $sp, $sp, 4')
 
     @visitor.on('node')
@@ -152,6 +152,9 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILProgramNode)
     def visit(self, node: cil_hierarchy.CILProgramNode):
         self.emit('.data')
+        self.emit('ior_msg_error: .asciiz "RuntimeError: Index out of range Error"')
+        self.emit('__void: .byte 0')
+        self.emit('std_in_data: .space 100')
         self.visit(node.dotdata)
         type_definition_creator = CollectMipsTypesDefinitionsVisitor()
         type_definition_creator.visit(node)
@@ -168,14 +171,6 @@ class CILtoMIPSVisitor:
         for i in range(len(node.dottypes)):
             self.visit(node.dotcode[i])
 
-    # @visitor.when(cil_hierarchy.CILAbortNode)
-    # def visit(self,node: cil_hierarchy.CILAbortNode):
-    #     self.emit(f'la $a0, {node}') #arreglar esto
-    #     self.emit(f'li $v0, 4')
-    #     self.emit('syscall')
-    #     self.emit(f'li $v0, 10')
-    #     self.emit(f'syscall')
-
     @visitor.when(cil_hierarchy.CILAllocateNode)
     def visit(self, node: cil_hierarchy.CILAllocateNode):
         '''
@@ -188,10 +183,12 @@ class CILtoMIPSVisitor:
         self.emit(f'la $t0, type_{node.type_id}')
         self.emit('addu $t0, $t0, 8')
         self.emit('li $t2, 0')
+        # cargamos la longitud del nombre del tipo
         self.emit('lb $t2, 0($t0)')
         self.emit('addu $t0,$t0,$t2')
         self.emit('addu $t0,$t0,1')
         # cargamos en $t1 el tamaño de la instancia
+        self.emit('li $t1, 0')
         self.emit('lb $t1, 0($t0)')
 
         # ponemos en $t0 el lugar a partir del cual se debe copiar
@@ -214,44 +211,14 @@ class CILtoMIPSVisitor:
         self.macro_pop('$fp')
         self.macro_pop('$ra')
 
-    def add_copy_byte_by_byte(self):
-        '''
-        Esta funcion recibe como primer parametro el lugar donde se va a copiar,
-        como segundo de donde se va a copiar y
-        como tercero cuantos bytes se vana copiar.
-        :return:
-        '''
-        self.emit('''
-        __copy_byte_by_byte:
-        lw $a0, -4($fp)
-        lw $a1, -8($fp)
-        lw $a2, -12($fp)
-        
-        move $v0, $a0
-        
-        __while_copy:
-        bnez $a2, __end_copy
-        
-        lb $t0, 0($a1)
-        sb 0($a0), $t0
-        
-        subu $a2, $a2,1
-        addu $a0, $a0,1
-        addu $a1, $a1,1
-        j __while_copy
-        
-        __end_copy:
-        jr $ra
-        ''')
-
     @visitor.when(cil_hierarchy.CILCopyNode)
     def visit(self, node: cil_hierarchy.CILCopyNode):
-        local_var_index = self.get_local_var_or_param_index(node.type_to_copy)
+        local_var_index = self.get_local_var_or_param_index(node.localv)
         # guardamos en $a0 el puntero al objeto que se quiere copiar
         self.emit(f'lw $a0, {-4*local_var_index}($fp)')
         # accedemos al tipo
         self.emit('lw $a1, 0($a0)')
-        # guardamos en $t3 el tamaño del nombre
+        # guardamos en $t3 el tamaño del nombre del tipo para poder saltarlo
         self.emit('li $t3, 0')
         self.emit('lb $t3, 8($a1)')
         self.emit('addu $t3, $t3, 9')
@@ -272,7 +239,8 @@ class CILtoMIPSVisitor:
 
         # pasamos el puntero del nuevo objeto como primer parametro
         self.macro_push('$v0')
-        self.macro_push('$a0')
+        self.emit('addu $a1, $a1, 1')
+        self.macro_push('$a1')
         self.macro_push('$t0')
         self.emit('jal __copy_byte_by_byte')
         self.emit('move $sp, $fp')
@@ -280,25 +248,35 @@ class CILtoMIPSVisitor:
         self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILArrayNode)
-    def visit(self,node: cil_hierarchy.CILArrayNode):
+    def visit(self, node: cil_hierarchy.CILArrayNode):
         self.emit('li $v0, 9')
         self.emit(f'li $a0, {node.size}')
         self.emit('syscall')
 
     @visitor.when(cil_hierarchy.CILAssignNode)
     def visit(self, node: cil_hierarchy.CILAssignNode):
-        self.visit(node.source)
+        try:
+            local_index = self.get_local_var_or_param_index(node.source)
+            self.emit(f'lw $v0, {-4*local_index}($fp)')
+        except ValueError:
+            self.visit(node.source)
         v = self.get_local_var_or_param_index(node.dest)
-        self.emit(f'sw, $v0, {4*v}($fp)')
+        self.emit(f'sw, $v0, {-4*v}($fp)')
 
     @visitor.when(cil_hierarchy.CILCodeNode)
-    def visit(self,node:cil_hierarchy.CILCodeNode):
+    def visit(self, node: cil_hierarchy.CILCodeNode):
         for func in node.functions:
             self.visit(func)
 
     @visitor.when(cil_hierarchy.CILConcatNode)
-    def visit(self,node:cil_hierarchy.CILConcatNode):
-        pass
+    def visit(self, node: cil_hierarchy.CILConcatNode):
+        self.macro_push('$ra')
+        local_index = self.get_local_var_or_param_index(node.str1)
+        self.emit(f'lw $a0, {-4*local_index}($fp)')
+        local_index = self.get_local_var_or_param_index(node.str2)
+        self.emit(f'lw $a1, {-4*local_index}($fp)')
+        self.emit('jal __concat_strings')
+        self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILDataNode)
     def visit(self, node: cil_hierarchy.CILDataNode):
@@ -315,7 +293,7 @@ class CILtoMIPSVisitor:
         self.emit(f'li $a0, {len(name)+1}')
         self.emit(f'syscall')
 
-        for i,char in enumerate(name):
+        for i, char in enumerate(name):
             self.emit(f'li $t1, {char}')
             self.emit(f'sb $t1, {i}($v0)')
         self.emit(f'sb $0, {len(name)}($v0)')
@@ -355,7 +333,12 @@ class CILtoMIPSVisitor:
         '''
         Este metodo resuelve dado una direccion de memoria de un string y de un vtable,
          devuelve el
-        puntero donde se encuentra el metodo correcto a llamar.
+        puntero donde se encuentra el puntero buscado con ese nombre
+        Recibe como primer parametro la direccion del string con el cual
+        se quiere comparar, y como segndo parametro, el array de los punteros
+        que tiene como forma: [byte_1(cantidad de punteros),.., byte_i(longitud
+        del nombre del puntero),(nombre del puntero),4bytes(puntero)]
+
         :return:
         '''
         self.emit('''
@@ -414,7 +397,7 @@ class CILtoMIPSVisitor:
         ''')
 
         # instance_x
-        # .word (type pointer)
+        # .word (ty    pe pointer)
         # .word (vtable pointer)
         # .byte (cntattrs)
         #   .byte (attr1Namelen)
@@ -422,8 +405,8 @@ class CILtoMIPSVisitor:
         #   .word value
         #  ...
 
-    @visitor.when(cil_hierarchy.CILBuiltinCallNode)
-    def visit(self, node: cil_hierarchy.CILBuiltinCallNode):
+    @visitor.when(cil_hierarchy.CILBuiltInCallNode)
+    def visit(self, node: cil_hierarchy.CILBuiltInCallNode):
 
         self.macro_push('$ra')
         self.macro_push('$fp')
@@ -441,10 +424,10 @@ class CILtoMIPSVisitor:
         self.macro_pop('$fp')
         self.macro_pop('$ra')
 
-    @visitor.when(cil_hierarchy.CILStaticCallNode)
-    def visit(self, node: cil_hierarchy.CILStaticCallNode):
+    @visitor.when(cil_hierarchy.CILDynamicCallNode)
+    def visit(self, node: cil_hierarchy.CILDynamicCallNode):
         # load instance pointer
-        instance_index = self.get_local_var_or_param_index(node.localv)
+        instance_index = self.get_local_var_or_param_index(node.instance)
         # cargamos en $t1 el puntero a la instancia
         self.emit(f'lw $t1, {-4*instance_index}($fp)')
         self.emit('addu $t1,$t1,4')
@@ -484,8 +467,8 @@ class CILtoMIPSVisitor:
         self.macro_pop('$fp')
         self.macro_pop('$ra')
 
-    @visitor.when(cil_hierarchy.CILDinamicCallNode)
-    def visit(self, node: cil_hierarchy.CILDinamicCallNode):
+    @visitor.when(cil_hierarchy.CILStaticCallNode)
+    def visit(self, node: cil_hierarchy.CILStaticCallNode):
         # resolve method address
         # call find_method_address function
         self.macro_push('$ra')
@@ -495,7 +478,7 @@ class CILtoMIPSVisitor:
         # seteamos el frame del metodo que vamos a pasar
         self.emit('move $fp, $sp')
 
-        self.emit(f'lw $t2, type_{node.fType} + 4')
+        self.emit(f'lw $t2, type_{node.parent_type} + 4')
         self.emit('li $t3, 0')
         self.emit('lb $t3, 0($t2)')
         self.emit('addu $t2, $t2, $t3')
@@ -530,7 +513,7 @@ class CILtoMIPSVisitor:
         self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILDivNode)
-    def visit(self,node:cil_hierarchy.CILDivNode):
+    def visit(self,node: cil_hierarchy.CILDivNode):
         l = node.left
         r = node.right                                                                                                                                                                                                                                                                                                                                                                                                                  
         if type(l) == int or type(l) == float:
@@ -548,8 +531,8 @@ class CILtoMIPSVisitor:
         self.emit(f'(div $t3, $t0, $t2)')
         self.emit('move $v0, $t3')
 
-    @visitor.when(cil_hierarchy.CILErrorMessage)
-    def visit(self, node: cil_hierarchy.CILErrorMessage):
+    @visitor.when(cil_hierarchy.CILErrorMessageNode)
+    def visit(self, node: cil_hierarchy.CILErrorMessageNode):
         self.emit(f'la $a0, {node.msg}')
         self.emit('li $v0, 4')
         self.emit('syscall')
@@ -564,73 +547,72 @@ class CILtoMIPSVisitor:
             self.visit(inst)
 
     @visitor.when(cil_hierarchy.CILGetAttributeNode)
-    def visit(self,node:cil_hierarchy.CILGetAttributeNode):
-        pass
+    def visit(self, node: cil_hierarchy.CILGetAttributeNode):
+        self._find_attr(node)
 
     @visitor.when(cil_hierarchy.CILGetIndexNode)
-    def visit(self,node:cil_hierarchy.CILGetIndexNode):
-        self.emit(f'lw $v0, ({node.id} + 4*{node.index})')
+    def visit(self, node: cil_hierarchy.CILGetIndexNode):
+        self.emit(f'lw $v0, ({node.localv} + 4*{node.index})')
 
     @visitor.when(cil_hierarchy.CILGetParentNode)
     def visit(self, node: cil_hierarchy.CILGetParentNode):
-        localv_index = self.get_local_var_or_param_index(node.id)
+        localv_index = self.get_local_var_or_param_index(node.parentLabel)
         self.emit(f'lw $a0, {-4*localv_index}($fp)')
         self.emit('lw $v0, 4($a0)')
 
-
+    # Todo:
     @visitor.when(cil_hierarchy.CILIntegerComplementNode)
     def visit(self, node: cil_hierarchy.CILIntegerComplementNode):
         pass
 
+    # fix this
     @visitor.when(cil_hierarchy.CILIsVoidNode)
     def visit(self, node: cil_hierarchy.CILIsVoidNode):
         try:
             v = self.get_local_var_or_param_index(node.is_void)
+            self.emit(f'lw, $t0, {-4*v}($fp)')
         except ValueError:
-            self.emit('li, $v0, 0')
-        else:
-            self.emit(f'lw, $t0, {4*v}($fp)')
             self.emit('seq $v0, $t0, 0')
-            #OJOJOJOJO poner esos labels por algun lado
+
+        self.emit('la $t1, __void')
+        self.emit('seq $v0, $t0, $t1')
 
     @visitor.when(cil_hierarchy.CILLabelNode)
-    def visit(self,node:cil_hierarchy.CILLabelNode):
+    def visit(self, node: cil_hierarchy.CILLabelNode):
         self.emit(f'{node.label}:')
 
     @visitor.when(cil_hierarchy.CILLengthNode)
     def visit(self,node:cil_hierarchy.CILLengthNode):
-        pass
+        self.macro_push('$ra')
+        local_index = self.get_local_var_or_param_index(node.localv)
+        self.emit(f'lw $a0, {-4*local_index}($fp)')
+        self.emit('jal __get_str_len')
+        self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILLoadNode)
     def visit(self,node:cil_hierarchy.CILLoadNode):
         self.emit(f'la, $v0, {node.msg}')
 
     @visitor.when(cil_hierarchy.CILMinusNode)
-    def visit(self,node:cil_hierarchy.CILMinusNode):
+    def visit(self, node: cil_hierarchy.CILMinusNode):
         l = node.left
         r = node.right
         if type(l) == int or type(l) == float:
             self.emit(f'li $t0, {l}')
         elif type(l) == str:
             v = self.get_local_var_or_param_index(l)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t0, {-4*(v)}($fp)')
         
         if type(r) == int or type(r) == float:
             self.emit(f'li $t1, {r}')
         elif type(r) == str:
             v = self.get_local_var_or_param_index(r)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t1, {-4*(v)}($fp)')
         
-        self.emit(f'neg $t2, $t1')
-        self.emit(f'(add $t3, $t0, $t2)')
-        self.emit('move $v0, $t3')
-
-    # @visitor.when(cil_hierarchy.CILParamNode)
-    # def visit(self,node: cil_hierarchy.CILParamNode):
-    #     self.macro_push(node.vinfo.name)
+        self.emit('sub $v0, $t0, $t1')
 
     @visitor.when(cil_hierarchy.CILPlusNode)
-    def visit(self,node:cil_hierarchy.CILPlusNode):
+    def visit(self, node: cil_hierarchy.CILPlusNode):
         l = node.left
         r = node.right
         if type(l) == int or type(l) == float:
@@ -649,23 +631,28 @@ class CILtoMIPSVisitor:
         self.emit('move $v0, $t2')
 
     @visitor.when(cil_hierarchy.CILPrefixNode)
-    def visit(self,node:cil_hierarchy.CILPrefixNode):
-        pass
+    def visit(self, node: cil_hierarchy.CILPrefixNode):
+        self.macro_push('$ra')
+        local_index = self.get_local_var_or_param_index(node.sub_string)
+        self.emit(f'lw $a0, {-4*local_index}($fp)')
+        local_index = self.get_local_var_or_param_index(node.full_string)
+        self.emit(f'lw $a1, {-4*local_index}($fp)')
+        self.emit('jal __get_if_its_prefix')
+        self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILPrintStringNode)
-    def visit(self,node:cil_hierarchy.CILPrintStringNode):
+    def visit(self, node: cil_hierarchy.CILPrintStringNode):
         try:
             v = self.currentfuncv.index(node.str_addr)
+            self.emit(f'lw $a0, {-4*v}($fp)')
         except ValueError:
+            # esto no deberia ocurrir
             self.emit(f'la $a0, {node.str_addr}')
-        else:
-            self.emit(f'lw $t0, ($sp + 4*{v})')
         self.emit('li $v0, 4')
         self.emit('syscall')
 
-            
     @visitor.when(cil_hierarchy.CILPrintIntNode)
-    def visit(self,node:cil_hierarchy.CILPrintIntNode):
+    def visit(self, node: cil_hierarchy.CILPrintIntNode):
         n = node.int_addr
         v = self.currentfuncv.index(n)
         self.emit(f'lw $t0, ($sp + 4*{v})')
@@ -674,14 +661,14 @@ class CILtoMIPSVisitor:
         self.emit('syscall')
 
     @visitor.when(cil_hierarchy.CILReadStringNode)
-    def visit(self,node:cil_hierarchy.CILReadStringNode):
+    def visit(self, node:cil_hierarchy.CILReadStringNode):
         self.emit('li $v0, 8')
         self.emit('la $a0, std_in_data')
-        self.emit('la $a1, std_in_data_size')
+        self.emit('la $a1, 100')
         self.emit('syscall')
     
     @visitor.when(cil_hierarchy.CILReadIntNode)
-    def visit(self,node:cil_hierarchy.CILReadIntNode):
+    def visit(self, node:cil_hierarchy.CILReadIntNode):
         self.emit('li $v0, 5')
         self.emit('syscall')
 
@@ -698,56 +685,97 @@ class CILtoMIPSVisitor:
             self.emit(f'lw $v0, {-4*local_index}($fp)')
         self.emit('jr $ra')
 
+    def _find_attr(self, node):
+        # load instance pointer
+        instance_index = self.get_local_var_or_param_index(node.localv)
+        # cargamos en $t1 el puntero a la instancia
+        self.emit(f'lw $t1, {-4*instance_index}($fp)')
+        self.emit('addu $t1, $t1, 8')
+        self.emit(f'lw $t1, 0($t1)')
+        # resolve attr address
+        # call find_attr_address function
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        # ponemos en $v0 la direccion del string
+        self.save_string(node.attrName)
+        # seteamos el frame del metodo que vamos a pasar
+        self.emit('move $fp, $sp')
+        # pasamos los parametros a la funcion
+        self.macro_push('$v0')
+        self.macro_push('$t1')
+        # saltar a la funcion que busca el puntero al attr correcto
+        self.emit('jal __resolve_name')
+
     @visitor.when(cil_hierarchy.CILSetAttributeNode)
-    def visit(self,node:cil_hierarchy.CILSetAttributeNode):
-        pass
+    def visit(self, node: cil_hierarchy.CILSetAttributeNode):
+        self._find_attr(node)
+
+        try:
+            local_ = self.get_local_var_or_param_index(node.value)
+            self.emit(f'lw $t0, {-4*local_}($fp)')
+        except ValueError:
+            if node.value == "":
+                self.emit('''
+                    li $v0, 9
+                    li $a0, 1
+                    syscall
+                    sb $0, 0($v0)
+                    move $t0, $v0
+                ''')
+            elif node.value == 'void':
+                self.emit('la $t0, __void')
+            else:
+                self.emit(f'li $t0, {node.value}')
+        self.emit('sw $t0, 0($v0)')
 
     @visitor.when(cil_hierarchy.CILSetIndexNode)
-    def visit(self,node:cil_hierarchy.CILSetIndexNode):
-        self.emit(f'lw {node.value}, ({node.id} + 4*{node.index})')
+    def visit(self,node: cil_hierarchy.CILSetIndexNode):
+        # se asume q los valores que se pasan son labels
+        local_index = self.get_local_var_or_param_index(node.localv)
+        self.emit(f'lw $t0, {-4*local_index}($fp)')
+        self.emit(f'addu $t0, $t0, {node.index}')
+        self.emit(f'la $t1, {node.value}')
+        self.emit(f'sw $t1, 0($t0)')
 
     @visitor.when(cil_hierarchy.CILStarNode)
-    def visit(self,node:cil_hierarchy.CILStarNode):
+    def visit(self, node: cil_hierarchy.CILStarNode):
         l = node.left
         r = node.right
         if type(l) == int or type(l) == float:
             self.emit(f'li $t0, {l}')
         elif type(l) == str:
             v = self.get_local_var_or_param_index(l)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t0, {-4*(v)}($fp)')
         
         if type(r) == int or type(r) == float:
             self.emit(f'li $t1, {r}')
         elif type(r) == str:
             v = self.get_local_var_or_param_index(r)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t0, {-4*(v)}($fp)')
         
         self.emit(f'(mul $t3, $t0, $t2)')
         self.emit('move $v0, $t3')
 
     @visitor.when(cil_hierarchy.CILSubstringNode)
-    def visit(self,node:cil_hierarchy.CILSubstringNode):
-        pass
+    def visit(self, node: cil_hierarchy.CILSubstringNode):
 
-    @visitor.when(cil_hierarchy.CILToStrNode)
-    def visit(self, node: cil_hierarchy.CILToStrNode):
-        pass
+        self.macro_push('$ra')
+        local_index = self.get_local_var_or_param_index(node.str1)
+        self.emit(f'lw $a0, {-4*local_index}($fp)')
+        self.emit(f'li $a1, {node.index}')
+        self.emit(f'li $a2, {node.length}')
+        self.emit('jal __get_substring')
+        self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILTypeNameNode)
     def visit(self, node: cil_hierarchy.CILTypeNameNode):
-        local_index = self.get_local_var_or_param_index(node.localv)
+        local_index = self.get_local_var_or_param_index(node.type_to_get)
         # cargamos la direccion de la instancia
         self.emit(f'lw $a0, {-4*local_index}($fp)')
         # cargamos la direccion del tipo
         self.emit('lw $a0, 0($a0)')
-        self.emit('add $v0, $a0, 5')
+        self.emit('add $v0, $a0, 9')
 
-    # todo??
-    # @visitor.when(cil_hierarchy.CILTypeNode)
-    # def visit(self, node: cil_hierarchy.CILTypeNode):
-    #     self.emit(f'{node.name}:')
-
-    # Todo
     @visitor.when(cil_hierarchy.CILTypeOfNode)
     def visit(self, node: cil_hierarchy.CILTypeOfNode):
         local_index = self.get_local_var_or_param_index(node.source)
@@ -757,11 +785,11 @@ class CILtoMIPSVisitor:
         self.emit('lw $v0, 0($a0)')
     
     @visitor.when(cil_hierarchy.CILNegationNode)
-    def visit(self,node:cil_hierarchy.CILNegationNode):
-        if type(node.id) == int or type(node.id) == float:
-            self.emit(f'li $t0, {node.id}')
+    def visit(self, node: cil_hierarchy.CILNegationNode):
+        if type(node.localv) == int or type(node.localv) == float:
+            self.emit(f'li $t0, {node.localv}')
         else:
-            v = self.get_local_var_or_param_index(node.id)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            v = self.get_local_var_or_param_index(node.localv)
+            self.emit(f'lw $t0, {-4*(v)}($fp)')
         self.emit(f'neg $t1, $t0')
         self.emit(f'move $v0, $t1')

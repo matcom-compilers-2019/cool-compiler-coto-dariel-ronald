@@ -113,16 +113,16 @@ class CILDivNode(CILArithmeticNode):
 
 
 class CILGetAttributeNode(CILInstructionNode):
-    def __init__(self, id, object_instance):
-        self.id = id
-        self.object_instance = object_instance
+    def __init__(self, attrName, localv):
+        self.attrName = attrName
+        self.localv = localv
 
 
 class CILSetAttributeNode(CILInstructionNode):
-    def __init__(self, id, index, value):
-        self.id = id
+    def __init__(self, attrName, localv, value):
+        self.attrName = attrName
         self.value = value
-        self.index = index
+        self.localv = localv
 
 
 class CILGetIndexNode(CILInstructionNode):
@@ -222,11 +222,11 @@ class CILPrefixNode(CILInstructionNode):
         self.full_string = s2
 
 
-# todo: Aguien que me explique q quisieron hacer con esto
 class CILSubstringNode(CILInstructionNode):
-    def __init__(self, str1, str2):
+    def __init__(self, str1, index, length):
         self.str1 = str1
-        self.str2 = str2
+        self.index = index
+        self.length = length
 
 
 class CILToStrNode(CILInstructionNode):
@@ -306,5 +306,5 @@ class CILEqualThanNode(CILInstructionNode):
 
 
 class CILCopyNode(CILInstructionNode):
-    def __init__(self, type_to_copy):
-        self.type_to_copy = type_to_copy
+    def __init__(self, localv):
+        self.localv = localv

@@ -23,7 +23,7 @@ def get_distance(cool_to_cil):
         cool_to_cil.register_instruction(CILLabelNode, l_base)
         cool_to_cil.define_internal_local()
         base_case = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, base_case.vinfo, CILEqualThanNode(current_parent.vinfo, "Object"))
+        cool_to_cil.register_instruction(CILAssignNode, base_case.vinfo, CILEqualThanNode(current_parent.vinfo, "type_Object"))
         cool_to_cil.register_instruction(CILGotoIfNode, base_case.vinfo, l_end)
 
         #Se analiza si encontramos al tipo t2

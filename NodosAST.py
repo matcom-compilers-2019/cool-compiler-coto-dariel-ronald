@@ -51,12 +51,6 @@ class AttributeNode(FeatureNode):
         other.id == self.id and other.type == self.type
 
 
-# class FormalNode(Node):
-#     def __init__(self):
-#         self.id = None
-#         self.type = None
-
-
 class ExpressionNode(Node):
     computed_type = None
 
