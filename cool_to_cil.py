@@ -123,7 +123,7 @@ class COOLToCILVisitor:
         return result
 
     @visitor.when(ast.ClassNode)
-    def visit(self, node:ast.ClassNode):
+    def visit(self, node: ast.ClassNode):
         self.dottypes.append(CILTypeNode(node.name, node.inherit))
         self.dotcode.append(CILCodeNode())
         if len(node.attributes) > 0:
@@ -133,7 +133,7 @@ class COOLToCILVisitor:
             self.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
             self.define_internal_local()
             index = self.dotcode[-1].functions[-1].localvars[-1]
-            self.register_instruction(CILAssignNode, index.vinfo, CILAllocateNode(node.name))
+            self.register_instruction(CILAssignNode, index, CILAllocateNode(node.name))
             for attr in node.attributes:
                 self.visit(attr)
                 if attr.value is not None:

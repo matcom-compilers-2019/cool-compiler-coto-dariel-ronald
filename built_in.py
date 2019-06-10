@@ -262,8 +262,16 @@ def mips_concat(output):
 
 def add_built_in(cool_to_cil):
         #OBJECT
-        cool_to_cil.dottypes.append(CILTypeNode("Object", "None", [], ["Object_abort","Object_type_name","Object_copy"]))
+        cool_to_cil.dottypes.append(CILTypeNode("Object", "None", [], ["Object_abort","Object_type_name","Object_copy",
+                                                                       'Object_cil_attributes_initializer']))
         cool_to_cil.dotcode.append(CILCodeNode())
+
+        constructor_method_name = 'Object_cil_attributes_initializer'
+        cool_to_cil.dottypes[-1].methods.append(constructor_method_name)
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
+        cool_to_cil.define_internal_local()
+        index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
+        cool_to_cil.register_instruction(CILAssignNode, index, CILAllocateNode('Object'))
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_abort",["self"]))
         cool_to_cil.current_function_name = "Object_abort"
@@ -285,20 +293,28 @@ def add_built_in(cool_to_cil):
         cool_to_cil.register_instruction(CILReturnNode, dest)
 
         #IO
-        cool_to_cil.dottypes.append(CILTypeNode("IO", "Object", [], ["IO_out_string","IO_out_int","IO_in_string","IO_in_int"]))
+        cool_to_cil.dottypes.append(CILTypeNode("IO", "Object", [], ["IO_out_string","IO_out_int","IO_in_string",
+                                                                     "IO_in_int",'IO_cil_attributes_initializer']))
         cool_to_cil.dotcode.append(CILCodeNode())
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_string",["self"]))
+        constructor_method_name = f'IO_cil_attributes_initializer'
+        cool_to_cil.dottypes[-1].methods.append(constructor_method_name)
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
+        cool_to_cil.define_internal_local()
+        index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
+        cool_to_cil.register_instruction(CILAssignNode, index, CILAllocateNode('IO'))
+
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_string", ["self"]))
         cool_to_cil.current_function_name = "IO_out_string"
         cool_to_cil.register_instruction(CILPrintStringNode, "self")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int",["self"]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int", ["self"]))
         cool_to_cil.current_function_name = "IO_out_int"
         cool_to_cil.register_instruction(CILPrintIntNode, "self")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_string",["self"]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_string", ["self"]))
         cool_to_cil.current_function_name = "IO_in_string"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
@@ -312,9 +328,9 @@ def add_built_in(cool_to_cil):
         cool_to_cil.register_instruction(CILAssignNode, dest, CILReadIntNode())
         cool_to_cil.register_instruction(CILReturnNode, dest)
 
-        #Int
-        cool_to_cil.dottypes.append(CILTypeNode("Int", "None"))
-        cool_to_cil.dotcode.append(CILCodeNode())
+        # #Int
+        # cool_to_cil.dottypes.append(CILTypeNode("Int", "None"))
+        # cool_to_cil.dotcode.append(CILCodeNode())
 
         #String
         cool_to_cil.dottypes.append(CILTypeNode("String", "None", [], ["String_length","String_concat",

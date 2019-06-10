@@ -199,6 +199,9 @@ class CILtoMIPSVisitor:
         self.emit('.text')
         for i in range(len(node.dottypes)):
             self.visit(node.dotcode[i])
+        for i in node.static_functions:
+            self.visit(i)
+
         add_builtin_mips_functions(self.output)
         self.add_compare_strings_funct()
         self.add_resolve_name_function()
@@ -288,13 +291,16 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILAssignNode)
     def visit(self, node: cil_hierarchy.CILAssignNode):
-        try:
-            local_index = self.get_local_var_or_param_index(node.source)
-            self.emit(f'lw $v0, {-4*local_index}($fp)')
-        except ValueError:
-            self.visit(node.source)
+        if type(node.source) is int:
+            self.emit(f'li $v0, {node.source}')
+        else:
+            try:
+                local_index = self.get_local_var_or_param_index(node.source)
+                self.emit(f'lw $v0, {-4*local_index}($fp)')
+            except ValueError:
+                self.visit(node.source)
         v = self.get_local_var_or_param_index(node.dest)
-        self.emit(f'sw, $v0, {-4*v}($fp)')
+        self.emit(f'sw $v0, {-4*v}($fp)')
 
     @visitor.when(cil_hierarchy.CILCodeNode)
     def visit(self, node: cil_hierarchy.CILCodeNode):
@@ -586,7 +592,19 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILGetIndexNode)
     def visit(self, node: cil_hierarchy.CILGetIndexNode):
-        self.emit(f'lw $v0, ({node.localv} + 4*{node.index})')
+        arr = self.get_local_var_or_param_index(node.localv)
+        self.emit(f'lw $t0, {-4*arr}($fp)')
+
+        if type(node.index) == int:
+            self.emit(f'li $t1, {node.index}')
+        else:
+            index = self.get_local_var_or_param_index(node.index)
+            self.emit(f'lw $t1, {-4*index}($fp)')
+
+        self.emit(f'li $t2, -4')
+        self.emit(f'mul $t1,$t1, $t2')
+        self.emit('add $t0, $t0, $t1')
+        self.emit(f'lw $v0, 0($t0)')
 
     @visitor.when(cil_hierarchy.CILGetParentNode)
     def visit(self, node: cil_hierarchy.CILGetParentNode):
@@ -665,7 +683,7 @@ class CILtoMIPSVisitor:
             v = self.get_local_var_or_param_index(r)
             self.emit(f'lw $t0, {4*(v)}($fp)')
 
-        self.emit(f'(add $t2, $t0, $t1)')
+        self.emit(f'add $t2, $t0, $t1')
         self.emit('move $v0, $t2')
 
     @visitor.when(cil_hierarchy.CILPrefixNode)
@@ -836,6 +854,78 @@ class CILtoMIPSVisitor:
         self.emit('lw $a0, 0($a0)')
         self.emit('add $v0, $a0, 9')
 
+    @visitor.when(cil_hierarchy.CILLowerEqualThanNode)
+    def visit(self, node: cil_hierarchy.CILLowerEqualThanNode):
+        l = node.left_expr
+        r = node.right_expr
+        if type(l) == int or type(l) == float:
+            self.emit(f'li $t0, {l}')
+        elif type(l) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $t0, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $t0, {node.left_expr}')
+
+        if type(r) == int or type(r) == float:
+            self.emit(f'li $t1, {r}')
+
+        elif type(r) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $t1, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $t1, {node.left_expr}')
+        self.emit('sle $v0, $t0, $t1')
+
+    @visitor.when(cil_hierarchy.CILEqualThanNode)
+    def visit(self, node: cil_hierarchy.CILEqualThanNode):
+        l = node.left_expr
+        r = node.right_expr
+        if type(l) == int or type(l) == float:
+            self.emit(f'li $t0, {l}')
+        elif type(l) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $t0, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $t0, {node.left_expr}')
+
+        if type(r) == int or type(r) == float:
+            self.emit(f'li $t1, {r}')
+
+        elif type(r) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $t1, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $t1, {node.left_expr}')
+        self.emit('seq $v0, $t0, $t1')
+
+    @visitor.when(cil_hierarchy.CILLowerThanNode)
+    def visit(self, node: cil_hierarchy.CILLowerThanNode):
+        l = node.left_expr
+        r = node.right_expr
+        if type(l) == int or type(l) == float:
+            self.emit(f'li $t0, {l}')
+        elif type(l) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $t0, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $t0, {node.left_expr}')
+
+        if type(r) == int or type(r) == float:
+            self.emit(f'li $t1, {r}')
+
+        elif type(r) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $t1, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $t1, {node.left_expr}')
+        self.emit('slt $v0, $t0, $t1')
+
     @visitor.when(cil_hierarchy.CILTypeOfNode)
     def visit(self, node: cil_hierarchy.CILTypeOfNode):
         local_index = self.get_local_var_or_param_index(node.source)
@@ -843,8 +933,22 @@ class CILtoMIPSVisitor:
         self.emit(f'lw $a0, {-4*local_index}($fp)')
         # cargamos la direccion del tipo
         self.emit('lw $v0, 0($a0)')
-    
-    # @visitor.when(cil_hierarchy.CILNegationNode)
+
+    @visitor.when(cil_hierarchy.CILGotoIfNode)
+    def visit(self, node: cil_hierarchy.CILGotoIfNode):
+
+        if type(node.compare) is int:
+            self.emit(f'li $t0, {node.compare}')
+        else:
+            v = self.get_local_var_or_param_index(node.compare)
+            self.emit(f'lw $t0,{-4*v}($fp)')
+        self.emit(f'beqz $t0, {node.label}')
+
+    @visitor.when(cil_hierarchy.CILGotoNode)
+    def visit(self, node: cil_hierarchy.CILGotoNode):
+        self.emit(f'b {node.label}')
+
+            # @visitor.when(cil_hierarchy.CILNegationNode)
     # def visit(self, node: cil_hierarchy.CILNegationNode):
     #     if type(node.localv) == int or type(node.localv) == float:
     #         self.emit(f'li $t0, {node.localv}')

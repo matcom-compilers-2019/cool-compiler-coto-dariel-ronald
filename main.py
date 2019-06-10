@@ -8,6 +8,7 @@ from tqdm import tqdm
 from cool_to_cil import *
 from cil_to_mips import *
 import logging
+from hashlib import sha256
 logging.basicConfig()
 
 
@@ -50,9 +51,9 @@ def compile_cool(data):
     mips_visitor.visit(cil_ast)
 
     program = mips_visitor.get_mips_program_code()
-    program_name = hash(program)
+    program_name = sha256(b'program').hexdigest()
 
-    with open(str(program_name)+'.s', 'w') as file:
+    with open(f'./examples_output/{program_name}.s', 'w') as file:
         file.writelines(program)
 
 if __name__ == '__main__':
