@@ -265,52 +265,52 @@ def add_built_in(cool_to_cil):
         cool_to_cil.dottypes.append(CILTypeNode("Object", "None", [], ["Object_abort","Object_type_name","Object_copy"]))
         cool_to_cil.dotcode.append(CILCodeNode())
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_abort",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_abort",["self"]))
         cool_to_cil.current_function_name = "Object_abort"
         cool_to_cil.register_data("EXECUTION ABORTED")
         cool_to_cil.register_instruction(CILErrorMessageNode, cool_to_cil.dotdata.data[-1].vname)
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_type_name",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_type_name",["self"]))
         cool_to_cil.current_function_name = "Object_type_name"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo,  CILTypeNameNode("self"))
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest,  CILTypeNameNode("self"))
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_copy",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_copy",["self"]))
         cool_to_cil.current_function_name = "Object_copy"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo, CILCopyNode("self"))
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest, CILCopyNode("self"))
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
         #IO
         cool_to_cil.dottypes.append(CILTypeNode("IO", "Object", [], ["IO_out_string","IO_out_int","IO_in_string","IO_in_int"]))
         cool_to_cil.dotcode.append(CILCodeNode())
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_string",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_string",["self"]))
         cool_to_cil.current_function_name = "IO_out_string"
         cool_to_cil.register_instruction(CILPrintStringNode, "self")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int",["self"]))
         cool_to_cil.current_function_name = "IO_out_int"
         cool_to_cil.register_instruction(CILPrintIntNode, "self")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_string",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_string",["self"]))
         cool_to_cil.current_function_name = "IO_in_string"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo, CILReadStringNode())
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest, CILReadStringNode())
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_int",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_int",["self"]))
         cool_to_cil.current_function_name = "IO_in_int"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo, CILReadIntNode())
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest, CILReadIntNode())
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
         #Int
         cool_to_cil.dottypes.append(CILTypeNode("Int", "None"))
@@ -321,29 +321,29 @@ def add_built_in(cool_to_cil):
                                                                        "String_substr"]))
         cool_to_cil.dotcode.append(CILCodeNode())
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("String_length",[CILArgNode("self")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("String_length",["self"]))
         cool_to_cil.current_function_name = "String_length"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo, CILLengthNode("self"))
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest, CILLengthNode("self"))
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("String_concat",[CILArgNode("self"),
-                                                                                  CILArgNode("s")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("String_concat",["self",
+                                                                                  "s"]))
         cool_to_cil.current_function_name = "String_concat"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo, CILConcatNode("self", "s"))
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest, CILConcatNode("self", "s"))
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("String_substr",[CILArgNode("self"),
-                                                                                  CILArgNode("index"),
-                                                                                  CILArgNode("length")]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("String_substr",["self",
+                                                                                  "index",
+                                                                                  "length"]))
         cool_to_cil.current_function_name = "String_substr"
         cool_to_cil.define_internal_local()
         dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-        cool_to_cil.register_instruction(CILAssignNode, dest.vinfo, CILSubstringNode("self", "index", "length"))
-        cool_to_cil.register_instruction(CILReturnNode, dest.vinfo)
+        cool_to_cil.register_instruction(CILAssignNode, dest, CILSubstringNode("self", "index", "length"))
+        cool_to_cil.register_instruction(CILReturnNode, dest)
 
         #Bool
         cool_to_cil.dottypes.append(CILTypeNode("Bool", "None"))

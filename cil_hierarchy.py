@@ -11,8 +11,9 @@ class CILProgramNode(CILNode):
 
 
 class CILTypeNode(CILNode):
-    def __init__(self,name, parent_name ,attributes = None, methods = None):
+    def __init__(self, name, parent_name,attributes = None, methods = None):
         self.name = name
+
         if attributes is None:
             self.attributes = []
         else:
@@ -24,7 +25,8 @@ class CILTypeNode(CILNode):
             self.methods = methods
 
         self.parent_name = parent_name
-
+        self.parent = None
+        self._visited = False
 
 class CILDataNode(CILNode):
     def __init__(self):
@@ -71,7 +73,7 @@ class CILFunctionNode(CILNode):
 
 
 class CILParamNode(CILNode):
-    def __init__(self,vinfo):
+    def __init__(self, vinfo):
         self.vinfo = vinfo
 
 
@@ -191,8 +193,8 @@ class CILGetParentNode(CILInstructionNode):
 
 
 class CILArgNode(CILInstructionNode):
-    def __init__(self, localv):
-        self.localv = localv
+    def __init__(self, vinfo):
+        self.vinfo = vinfo
 
 
 class CILReturnNode(CILInstructionNode):

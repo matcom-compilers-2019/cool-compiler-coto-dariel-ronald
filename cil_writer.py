@@ -66,26 +66,28 @@ class CILWriterVisitor(object):
         self.black()
         self.emit(f'function {node.fname} {{')
         for x in node.params:
-            self.visit(x)
+            self.emit(f'  ARG {x}')
+
         if node.params:
             self.black()
 
         for x in node.localvars:
-            self.visit(x)
+            self.emit(f'  LOCAL {x}')
         if node.localvars:
             self.black()
 
         for x in node.instructions:
             self.visit(x)
         self.emit('}')
+    #
 
-    @visitor.when(cil.CILParamNode)
-    def visit(self, node:cil.CILParamNode):
-        self.emit(f'  PARAM {node.vinfo}')
-
-    @visitor.when(cil.CILLocalNode)
-    def visit(self, node:cil.CILLocalNode):
-        self.emit(f'  LOCAL {node.vinfo}')
+    # @visitor.when(cil.CILParamNode)
+    # def visit(self, node: cil.CILParamNode):
+    #     self.emit(f'  PARAM {node.vinfo}')
+    #
+    # @visitor.when(cil.CILLocalNode)
+    # def visit(self, node:cil.CILLocalNode):
+    #     self.emit(f'  LOCAL {node.vinfo}')
 
     @visitor.when(cil.CILAssignNode)
     def visit(self, node: cil.CILAssignNode):
@@ -193,9 +195,9 @@ class CILWriterVisitor(object):
     def visit(self, node: int):
         return node
 
-    @visitor.when(cil.CILArgNode)
-    def visit(self, node:cil.CILArgNode):
-        self.emit(f'  ARG {node.localv}')
+    # @visitor.when(cil.CILArgNode)
+    # def visit(self, node: cil.CILArgNode):
+    #     self.emit(f'  ARG {node.vinfo}')
 
     @visitor.when(cil.CILReturnNode)
     def visit(self, node:cil.CILReturnNode):

@@ -3,6 +3,7 @@ import cil_hierarchy
 from mips_utils import *
 from built_in import add_builtin_mips_functions
 
+
 class CollectMipsVtablesVisitor:
     def __init__(self):
         self.output = []
@@ -20,7 +21,7 @@ class CollectMipsVtablesVisitor:
 
     @visitor.when(cil_hierarchy.CILProgramNode)
     def visit(self, node: cil_hierarchy.CILProgramNode):
-        self.emit('__vtables: ')
+        self.emit('__vtables: \n')
 
         cil_context = MipsTypeContext()
         cil_context.add_nodes(node.dottypes)
@@ -28,6 +29,7 @@ class CollectMipsVtablesVisitor:
         cil_context.update_methods_inheritence()
 
         for node_type in node.dottypes:
+            self.emit('')
             self.visit(node_type)
 
     # Vtable definition example
@@ -97,7 +99,10 @@ class CollectMipsTypesDefinitionsVisitor:
         # type space
         self.emit(f'.word {type_space_in_bytes}')
         # parent pointer
-        self.emit(f'.word type_{node.parent_name}')
+        if node.parent_name == 'None':
+            self.emit(f'.word __void')
+        else:
+            self.emit(f'.word type_{node.parent_name}')
         # type Name length
         self.emit(f'.byte {len(node.name)}')
         # type Name
@@ -126,7 +131,7 @@ class CILtoMIPSVisitor:
         self.currentfuncv = None
 
     def get_mips_program_code(self):
-        
+
         result = ''
         for text in self.output:
             result += text
@@ -138,9 +143,9 @@ class CILtoMIPSVisitor:
     def blank(self):
         self.output.append('')
     
-    def get_local_var_or_param_index(self,name):
-        for i,v in enumerate(self.currentfuncv.params + self.currentfuncv.localvars):
-            if name == v.vinfo.name:
+    def get_local_var_or_param_index(self, name):
+        for i, v in enumerate(self.currentfuncv.params + self.currentfuncv.localvars):
+            if name == v:
                 return i
         raise ValueError
     
@@ -293,7 +298,8 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILDataElementNode)
     def visit(self, node: cil_hierarchy.CILDataElementNode):
-        self.emit(f'{node.vname}: .asciiz "{node.value}\n"')
+        name = node.value.replace('"','')
+        self.emit(f'{node.vname}: .asciiz "{name}"\n')
 
     def save_string(self, name):
         # reservar el espacio del string, se guarda en $v0
@@ -578,8 +584,6 @@ class CILtoMIPSVisitor:
         self.emit('neg $t0,$t0')
         self.emit('addu $v0,$t0,1')
 
-
-
     @visitor.when(cil_hierarchy.CILIsVoidNode)
     def visit(self, node: cil_hierarchy.CILIsVoidNode):
         try:
@@ -657,7 +661,7 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILPrintStringNode)
     def visit(self, node: cil_hierarchy.CILPrintStringNode):
         try:
-            v = self.currentfuncv.index(node.str_addr)
+            v = self.get_local_var_or_param_index(node.str_addr)
             self.emit(f'lw $a0, {-4*v}($fp)')
         except ValueError:
             # esto no deberia ocurrir
@@ -667,9 +671,11 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILPrintIntNode)
     def visit(self, node: cil_hierarchy.CILPrintIntNode):
-        n = node.int_addr
-        v = self.currentfuncv.index(n)
-        self.emit(f'lw $t0, ($sp + 4*{v})')
+        try:
+            v = self.get_local_var_or_param_index(node.int_addr)
+            self.emit(f'lw $t0, ($sp + 4*{v})')
+        except ValueError:
+            self.emit(f'li $t0, {node.int_addr}')
         self.emit('move $a0, $t0')
         self.emit('li $v0, 1')
         self.emit('syscall')
@@ -695,8 +701,11 @@ class CILtoMIPSVisitor:
         :return:
         '''
         if node.value is not None:
-            local_index = self.get_local_var_or_param_index(node.value)
-            self.emit(f'lw $v0, {-4*local_index}($fp)')
+            try:
+                local_index = self.get_local_var_or_param_index(node.value)
+                self.emit(f'lw $v0, {-4*local_index}($fp)')
+            except ValueError:
+                self.emit(f'li $v0, {node.value}')
         self.emit('jr $ra')
 
     def _find_attr(self, node):

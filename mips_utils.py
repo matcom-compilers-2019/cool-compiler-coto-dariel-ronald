@@ -23,23 +23,19 @@ class MipsTypeContext:
 
     def update_methods_inheritence(self):
         def dfs_visit_topologicalsort(node: CILTypeNode):
-            if node.parent is None:
-                node._visited = True
+            if node.parent is not None:
 
-            elif node.parent._visited:
-                min_len_list = node.methods if len(node.methods) < len(node.parent.methods) else node.parent.methods
-                max_len_list = node.methods if len(node.methods) >= len(node.parent.methods) else node.parent.methods
+                if node.parent._visited:
 
-                # le quitamos el prefijo NombreDelTipo
-                min_canonical_list = [method_name.split('_',maxsplit=1)[1] for method_name in min_len_list]
-                max_canonical_list = [method_name.split('_',maxsplit=1)[1] for method_name in max_len_list]
+                    # le quitamos el prefijo NombreDelTipo
+                    node_canonical_list = [method_name.split('_',maxsplit=1)[1] for method_name in node.methods]
+                    parent_canonical_list = [method_name.split('_',maxsplit=1)[1] for method_name in node.parent.methods]
 
-                node.methods = [min_len_list[i] for i, method_name in min_canonical_list
-                                if method_name not in max_canonical_list]
-                node.methods += max_len_list
+                    node.methods += [node.parent.methods[i] for i, method_name in enumerate(parent_canonical_list)
+                                    if method_name not in node_canonical_list]
 
-            else:
-                dfs_visit_topologicalsort(node.parent)
+                else:
+                    dfs_visit_topologicalsort(node.parent)
             node._visited = True
 
         for type_node in self.factory.values():

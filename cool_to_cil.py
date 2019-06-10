@@ -31,8 +31,8 @@ class COOLToCILVisitor:
 
     def define_internal_local(self):
         vinfo = self.build_internal_vname()
-        local_node = CILLocalNode(vinfo)
-        self.dotcode[-1].functions[-1].localvars.append(local_node)
+        # local_node = CILLocalNode(vinfo)
+        self.dotcode[-1].functions[-1].localvars.append(vinfo)
         return vinfo
 
     def register_instruction(self, instruction_type, *args):
@@ -55,8 +55,8 @@ class COOLToCILVisitor:
 
     def define_ud_internal_local(self, vinfo):
         vinfo = self.build_user_defined_vname(vinfo)
-        local_node = CILLocalNode(vinfo)
-        self.dotcode[-1].functions[-1].localvars.append(local_node)
+        # local_node = CILLocalNode(vinfo)
+        self.dotcode[-1].functions[-1].localvars.append(vinfo)
         return vinfo
 
     
@@ -157,9 +157,9 @@ class COOLToCILVisitor:
         name = f'{self.dottypes[-1].name}_{node.id}'
         self.current_function_name = name
         self.dottypes[-1].methods.append(name)
-        self.dotcode[-1].functions.append(CILFunctionNode(name,[CILArgNode("self")]))
+        self.dotcode[-1].functions.append(CILFunctionNode(name,["self"]))
         for x,_ in node.parameters:
-            self.dotcode[-1].functions[-1].params.append(CILArgNode(x))
+            self.dotcode[-1].functions[-1].params.append(x)
             
         if type(node.expression) is ast.BlockNode:
             for expr in node.expression.expressions:
@@ -211,7 +211,7 @@ class COOLToCILVisitor:
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, my_call)
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.StaticDispatchNode)
     def visit(self, node: ast.StaticDispatchNode):
@@ -234,7 +234,7 @@ class COOLToCILVisitor:
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, my_call)
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.ConditionalNode)
     def visit(self, node: ast.ConditionalNode):
@@ -284,10 +284,10 @@ class COOLToCILVisitor:
             if dec[1] is not None:
                 self.visit(dec[1])
                 self.define_ud_internal_local(dec[0][0])
-                self.register_instruction(CILAssignNode,self.dotcode[-1].functions[-1].localvars[-1].vinfo,dec[1].holder)
+                self.register_instruction(CILAssignNode,self.dotcode[-1].functions[-1].localvars[-1], dec[1].holder)
             else:
                 self.define_ud_internal_local(dec[0][0])
-                self.register_instruction(CILAssignNode,self.dotcode[-1].functions[-1].localvars[-1].vinfo,0)
+                self.register_instruction(CILAssignNode,self.dotcode[-1].functions[-1].localvars[-1], 0)
         self.visit(node.in_expression)
         node.holder = node.in_expression.holder
 
@@ -298,44 +298,46 @@ class COOLToCILVisitor:
         # self.define_ud_internal_local(node.) todo: Preguntarle a dariel que qiso hacer aca
         self.define_internal_local() # yo puse esto
         expr0_value = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, expr0_value.vinfo, node.case_expression.holder)
+        self.register_instruction(CILAssignNode, expr0_value, node.case_expression.holder)
 
         #Aqui se crea un array que tendra todos los tipos correpondientes a las variables de las implicaciones
         #en orden
         self.define_internal_local()
         arr = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, arr.vinfo, CILArrayNode(len(node.implications)))
+        self.register_instruction(CILAssignNode, arr, CILArrayNode(len(node.implications)))
         for i in range(0, len(node.implications)):
-            self.register_instruction(CILSetIndexNode, arr.vinfo, i, 'type_'+node.implications[i][0][1])
+            self.register_instruction(CILSetIndexNode, arr, i, 'type_'+node.implications[i][0][1])
 
         #Aqui se obtiene el tipo del resultado de evaluar la expresion inicial del case
         self.define_internal_local()
         expr0_type_name = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, expr0_type_name.vinfo, CILTypeOfNode(node.case_expression.holder))
+        self.register_instruction(CILAssignNode, expr0_type_name, CILTypeOfNode(node.case_expression.holder))
 
         #Se realiza un llamado a la funcion estatica "get_closest_type", cuyo retorno se le asigna a closest_type_index
         self.define_internal_local()
         closest_type_index = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILParamNode, expr0_type_name.vinfo)
-        self.register_instruction(CILParamNode, arr.vinfo)
-        self.register_instruction(CILAssignNode, closest_type_index.vinfo, CILBuiltInCallNode("__get_closest_type"))
+        # self.register_instruction(CILParamNode, expr0_type_name)
+        # self.register_instruction(CILParamNode, arr)
+        bcall = CILBuiltInCallNode("__get_closest_type")
+        bcall.params = [expr0_type_name,arr]
+        self.register_instruction(CILAssignNode, closest_type_index, bcall)
 
         #Se crea un array que contendra los labels de las expresiones a visitar
         self.define_internal_local()
         array_labels = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, array_labels.vinfo, CILArrayNode(len(node.implications)))
+        self.register_instruction(CILAssignNode, array_labels, CILArrayNode(len(node.implications)))
         labels = []
 
         for i in range(len(node.implications)):
             l_next = self.next_label()
             labels.append(l_next)
-            self.register_instruction(CILSetIndexNode, array_labels.vinfo, i, l_next)
+            self.register_instruction(CILSetIndexNode, array_labels, i, l_next)
 
         #Se define en un goto a que label correspondiente a una de las expr se realizara el salto
         self.define_internal_local()
         label_index = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, label_index.vinfo, CILGetIndexNode(array_labels.vinfo, closest_type_index.vinfo))
-        self.register_instruction(CILGotoNode, label_index.vinfo)
+        self.register_instruction(CILAssignNode, label_index, CILGetIndexNode(array_labels, closest_type_index))
+        self.register_instruction(CILGotoNode, label_index)
 
         self.define_internal_local()
         final_holder = self.dotcode[-1].functions[-1].localvars[-1]
@@ -344,16 +346,16 @@ class COOLToCILVisitor:
         for i in range(0,len(node.implications)):
             self.register_instruction(CILLabelNode, labels[i])
             self.visit(node.implications[i][1])
-            self.register_instruction(CILAssignNode, final_holder.vinfo, node.implications[i][1].holder)
-        node.holder = final_holder.vinfo
+            self.register_instruction(CILAssignNode, final_holder, node.implications[i][1].holder)
+        node.holder = final_holder
 
     @visitor.when(ast.NewTypeNode)
     def visit(self, node: ast.NewTypeNode):
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         constructor_name = f'{node.type_name}_cil_attributes_initializer'
-        self.register_instruction(CILAssignNode, holder, CILStaticCallNode(constructor_name, node.type_name, None))
-        node.holder = holder.vinfo
+        self.register_instruction(CILAssignNode, holder, CILBuiltInCallNode(constructor_name))
+        node.holder = holder
 
     @visitor.when(ast.PlusNode)
     def visit(self, node: ast.PlusNode):
@@ -361,17 +363,17 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, CILPlusNode(left, right))
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.MinusNode)
     def visit(self, node: ast.MinusNode):
@@ -379,17 +381,17 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, CILMinusNode(left, right))
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.StarNode)
     def visit(self, node: ast.StarNode):
@@ -397,17 +399,17 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, CILStarNode(left, right))
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.DivNode)
     def visit(self, node:ast.DivNode):
@@ -415,17 +417,17 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, CILDivNode(left, right))
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.NegationNode)
     def visit(self, node: ast.NegationNode):
@@ -434,7 +436,7 @@ class COOLToCILVisitor:
         holder = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, holder, CILMinusNode(0, node.expression.holder))
 
-        node.holder = holder.vinfo
+        node.holder = holder
 
     @visitor.when(ast.NotNode)
     def visit(self, node: ast.NotNode):
@@ -443,7 +445,7 @@ class COOLToCILVisitor:
         local_dest = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, local_dest, CILMinusNode(1,node.expression.holder))
 
-        node.holder = local_dest.vinfo
+        node.holder = local_dest
 
     @visitor.when(ast.LowerThanNode)
     def visit(self, node: ast.LowerThanNode):
@@ -451,17 +453,17 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         local_dest = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, local_dest.vinfo, CILLowerThanNode(left, right))
-        node.holder = local_dest.vinfo
+        self.register_instruction(CILAssignNode, local_dest, CILLowerThanNode(left, right))
+        node.holder = local_dest
 
     @visitor.when(ast.LowerEqualThanNode)
     def visit(self, node:ast.LowerEqualThanNode):
@@ -469,17 +471,17 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         local_dest = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, local_dest.vinfo, CILLowerEqualThanNode(left, right))
-        node.holder = local_dest.vinfo
+        self.register_instruction(CILAssignNode, local_dest, CILLowerEqualThanNode(left, right))
+        node.holder = local_dest
 
     @visitor.when(ast.EqualThanNode)
     def visit(self, node:ast.EqualThanNode): 
@@ -487,25 +489,25 @@ class COOLToCILVisitor:
         self.visit(node.right_expression)
 
         left = node.left_expression.holder
-        if type(node.left_expression.holder) is cil.CILLocalNode:
-            left = node.left_expression.holder.vinfo
+        # if type(node.left_expression.holder) is cil.CILLocalNode:
+        #     left = node.left_expression.holder
 
         right = node.right_expression.holder
-        if type(node.right_expression.holder) is cil.CILLocalNode:
-            right = node.right_expression.holder.vinfo
+        # if type(node.right_expression.holder) is cil.CILLocalNode:
+        #     right = node.right_expression.holder
 
         self.define_internal_local()
         local_dest = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, local_dest.vinfo, CILEqualThanNode(left, right))
-        node.holder = local_dest.vinfo
+        self.register_instruction(CILAssignNode, local_dest, CILEqualThanNode(left, right))
+        node.holder = local_dest
 
     @visitor.when(ast.ObjectNode)
     def visit(self, node:ast.ObjectNode):
         name = f'{self.internal_count}_{self.current_function_name}_user_defined_{node.id}'
         for x in self.dotcode[-1].functions[-1].localvars:
-            splitted = x.vinfo.split("_")
+            splitted = x.split("_")
             if splitted[-1] == node.id:
-                name = x.vinfo
+                name = x
         node.holder = name
 
     @visitor.when(ast.IsVoidNode)
@@ -544,7 +546,7 @@ class COOLToCILVisitor:
         self.define_internal_local()
         load = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, load, CILLoadNode(local))
-        node.holder = load.vinfo
+        node.holder = load
     
     @visitor.when(ast.BoolNode)
     def visit(self, node:ast.BoolNode):

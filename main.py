@@ -7,7 +7,6 @@ from cool_errors import CoolErrorLogger
 from tqdm import tqdm
 from cool_to_cil import *
 from cil_to_mips import *
-import os
 import logging
 logging.basicConfig()
 
@@ -37,9 +36,10 @@ def check_semantic(ast):
 
 
 def compile_cool(data):
+    cool_ast = parser.parse(data, lexer)
+
     logging.info('Checking semantic...')
-    cool_ast = parser.parse(data, lexer, True)
-    check_semantic(ast)
+    check_semantic(cool_ast)
 
     logging.info('Generating IL code')
     ctcv = COOLToCILVisitor()
@@ -52,10 +52,11 @@ def compile_cool(data):
     program = mips_visitor.get_mips_program_code()
     program_name = hash(program)
 
-    with open(str(program_name), 'w') as file:
+    with open(str(program_name)+'.s', 'w') as file:
         file.writelines(program)
 
-
+if __name__ == '__main__':
+    main()
 
 
 
