@@ -560,12 +560,18 @@ class CILtoMIPSVisitor:
         self.emit(f'lw $a0, {-4*localv_index}($fp)')
         self.emit('lw $v0, 4($a0)')
 
-    # Todo:
     @visitor.when(cil_hierarchy.CILIntegerComplementNode)
     def visit(self, node: cil_hierarchy.CILIntegerComplementNode):
-        pass
+        try:
+            v = self.get_local_var_or_param_index(node.complement)
+            self.emit(f'lw, $t0, {-4*v}($fp)')
+        except ValueError:
+            self.emit(f'li $t0, {node.complement}')
+        self.emit('neg $t0,$t0')
+        self.emit('addu $v0,$t0,1')
 
-    # fix this
+
+
     @visitor.when(cil_hierarchy.CILIsVoidNode)
     def visit(self, node: cil_hierarchy.CILIsVoidNode):
         try:
@@ -784,12 +790,12 @@ class CILtoMIPSVisitor:
         # cargamos la direccion del tipo
         self.emit('lw $v0, 0($a0)')
     
-    @visitor.when(cil_hierarchy.CILNegationNode)
-    def visit(self, node: cil_hierarchy.CILNegationNode):
-        if type(node.localv) == int or type(node.localv) == float:
-            self.emit(f'li $t0, {node.localv}')
-        else:
-            v = self.get_local_var_or_param_index(node.localv)
-            self.emit(f'lw $t0, {-4*(v)}($fp)')
-        self.emit(f'neg $t1, $t0')
-        self.emit(f'move $v0, $t1')
+    # @visitor.when(cil_hierarchy.CILNegationNode)
+    # def visit(self, node: cil_hierarchy.CILNegationNode):
+    #     if type(node.localv) == int or type(node.localv) == float:
+    #         self.emit(f'li $t0, {node.localv}')
+    #     else:
+    #         v = self.get_local_var_or_param_index(node.localv)
+    #         self.emit(f'lw $t0, {-4*(v)}($fp)')
+    #     self.emit(f'neg $t1, $t0')
+    #     self.emit(f'move $v0, $t1')

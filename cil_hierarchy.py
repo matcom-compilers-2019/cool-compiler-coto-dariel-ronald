@@ -282,9 +282,9 @@ class CILTypeNameNode(CILInstructionNode):
         self.type_to_get = type_to_get
 
 
-class CILNegationNode(CILInstructionNode):
-    def __init__(self, localv):
-        self.localv = localv
+# class CILNegationNode(CILInstructionNode):
+#     def __init__(self, localv):
+#         self.localv = localv
 
 
 class CILLowerThanNode(CILInstructionNode):

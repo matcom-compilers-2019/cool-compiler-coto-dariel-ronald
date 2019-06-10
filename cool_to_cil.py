@@ -429,16 +429,16 @@ class COOLToCILVisitor:
         node.holder = holder.vinfo
 
     @visitor.when(ast.NegationNode)
-    def visit(self, node:ast.NegationNode):
+    def visit(self, node: ast.NegationNode):
         self.visit(node.expression)
         self.define_internal_local()
         holder = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, holder, CILNegationNode(node.expression.holder))
+        self.register_instruction(CILAssignNode, holder, CILMinusNode(0, node.expression.holder))
 
         node.holder = holder.vinfo
 
     @visitor.when(ast.NotNode)
-    def visit(self, node:ast.NotNode):
+    def visit(self, node: ast.NotNode):
         self.visit(node.expression)
         self.define_internal_local()
         local_dest = self.dotcode[-1].functions[-1].localvars[-1]
