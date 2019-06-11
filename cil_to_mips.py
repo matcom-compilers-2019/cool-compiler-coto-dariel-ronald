@@ -224,19 +224,14 @@ class CILtoMIPSVisitor:
         :return:
         '''
         self.emit(f'la $t0, type_{node.type_id}')
-        self.emit('addu $t0, $t0, 8')
-        self.emit('li $t2, 0')
-        # cargamos la longitud del nombre del tipo
-        self.emit('lb $t2, 0($t0)')
-        self.emit('addu $t0,$t0,$t2')
-        self.emit('addu $t0,$t0,1')
+        self.emit('addu $t0, $t0, 12')
         # cargamos en $t1 el tamaño de la instancia
-        self.emit('li $t1, 0')
-        self.emit('lb $t1, 0($t0)')
+        self.emit('xor $t1, $t1, $t1')
+        self.emit('lw $t1, 0($t0)')
 
         # ponemos en $t0 el lugar a partir del cual se debe copiar
         # para crear una instancia
-        self.emit('addu $t0, $t0, 1')
+        self.emit('addu $t0, $t0, 4')
         self.emit('li $v0, 9')
         self.emit('move $a0, $t1')
         self.emit('syscall')
@@ -261,16 +256,16 @@ class CILtoMIPSVisitor:
         self.emit(f'lw $a0, {-4*local_var_index}($fp)')
         # accedemos al tipo
         self.emit('lw $a1, 0($a0)')
-        # guardamos en $t3 el tamaño del nombre del tipo para poder saltarlo
-        self.emit('li $t3, 0')
-        self.emit('lb $t3, 8($a1)')
-        self.emit('addu $t3, $t3, 9')
+        # # guardamos en $t3 el tamaño del nombre del tipo para poder saltarlo
+        # self.emit('li $t3, 0')
+        # self.emit('lb $t3, 8($a1)')
+        # self.emit('addu $t3, $t3, 9')
 
         # nos movemos hasta el campo que contiene el tamaño de cada instancia
-        self.emit('addu $a1, $a1, $t3')
-        self.emit('li $t0, 0')
+        self.emit('addu $a1, $a1, 12')
+        self.emit('xor $t0,$t0,$t0')
         # guardamos en $t0 la cantidad que hay que reservar para crear una instancia del tipo deseado
-        self.emit('lb $t0, 0($a1)')
+        self.emit('lw $t0, 0($a1)')
 
         self.emit('li $v0, 9')
         self.emit('move $a0, $t0')
@@ -282,7 +277,7 @@ class CILtoMIPSVisitor:
 
         # pasamos el puntero del nuevo objeto como primer parametro
         self.macro_push('$v0')
-        self.emit('addu $a1, $a1, 1')
+        self.emit('addu $a1, $a1, 4')
         self.macro_push('$a1')
         self.macro_push('$t0')
         self.emit('jal __copy_byte_by_byte')
@@ -396,18 +391,20 @@ class CILtoMIPSVisitor:
             lw $a1, -8($fp)
             
             xor $t0,$t0,$t0
-            # cargamos la longitud del array de metodos en $t0
-            lb $t0, 0($a1)
+            # cargamos la longitud del array de punteros en $t0
+            lw $t0, 0($a1)
             
             # t1 es el indice que se movera por el array
             li $t1, 0
             
-            addu $a1, $a1, 1
+            xor $v0, $v0, $v0
+            add $a1,$a1,4
             
             analize_method_name:
-            li $t2, 0
+            xor $t2,$t2,$t2
             # nos paramos sobre el nombre del metodo
-            addu $t2, $a1, 1
+            move $t2, $a1
+            lw $t2, 0($t2)
             
         ''')
         self.macro_push('$ra')
@@ -424,11 +421,8 @@ class CILtoMIPSVisitor:
             
             move_next:
             
-            # guardamos en $t3 la longitud del nombre del metodo
-            lb $t3, 0($a0)
-            addu $t3, $t3, 5
             # nos movemos al proximo metodo
-            addu $a1, $a1, $t3 
+            addu $a1, $a1, 8 
             addu $t1,$t1,1
             bge $t1, $t0, end__resolve_name
             j analize_method_name
@@ -438,18 +432,17 @@ class CILtoMIPSVisitor:
             jr $ra
             
             founded_method:
-            lb $t3, 0($a0)
-            addu $t3, $t3, 1
+            lw $t3, 0($a1)
+            addu $t3, $t3, 4
             lw $v0, 0($t3)
             
         ''')
 
         # instance_x
-        # .word (ty    pe pointer)
+        # .word (type pointer)
         # .word (vtable pointer)
-        # .byte (cntattrs)
-        #   .byte (attr1Namelen)
-        #   .asciiz Name
+        # .word (cntattrs)
+        #   .word (attr1Name pointer)
         #   .word value
         #  ...
 
@@ -527,13 +520,9 @@ class CILtoMIPSVisitor:
         # seteamos el frame del metodo que vamos a pasar
         self.emit('move $fp, $sp')
 
-        self.emit(f'lw $t2, type_{node.parent_type} + 4')
-        self.emit('li $t3, 0')
-        self.emit('lb $t3, 0($t2)')
-        self.emit('addu $t2, $t2, $t3')
-        self.emit('addu $t2,$t2,6')
         # guardamos en $t1 la direccion de memoria de la vtable del tipo definido por el nodo
-        self.emit(f'lw $t1, 0($t2)')
+        self.emit(f'lw $t1, type_{node.parent_type} + 20')
+
         # pasamos los parametros a la funcion
         self.macro_push('$v0')
         self.macro_push('$t1')
@@ -562,7 +551,7 @@ class CILtoMIPSVisitor:
         self.macro_pop('$ra')
 
     @visitor.when(cil_hierarchy.CILDivNode)
-    def visit(self,node: cil_hierarchy.CILDivNode):
+    def visit(self, node: cil_hierarchy.CILDivNode):
         l = node.left
         r = node.right                                                                                                                                                                                                                                                                                                                                                                                                                  
         if type(l) == int or type(l) == float:
@@ -612,14 +601,14 @@ class CILtoMIPSVisitor:
             index = self.get_local_var_or_param_index(node.index)
             self.emit(f'lw $t1, {-4*index}($fp)')
 
-        self.emit(f'li $t2, -4')
-        self.emit(f'mul $t1,$t1, $t2')
+        self.emit(f'mul $t1,$t1, 4')
         self.emit('add $t0, $t0, $t1')
         self.emit(f'lw $v0, 0($t0)')
 
     @visitor.when(cil_hierarchy.CILGetParentNode)
     def visit(self, node: cil_hierarchy.CILGetParentNode):
         localv_index = self.get_local_var_or_param_index(node.parentLabel)
+        # cargamos el puntero al tipo
         self.emit(f'lw $a0, {-4*localv_index}($fp)')
         self.emit('lw $v0, 4($a0)')
 
@@ -763,7 +752,7 @@ class CILtoMIPSVisitor:
         # cargamos en $t1 el puntero a la instancia
         self.emit(f'lw $t1, {-4*instance_index}($fp)')
         self.emit('addu $t1, $t1, 8')
-        self.emit(f'lw $t1, 0($t1)')
+        # self.emit(f'lw $t1, 0($t1)')
         self.emit(f'move $t3, $t1')
         # resolve attr address
         # call find_attr_address function
