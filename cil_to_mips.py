@@ -153,6 +153,7 @@ class CILtoMIPSVisitor:
         self.emit('move $sp, $fp')
         self.macro_pop('$fp')
         self.macro_pop('$ra')
+        self.emit('jr $ra')
 
     def get_mips_program_code(self):
         result = ''
@@ -432,9 +433,10 @@ class CILtoMIPSVisitor:
             jr $ra
             
             founded_method:
-            lw $t3, 0($a1)
+            move $t3, $a1
             addu $t3, $t3, 4
             lw $v0, 0($t3)
+            jr $ra
             
         ''')
 
@@ -500,7 +502,7 @@ class CILtoMIPSVisitor:
         # pasamos los parametros del metodo
         for param in node.params:
             param_index = self.get_local_var_or_param_index(param)
-            self.emit(f'lw $a0, {4*param_index}($t0)')
+            self.emit(f'lw $a0, {-4*param_index}($t0)')
             self.macro_push('$a0')
 
         # llamamos al metodo
@@ -647,7 +649,7 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILLoadNode)
     def visit(self,node:cil_hierarchy.CILLoadNode):
-        self.emit(f'la, $v0, {node.msg}')
+        self.emit(f'la $v0, {node.msg}')
 
     @visitor.when(cil_hierarchy.CILMinusNode)
     def visit(self, node: cil_hierarchy.CILMinusNode):
