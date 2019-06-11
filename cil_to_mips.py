@@ -34,22 +34,24 @@ class CollectMipsVtablesVisitor:
 
     # Vtable definition example
     # __vtable_X:
-    # .byte (cnt_methods)
+    # .word (cnt_methods)
     # #method1
-    # .byte (longitud del nombre del metodo)
-    # .asciiz (nombre del metodo)
+    # .word (puntero al nombre del metodo)
     # .word (puntero al metodo)
 
     @visitor.when(cil_hierarchy.CILTypeNode)
     def visit(self, node: cil_hierarchy.CILTypeNode):
+        i = len(self.output) - 1
         self.emit(f'__vtable_{node.name}: ')
-        self.emit(f'.byte {len(node.methods)}')
+        self.emit(f'.word {len(node.methods)}')
 
         for method_name in node.methods:
             method_real_name = method_name.split('_', maxsplit=1)[1]
+            label_method_name = f'label_method_name_{node.name}_{method_real_name}'
+            self.output.insert(i, f'\n{label_method_name}: \n')
+            self.output.insert(i+1, f'.asciiz "{method_real_name}"\n')
             self.emit('# method')
-            self.emit(f'.byte {len(method_real_name)+1}')
-            self.emit(f'.asciiz "{method_real_name}"')
+            self.emit(f'.word {label_method_name}')
             self.emit(f'.word {method_name}')
 
 
@@ -82,24 +84,25 @@ class CollectMipsTypesDefinitionsVisitor:
 
     # Type definition example
     # type_X:
-    # .word(tamaño de definicion)
-    # .word(parent pointer)
-    # .byte (nameLength)
-    # .asciiz (typeName)
-    # .byte(tamaño a reservar por cada instancia)
+    # .word (tamaño de definicion)
+    # .word (parent pointer)
+    # .word (pointer typeName)
+    # .word (tamaño a reservar por cada instancia)
     # .word type_X(direccion del mismo tipo)
     # .word __vtable_{node.name}
-    # .byte(cantidad de attrs)
+    # .word (cantidad de attrs)
     # # attr1
-    # .byte(len attrname1)
-    # .asciiz(name)
+    # .word (attr1name pointer)
     # .space 4(value)
 
     @visitor.when(cil_hierarchy.CILTypeNode)
     def visit(self, node: cil_hierarchy.CILTypeNode):
-        self.emit(f'type_{node.name}: ')
-        type_space_in_bytes = sum([1+len(attr_name) + 1 + 4 for attr_name in node.attributes]) \
-                              + 9 + len(node.name) + 1 + 1 + 4 + 4 + 1
+        label_str_class_name = f'label_class_name_{node.name}'
+        self.emit(f'\n{label_str_class_name}:')
+        self.emit(f'.asciiz "{node.name}"')
+        i = len(self.output) - 1
+        self.emit(f'type_{node.name}:')
+        type_space_in_bytes = 28 + len(node.attributes)*8
         # type space
         self.emit('# espacio de definicion del tipo')
         self.emit(f'.word {type_space_in_bytes}')
@@ -109,15 +112,12 @@ class CollectMipsTypesDefinitionsVisitor:
             self.emit(f'.word __void')
         else:
             self.emit(f'.word type_{node.parent_name}')
-        # type Name length
-        self.emit('# longitud del nombre de la clase')
-        self.emit(f'.byte {len(node.name)+1}')
         # type Name
-        self.emit('# nombre de la clase')
-        self.emit(f'.asciiz "{node.name}"')
+        self.emit('# puntero nombre de la clase')
+        self.emit(f'.word {label_str_class_name}')
         # instance space
         self.emit('# espacio que ocupa una instancia de esta clase')
-        self.emit(f'.byte {type_space_in_bytes - 10 - len(node.name)}')
+        self.emit(f'.word {type_space_in_bytes - 16}')
         # type pointer
         self.emit('# puntero a la misma clase')
         self.emit(f'.word type_{node.name}')
@@ -126,14 +126,15 @@ class CollectMipsTypesDefinitionsVisitor:
         self.emit(f'.word __vtable_{node.name}')
         # cnt attrs
         self.emit('# cantidad de atributos')
-        self.emit(f'.byte {len(node.attributes)}')
+        self.emit(f'.word {len(node.attributes)}')
 
         for attr in node.attributes:
+            label_attr_name = f'label_attr_name_{node.name}_{attr}'
+            self.output.insert(i, f'\n{label_attr_name}:')
+            self.output.insert(i+1, f'.asciiz "{attr}"')
             self.emit('# attr')
-            # length attr_name
-            self.emit(f'.byte {len(attr)+1}')
             # attr_name
-            self.emit(f'.asciiz "{attr}"')
+            self.emit(f'.word {label_attr_name}')
             # value
             self.emit(f'.space 4')
 
