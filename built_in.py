@@ -268,7 +268,6 @@ def add_built_in(cool_to_cil):
         cool_to_cil.dotcode.append(CILCodeNode())
 
         constructor_method_name = 'Object_cil_attributes_initializer'
-        cool_to_cil.dottypes[-1].methods.append(constructor_method_name)
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
         cool_to_cil.define_internal_local()
         index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
@@ -300,7 +299,6 @@ def add_built_in(cool_to_cil):
         cool_to_cil.dotcode.append(CILCodeNode())
 
         constructor_method_name = f'IO_cil_attributes_initializer'
-        cool_to_cil.dottypes[-1].methods.append(constructor_method_name)
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
         cool_to_cil.define_internal_local()
         index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]

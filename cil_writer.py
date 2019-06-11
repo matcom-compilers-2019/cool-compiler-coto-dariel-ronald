@@ -177,14 +177,14 @@ class CILWriterVisitor(object):
     @visitor.when(cil.CILDynamicCallNode)
     def visit(self, node: cil.CILDynamicCallNode):
         for x in node.params:
-            self.emit(f'  PARAM {x}')
+            self.output.append(f'  PARAM {x}')
         return f'  DCALL {node.instance} {node.fid} '
 
     @visitor.when(cil.CILBuiltInCallNode)
     def visit(self, node: cil.CILBuiltInCallNode):
         for x in node.params:
-            self.emit(f'  PARAM {x}')
-            return f'  BUILT_IN_CALL {node.fid}'
+            self.output.append(f'  PARAM {x}')
+        return f'  BUILT_IN_CALL {node.fid}'
 
 
     @visitor.when(str)

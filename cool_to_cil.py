@@ -126,26 +126,26 @@ class COOLToCILVisitor:
     def visit(self, node: ast.ClassNode):
         self.dottypes.append(CILTypeNode(node.name, node.inherit))
         self.dotcode.append(CILCodeNode())
-        if len(node.attributes) > 0:
-            constructor_method_name = f'{node.name}_cil_attributes_initializer'
-            self.dottypes[-1].methods.append(constructor_method_name)
-            self.current_function_name = constructor_method_name 
-            self.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
-            self.define_internal_local()
-            index = self.dotcode[-1].functions[-1].localvars[-1]
-            self.register_instruction(CILAssignNode, index, CILAllocateNode(node.name))
-            for attr in node.attributes:
-                self.visit(attr)
-                if attr.value is not None:
-                    self.visit(attr.value)
-                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, attr.value.holder)
+
+        constructor_method_name = f'{node.name}_cil_attributes_initializer'
+        self.dottypes[-1].methods.append(constructor_method_name)
+        self.current_function_name = constructor_method_name
+        self.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
+        self.define_internal_local()
+        index = self.dotcode[-1].functions[-1].localvars[-1]
+        self.register_instruction(CILAssignNode, index, CILAllocateNode(node.name))
+        for attr in node.attributes:
+            self.visit(attr)
+            if attr.value is not None:
+                self.visit(attr.value)
+                self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, attr.value.holder)
+            else:
+                if attr.type == "Int" or attr.type == "Bool":
+                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 0)
+                elif attr.type == "String":
+                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 'void')
                 else:
-                    if attr.type == "Int" or attr.type == "Bool":
-                        self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 0)
-                    elif attr.type == "String":
-                        self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 'void')
-                    else:
-                        self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, "")
+                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, "")
 
         for method in node.methods:
             self.visit(method)

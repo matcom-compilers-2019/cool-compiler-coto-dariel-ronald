@@ -48,7 +48,7 @@ class CollectMipsVtablesVisitor:
         for method_name in node.methods:
             method_real_name = method_name.split('_', maxsplit=1)[1]
             self.emit('# method')
-            self.emit(f'.byte {len(method_name)+1}')
+            self.emit(f'.byte {len(method_real_name)+1}')
             self.emit(f'.asciiz "{method_real_name}"')
             self.emit(f'.word {method_name}')
 
@@ -117,7 +117,7 @@ class CollectMipsTypesDefinitionsVisitor:
         self.emit(f'.asciiz "{node.name}"')
         # instance space
         self.emit('# espacio que ocupa una instancia de esta clase')
-        self.emit(f'.byte {type_space_in_bytes - 11 - len(node.name)}')
+        self.emit(f'.byte {type_space_in_bytes - 10 - len(node.name)}')
         # type pointer
         self.emit('# puntero a la misma clase')
         self.emit(f'.word type_{node.name}')
@@ -145,7 +145,13 @@ class CILtoMIPSVisitor:
 
     def set_mips_main(self):
         self.emit('main: ')
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit('move $fp, $sp')
         self.emit('jal Main_main')
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
 
     def get_mips_program_code(self):
         result = ''
@@ -163,7 +169,7 @@ class CILtoMIPSVisitor:
     def get_local_var_or_param_index(self, name):
         for i, v in enumerate(self.currentfuncv.params + self.currentfuncv.localvars):
             if name == v:
-                return i
+                return i + 1
         raise ValueError
     
     def macro_push(self,reg):
@@ -388,6 +394,7 @@ class CILtoMIPSVisitor:
             # guardamos en $a1 la direccion del vtable
             lw $a1, -8($fp)
             
+            xor $t0,$t0,$t0
             # cargamos la longitud del array de metodos en $t0
             lb $t0, 0($a1)
             
@@ -473,17 +480,18 @@ class CILtoMIPSVisitor:
         self.emit('addu $t1,$t1,4')
         # cargamos la tabla de metodos virtuales
         self.emit(f'lw $t1, 0($t1)')
+        self.emit('move $t3, $t1')
         # resolve method address
+        # ponemos en $v0 la direccion del string
+        self.save_string(node.fid)
         # call find_method_address function
         self.macro_push('$ra')
         self.macro_push('$fp')
-        # ponemos en $v0 la direccion del string
-        self.save_string(node.fid)
         # seteamos el frame del metodo que vamos a pasar
         self.emit('move $fp, $sp')
         # pasamos los parametros a la funcion
         self.macro_push('$v0')
-        self.macro_push('$t1')
+        self.macro_push('$t3')
         # saltar a la funcion que busca el puntero al metodo correcto
         self.emit('jal __resolve_name')
         # tenemos en $v0 el puntero al metodo correcto
@@ -755,6 +763,7 @@ class CILtoMIPSVisitor:
         self.emit(f'lw $t1, {-4*instance_index}($fp)')
         self.emit('addu $t1, $t1, 8')
         self.emit(f'lw $t1, 0($t1)')
+        self.emit(f'move $t3, $t1')
         # resolve attr address
         # call find_attr_address function
         self.macro_push('$ra')
@@ -765,7 +774,7 @@ class CILtoMIPSVisitor:
         self.emit('move $fp, $sp')
         # pasamos los parametros a la funcion
         self.macro_push('$v0')
-        self.macro_push('$t1')
+        self.macro_push('$t3')
         # saltar a la funcion que busca el puntero al attr correcto
         self.emit('jal __resolve_name')
 
