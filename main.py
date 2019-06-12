@@ -52,8 +52,8 @@ def compile_cool(data):
 
     program = mips_visitor.get_mips_program_code()
     program_name = sha256(b'program').hexdigest()
-
-    with open(f'./examples_output/{program_name}.s', 'w') as file:
+    name_output = f'./examples_output/{program_name}.s'
+    with open('./examples_output/t.s', 'w') as file:
         file.writelines(program)
 
 if __name__ == '__main__':

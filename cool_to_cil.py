@@ -138,7 +138,7 @@ class COOLToCILVisitor:
             self.visit(attr)
             if attr.value is not None:
                 self.visit(attr.value)
-                self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, attr.value.holder)
+                self.register_instruction(CILSetAttributeNode, attr.id, index, attr.value.holder)
             else:
                 if attr.type == "Int" or attr.type == "Bool":
                     self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 0)

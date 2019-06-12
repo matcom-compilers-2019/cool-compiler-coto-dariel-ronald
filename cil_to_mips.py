@@ -100,8 +100,8 @@ class CollectMipsTypesDefinitionsVisitor:
         label_str_class_name = f'label_class_name_{node.name}'
         self.emit(f'\n{label_str_class_name}:')
         self.emit(f'.asciiz "{node.name}"')
-        i = len(self.output) - 1
         self.emit(f'type_{node.name}:')
+        i = len(self.output) - 1
         type_space_in_bytes = 28 + len(node.attributes)*8
         # type space
         self.emit('# espacio de definicion del tipo')
@@ -130,8 +130,8 @@ class CollectMipsTypesDefinitionsVisitor:
 
         for attr in node.attributes:
             label_attr_name = f'label_attr_name_{node.name}_{attr}'
-            self.output.insert(i, f'\n{label_attr_name}:')
-            self.output.insert(i+1, f'.asciiz "{attr}"')
+            self.output.insert(i, f'\n{label_attr_name}:\n')
+            self.output.insert(i+1, f'.asciiz "{attr}"\n')
             self.emit('# attr')
             # attr_name
             self.emit(f'.word {label_attr_name}')
@@ -434,8 +434,7 @@ class CILtoMIPSVisitor:
             
             founded_method:
             move $t3, $a1
-            addu $t3, $t3, 4
-            lw $v0, 0($t3)
+            addu $v0, $t3, 4
             jr $ra
             
         ''')
@@ -490,7 +489,8 @@ class CILtoMIPSVisitor:
         self.macro_push('$t3')
         # saltar a la funcion que busca el puntero al metodo correcto
         self.emit('jal __resolve_name')
-        # tenemos en $v0 el puntero al metodo correcto
+        # guardamos en $v0 el puntero al metodo correcto
+        self.emit('lw $v0, 0($v0)')
         self.emit('move $sp, $fp')
         self.macro_pop('$fp')
         self.macro_pop('$ra')
@@ -530,7 +530,8 @@ class CILtoMIPSVisitor:
         self.macro_push('$t1')
         # saltar a la funcion que busca el puntero al metodo correcto
         self.emit('jal __resolve_name')
-        # tenemos en $v0 el puntero al metodo correcto
+        # guardamos en $v0 el puntero al metodo correcto
+        self.emit('lw $v0, 0($v0)')
         self.emit('move $sp, $fp')
         self.macro_pop('$fp')
         self.macro_pop('$ra')
@@ -591,6 +592,8 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILGetAttributeNode)
     def visit(self, node: cil_hierarchy.CILGetAttributeNode):
         self._find_attr(node)
+        # guardamos en $v0 el valor del attr
+        self.emit('lw $v0, 0($v0)')
 
     @visitor.when(cil_hierarchy.CILGetIndexNode)
     def visit(self, node: cil_hierarchy.CILGetIndexNode):
@@ -754,7 +757,7 @@ class CILtoMIPSVisitor:
         # cargamos en $t1 el puntero a la instancia
         self.emit(f'lw $t1, {-4*instance_index}($fp)')
         self.emit('addu $t1, $t1, 8')
-        # self.emit(f'lw $t1, 0($t1)')
+        # la direccion donde se encuentra la cnt attrs se guarda en $t3
         self.emit(f'move $t3, $t1')
         # resolve attr address
         # call find_attr_address function
@@ -770,9 +773,15 @@ class CILtoMIPSVisitor:
         # saltar a la funcion que busca el puntero al attr correcto
         self.emit('jal __resolve_name')
 
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
+    #     se tiene en $v0 la direccion donde se encuentra el valor del attr
+
     @visitor.when(cil_hierarchy.CILSetAttributeNode)
     def visit(self, node: cil_hierarchy.CILSetAttributeNode):
         self._find_attr(node)
+        # tenemos en $v0 la direccion donde se encuentra el valor del attr
 
         try:
             local_ = self.get_local_var_or_param_index(node.value)

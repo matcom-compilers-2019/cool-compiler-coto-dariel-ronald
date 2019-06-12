@@ -15,6 +15,7 @@
        };
     };
     class B inherits A {
+        attr1: Int <- 0;
         funk():Int {
             42
         };
