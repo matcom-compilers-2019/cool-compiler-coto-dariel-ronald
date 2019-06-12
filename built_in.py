@@ -310,9 +310,9 @@ def add_built_in(cool_to_cil):
         cool_to_cil.register_instruction(CILPrintStringNode, "str")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
-        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int", ["self"]))
+        cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_out_int", ["self","integer_input"]))
         cool_to_cil.current_function_name = "IO_out_int"
-        cool_to_cil.register_instruction(CILPrintIntNode, "self")
+        cool_to_cil.register_instruction(CILPrintIntNode, "integer_input")
         cool_to_cil.register_instruction(CILReturnNode, "self")
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_string", ["self"]))

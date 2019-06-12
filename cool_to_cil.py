@@ -146,6 +146,7 @@ class COOLToCILVisitor:
                     self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 'void')
                 else:
                     self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, "")
+        self.register_instruction(CILReturnNode, index)
 
         for method in node.methods:
             self.visit(method)
@@ -466,7 +467,7 @@ class COOLToCILVisitor:
         node.holder = local_dest
 
     @visitor.when(ast.LowerEqualThanNode)
-    def visit(self, node:ast.LowerEqualThanNode):
+    def visit(self, node: ast.LowerEqualThanNode):
         self.visit(node.left_expression)
         self.visit(node.right_expression)
 

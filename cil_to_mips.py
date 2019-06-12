@@ -560,13 +560,13 @@ class CILtoMIPSVisitor:
             self.emit(f'li $t0, {l}')
         elif type(l) == str:
             v = self.get_local_var_or_param_index(l)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t0, {-4*(v)}($fp)')
         
         if type(r) == int or type(r) == float:
             self.emit(f'li $t1, {r}')
         elif type(r) == str:
             v = self.get_local_var_or_param_index(r)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t1, {-4*(v)}($fp)')
         
         self.emit(f'(div $t3, $t0, $t2)')
         self.emit('move $v0, $t3')
@@ -677,13 +677,13 @@ class CILtoMIPSVisitor:
             self.emit(f'li $t0, {l}')
         elif type(l) == str:
             v = self.get_local_var_or_param_index(l)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t0, {-4*(v)}($fp)')
         
         if type(r) == int or type(r) == float:
             self.emit(f'li $t1, {r}')
         elif type(r) == str:
             v = self.get_local_var_or_param_index(r)
-            self.emit(f'lw $t0, {4*(v)}($fp)')
+            self.emit(f'lw $t1, {-4*(v)}($fp)')
 
         self.emit(f'add $t2, $t0, $t1')
         self.emit('move $v0, $t2')
@@ -822,7 +822,7 @@ class CILtoMIPSVisitor:
             self.emit(f'li $t1, {r}')
         elif type(r) == str:
             v = self.get_local_var_or_param_index(r)
-            self.emit(f'lw $t0, {-4*(v)}($fp)')
+            self.emit(f'lw $t1, {-4*(v)}($fp)')
         
         self.emit(f'(mul $t3, $t0, $t2)')
         self.emit('move $v0, $t3')
