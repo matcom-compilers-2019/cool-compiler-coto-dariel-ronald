@@ -307,6 +307,12 @@ class CILEqualThanNode(CILInstructionNode):
         self.right_expr = right_expr
 
 
+class CILEqualStrThanStr(CILInstructionNode):
+    def __init__(self, left_expr, right_expr):
+        self.left_expr = left_expr
+        self.right_expr = right_expr
+
+
 class CILCopyNode(CILInstructionNode):
     def __init__(self, localv):
         self.localv = localv

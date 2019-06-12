@@ -905,6 +905,36 @@ class CILtoMIPSVisitor:
                 self.emit(f'la $t1, {node.left_expr}')
         self.emit('seq $v0, $t0, $t1')
 
+    @visitor.when(cil_hierarchy.CILEqualStrThanStr)
+    def visit(self, node: cil_hierarchy.CILEqualStrThanStr):
+        l = node.left_expr
+        r = node.right_expr
+        # if type(l) == int or type(l) == float:
+        #     self.emit(f'li $t0, {l}')
+        if type(l) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $a0, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $a0, {node.left_expr}')
+
+        if type(r) == str:
+            try:
+                v = self.get_local_var_or_param_index(l)
+                self.emit(f'lw $a1, {-4*(v)}($fp)')
+            except ValueError:
+                self.emit(f'la $a1, {node.left_expr}')
+
+        self.macro_push('$ra')
+        self.macro_push('$fp')
+        self.emit('move $fp, $sp')
+        self.macro_push('$a0')
+        self.macro_push('$a1')
+        self.emit('jal __compare_strings')
+        self.emit('move $sp, $fp')
+        self.macro_pop('$fp')
+        self.macro_pop('$ra')
+
     @visitor.when(cil_hierarchy.CILLowerThanNode)
     def visit(self, node: cil_hierarchy.CILLowerThanNode):
         l = node.left_expr

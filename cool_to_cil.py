@@ -484,7 +484,7 @@ class COOLToCILVisitor:
         node.holder = local_dest
 
     @visitor.when(ast.EqualThanNode)
-    def visit(self, node:ast.EqualThanNode): 
+    def visit(self, node: ast.EqualThanNode):
         self.visit(node.left_expression)
         self.visit(node.right_expression)
 
@@ -498,7 +498,10 @@ class COOLToCILVisitor:
 
         self.define_internal_local()
         local_dest = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, local_dest, CILEqualThanNode(left, right))
+        if node.left_expression.computed_type.name == "String" and node.right_expression.computed_type.name == "String":
+            self.register_instruction(CILAssignNode, local_dest, CILEqualStrThanStr(left, right))
+        else:
+            self.register_instruction(CILAssignNode, local_dest, CILEqualThanNode(left, right))
         node.holder = local_dest
 
     @visitor.when(ast.ObjectNode)
