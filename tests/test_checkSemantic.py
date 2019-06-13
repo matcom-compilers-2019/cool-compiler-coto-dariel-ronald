@@ -179,8 +179,9 @@ def test_loop_check():
 def test_case():
     program_ast = ProgramNode(
         [ClassNode('Main', features=[
-            MethodNode('main', [], 'Object',
-                LoopNode(BoolNode('true'),
+            MethodNode('main', [], 'Int',
+                       BlockNode([
+                LoopNode(LowerThanNode(IntNode(1),IntNode(2)),
                      BlockNode([
                          CaseNode(PlusNode(IntNode(1),IntNode(2)),
                                   [
@@ -193,16 +194,16 @@ def test_case():
                              BlockNode([
                                  LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                             DispatchNode('out_string',
-                                                         [StrNode('"True"')], ObjectNode('io'))),
+                                                         [StrNode('True')], ObjectNode('io'))),
                              ]),
                              BlockNode([
                                  LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                             DispatchNode('out_string',
-                                                         [StrNode('"False"')], ObjectNode('io')))
+                                                         [StrNode('False')], ObjectNode('io')))
                              ]))
 
                      ])
-                 )
+                 ), IntNode(0)])
                )
             ]),
              ClassNode('A',features=[
@@ -219,8 +220,8 @@ def test_case():
                         BlockNode([
                             LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                        DispatchNode('out_string',
-                                                    [StrNode('"Call method3"')], ObjectNode('io'))),
-                            DispatchNode('method3',[MinusNode(ObjectNode('index'),IntNode(1))])
+                                                    [StrNode("Call method3")], ObjectNode('io'))),
+                            DispatchNode('method3',[MinusNode(ObjectNode('index'), IntNode(1))])
                         ]))
                 )
                 ]),
@@ -233,23 +234,26 @@ def test_case():
 
     program_code = '''
         class Main {
-            main() : Object {
-                while true loop
-               {
-                    case 1+2 of 
-                        id1:Int => id1+5;
-                        id2:Object => id2;
-                        id3:String => id3;
-                    esac;
-                    if 2<=3 then 
-                    { 
-                        let io: IO <- new IO in io.out_string("True");
-                    } 
-                    else {
-                        let io: IO <- new IO in io.out_string("False");
-                    } 
-                    fi;
-               } pool
+            main() : Int {
+                {
+                    while 1 < 2 loop
+                   {
+                        case 1+2 of 
+                            id1:Int => id1+5;
+                            id2:Object => id2;
+                            id3:String => id3;
+                        esac;
+                        if 2<=3 then 
+                        { 
+                            let io: IO <- new IO in io.out_string("True");
+                        } 
+                        else {
+                            let io: IO <- new IO in io.out_string("False");
+                        } 
+                        fi;
+                   } pool;
+                   0;
+               }
             };
         };
         class A {

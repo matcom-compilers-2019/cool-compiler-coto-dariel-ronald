@@ -893,7 +893,7 @@ class CILtoMIPSVisitor:
 
         elif type(r) == str:
             try:
-                v = self.get_local_var_or_param_index(l)
+                v = self.get_local_var_or_param_index(r)
                 self.emit(f'lw $t1, {-4*(v)}($fp)')
             except ValueError:
                 self.emit(f'la $t1, {node.left_expr}')
@@ -917,10 +917,10 @@ class CILtoMIPSVisitor:
 
         elif type(r) == str:
             try:
-                v = self.get_local_var_or_param_index(l)
+                v = self.get_local_var_or_param_index(r)
                 self.emit(f'lw $t1, {-4*(v)}($fp)')
             except ValueError:
-                self.emit(f'la $t1, {node.left_expr}')
+                self.emit(f'la $t1, type_{node.right_expr}')
         self.emit('seq $v0, $t0, $t1')
 
     @visitor.when(cil_hierarchy.CILEqualStrThanStr)
@@ -938,10 +938,10 @@ class CILtoMIPSVisitor:
 
         if type(r) == str:
             try:
-                v = self.get_local_var_or_param_index(l)
+                v = self.get_local_var_or_param_index(r)
                 self.emit(f'lw $a1, {-4*(v)}($fp)')
             except ValueError:
-                self.emit(f'la $a1, {node.left_expr}')
+                self.emit(f'la $a1, {node.right_expr}')
 
         self.macro_push('$ra')
         self.macro_push('$fp')
@@ -971,10 +971,10 @@ class CILtoMIPSVisitor:
 
         elif type(r) == str:
             try:
-                v = self.get_local_var_or_param_index(l)
+                v = self.get_local_var_or_param_index(r)
                 self.emit(f'lw $t1, {-4*(v)}($fp)')
             except ValueError:
-                self.emit(f'la $t1, {node.left_expr}')
+                self.emit(f'la $t1, type_{node.right_expr}')
         self.emit('slt $v0, $t0, $t1')
 
     @visitor.when(cil_hierarchy.CILTypeOfNode)
@@ -993,7 +993,7 @@ class CILtoMIPSVisitor:
         else:
             v = self.get_local_var_or_param_index(node.compare)
             self.emit(f'lw $t0,{-4*v}($fp)')
-        self.emit(f'beqz $t0, {node.label}')
+        self.emit(f'bnez $t0, {node.label}')
 
     @visitor.when(cil_hierarchy.CILGotoNode)
     def visit(self, node: cil_hierarchy.CILGotoNode):

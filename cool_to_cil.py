@@ -111,8 +111,6 @@ class COOLToCILVisitor:
         add_built_in(self)
 
         for program_class in node.classes:
-            self.internal_count = 0
-            self.label_count = 0
             self.visit(program_class)
         
         result = CILProgramNode(self.dottypes, self.dotdata, self.dotcode, self.static_functions)
@@ -144,11 +142,11 @@ class COOLToCILVisitor:
                 self.register_instruction(CILSetAttributeNode, attr.id, index, attr.value.holder)
             else:
                 if attr.type == "Int" or attr.type == "Bool":
-                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 0)
+                    self.register_instruction(CILSetAttributeNode, attr.id, index, 0)
                 elif attr.type == "String":
-                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, 'void')
+                    self.register_instruction(CILSetAttributeNode, attr.id, index, '__void')
                 else:
-                    self.register_instruction(CILSetAttributeNode, attr.id, index.vinfo, "")
+                    self.register_instruction(CILSetAttributeNode, attr.id, index, "")
         self.register_instruction(CILReturnNode, index)
 
         for method in node.methods:

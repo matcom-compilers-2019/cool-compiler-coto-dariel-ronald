@@ -125,7 +125,6 @@ def p_upper_non(p):
         p[0] = p[1]
 
 
-
 def p_operator_non(p):
     '''operator_non : k_arith LTHAN k_arith
                     | k_arith LETHAN k_arith

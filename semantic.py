@@ -148,7 +148,7 @@ class TypeCheckerVisitor:
     def visit(self, node, scope):
         pass
 
-    def update_classes_attrs(self,scope:Scope):
+    def update_classes_attrs(self, scope: Scope):
         for cls in scope.scope_classes_dictionary.values():
             if cls.updated_attrs_inheritence:
                 continue
@@ -215,6 +215,10 @@ class TypeCheckerVisitor:
 
         method_info = scope.get_method_from_type(self.current_class_name, node.id)
         return_type = method_info.return_type
+        if node.expression.computed_type is None:
+            throw_exception(TypeError, node.line, node.index,
+                            "Error in method {}: return static type expected {}, founded: Void".
+                            format(node.id, return_type.name))
 
         if not node.expression.computed_type.lower_equals(return_type):
             throw_exception(TypeError, node.line, node.index,
@@ -366,16 +370,16 @@ class TypeCheckerVisitor:
         node.computed_type = lca_joined
 
     @visitor.when(ast.LoopNode)
-    def visit(self, node,scope):
+    def visit(self, node, scope):
         self.visit(node.while_expression,scope)
 
         if node.while_expression.computed_type != scope.get_type('Bool'):
             throw_exception(TypeError, node.line,node.index,'Error in while Condition expression, is not type boolean.')
 
         child_scope = scope.create_child_scope()
-        self.visit(node.loop_expression,child_scope)
+        self.visit(node.loop_expression, child_scope)
 
-        node.computed_type = scope.get_type('Object')
+        node.computed_type = None
 
 
     @visitor.when(ast.NewTypeNode)

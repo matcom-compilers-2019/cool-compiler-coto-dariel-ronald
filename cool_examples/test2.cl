@@ -17,8 +17,15 @@
        };
     };
     class B inherits A {
+        attr2:Int <-5;
         funk():Int {
-            attr1 <- 21*4
+            {   while 1 = attr2  loop
+                {
+                    attr2 <- attr2 - 1;
+                    let io: IO <- new IO in io.out_int(attr2);
+                } pool;
+                attr2;
+            }
         };
     };
     class C {

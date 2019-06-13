@@ -85,11 +85,9 @@ class Type:
     def get_hierarchy_iterator(self):
 
         current_type = self
-        object_obj = classes_dictionary['Object']
-        while current_type != object_obj:
+        while current_type.parent_type is not None:
             yield current_type
             current_type = current_type.parent_type
-        yield current_type
 
     def get_attr(self,name):
         '''
@@ -185,6 +183,7 @@ Object_Class = Type('Object',parent_type_name=None,line=0,index=0)
 IO_Class = Type("IO", line=0, index=0)
 
 builtins_classes = {Str_Class, Bool_Class, Int_Class, Object_Class, IO_Class}
+
 builtins_classes_names = {Str_Class.name, Bool_Class.name, Int_Class.name, Object_Class.name, IO_Class.name}
 
 Str_Class.parent_type = Object_Class
