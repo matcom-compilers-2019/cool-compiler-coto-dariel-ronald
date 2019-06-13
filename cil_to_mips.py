@@ -572,7 +572,7 @@ class CILtoMIPSVisitor:
             v = self.get_local_var_or_param_index(r)
             self.emit(f'lw $t1, {-4*(v)}($fp)')
         
-        self.emit(f'(div $t3, $t0, $t2)')
+        self.emit(f'div $t3, $t0, $t1')
         self.emit('move $v0, $t3')
 
     @visitor.when(cil_hierarchy.CILErrorMessageNode)
@@ -842,7 +842,7 @@ class CILtoMIPSVisitor:
             v = self.get_local_var_or_param_index(r)
             self.emit(f'lw $t1, {-4*(v)}($fp)')
         
-        self.emit(f'(mul $t3, $t0, $t2)')
+        self.emit(f'mul $t3, $t0, $t1')
         self.emit('move $v0, $t3')
 
     @visitor.when(cil_hierarchy.CILSubstringNode)

@@ -18,7 +18,7 @@
     };
     class B inherits A {
         funk():Int {
-            attr1 <- 21
+            attr1 <- 21*4
         };
     };
     class C {

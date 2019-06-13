@@ -4,12 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/cool_utils.py" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="Pusimos q si lo ultimo q se escribe es una signacion a un a">
+    <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cil_hierarchy.py" afterPath="$PROJECT_DIR$/cil_hierarchy.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cil_to_mips.py" afterPath="$PROJECT_DIR$/cil_to_mips.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cool_examples/test2.cl" afterPath="$PROJECT_DIR$/cool_examples/test2.cl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cool_to_cil.py" afterPath="$PROJECT_DIR$/cool_to_cil.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Playing_with_PLY$Nosetests_for_test_parser_test_empty_class_definition.coverage" NAME="Nosetests for test_parser.test_empty_class_definition Coverage Results" MODIFIED="1549053869959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/project_Implementation$main.coverage" NAME="main Coverage Results" MODIFIED="1560452851446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/project_Implementation$main.coverage" NAME="main Coverage Results" MODIFIED="1560454765894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_parser_test_let_statement_with_three_vars.coverage" NAME="Nosetests for test_parser.test_let_statement_with_three_vars Coverage Results" MODIFIED="1560361724195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CurrentProjectComp$Nosetests_in_test_parser_py.coverage" NAME="Nosetests in test_parser.py Coverage Results" MODIFIED="1557636233171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CurrentProjectComp$prueba.coverage" NAME="prueba Coverage Results" MODIFIED="1557282966514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -37,8 +35,8 @@
       <file leaf-file-name="cil_to_mips.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="745" column="20" lean-forward="true" selection-start-line="745" selection-start-column="20" selection-end-line="745" selection-end-column="20" />
+            <state relative-caret-position="266">
+              <caret line="675" column="38" lean-forward="true" selection-start-line="675" selection-start-column="38" selection-end-line="675" selection-end-column="38" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -66,11 +64,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="visitor.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/visitor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="test2.cl" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cool_examples/test2.cl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+            <state relative-caret-position="400">
+              <caret line="20" column="25" lean-forward="false" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -90,7 +98,7 @@
         <entry file="file://$PROJECT_DIR$/examples_output/t.s">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="235">
-              <caret line="1031" column="14" lean-forward="true" selection-start-line="1031" selection-start-column="14" selection-end-line="1031" selection-end-column="14" />
+              <caret line="1000" column="9" lean-forward="true" selection-start-line="1000" selection-start-column="9" selection-end-line="1000" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -128,16 +136,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NodosAST.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NodosAST.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-362">
-              <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -149,13 +147,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add_parent_attr</find>
-      <find>V</find>
-      <find>Va</find>
-      <find>Variab</find>
-      <find>Variable</find>
-      <find>Variable</find>
-      <find>Variable a</find>
       <find>Variable al</find>
       <find>Variable alre</find>
       <find>A</find>
@@ -166,19 +157,26 @@
       <find>Attribute att</find>
       <find>Attribute at</find>
       <find>Attribute a</find>
-      <find>Attribute</find>
       <find>Set</find>
       <find>current_type_attrs</find>
       <find>Ob</find>
       <find>Get</find>
       <find>AssignNode</find>
-      <find>li $v0, attr1</find>
-      <find>Ty</find>
-      <find>update_classes_attrs</find>
-      <find>CILAssignNode</find>
       <find>Return</find>
       <find>reserved</find>
+      <find>Attribute</find>
+      <find>(mul $t3, $t0,</find>
+      <find>(mul $t3, $t0,</find>
+      <find>(mul $t3, $t0, $</find>
+      <find>(mul $t3, $t0, $t</find>
+      <find>(mul $t3, $t0, $t2</find>
+      <find>(mul $t3, $t0, $t2)</find>
+      <find>update_classes_attrs</find>
+      <find>CILAssignNode</find>
       <find>_find_attr</find>
+      <find>li $v0, attr1</find>
+      <find>mul</find>
+      <find>Ty</find>
     </findStrings>
     <replaceStrings>
       <replace>ClassNode(</replace>
@@ -617,13 +615,6 @@
       <option name="presentableId" value="Default" />
       <updated>1548113060198</updated>
     </task>
-    <task id="LOCAL-00019" summary="Incluyamos en el ast line and index properties for catching errors.">
-      <created>1551633505659</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1551633505659</updated>
-    </task>
     <task id="LOCAL-00020" summary="Le dimos un primer valor a las propiedades de line e index">
       <created>1551635226959</created>
       <option name="number" value="00020" />
@@ -960,7 +951,14 @@
       <option name="project" value="LOCAL" />
       <updated>1560384005153</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Pusimos si lo que se retorna es un attr se busca en la instacia y se devuelve el valor">
+      <created>1560452920270</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1560452920270</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1087,7 +1085,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added vtables and type definitions in .DATA mips region" />
     <MESSAGE value="working on mips dinamicCall" />
     <MESSAGE value="Implementamos los callNodes" />
     <MESSAGE value="Created copy_byte_by_byte_funct in mips" />
@@ -1112,7 +1109,8 @@
     <MESSAGE value="probamos con polimorfismo" />
     <MESSAGE value="se pasó la primera prueba de trabajo con attrs" />
     <MESSAGE value="Arreglamos el uso de attrs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arreglamos el uso de attrs" />
+    <MESSAGE value="Pusimos si lo que se retorna es un attr se busca en la instacia y se devuelve el valor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pusimos si lo que se retorna es un attr se busca en la instacia y se devuelve el valor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1139,23 +1137,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>764</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/semantic.py</url>
-          <line>172</line>
-          <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cool_to_cil.py</url>
-          <line>186</line>
-          <option name="timeStamp" value="107" />
+          <line>752</line>
+          <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>752</line>
-          <option name="timeStamp" value="108" />
+          <line>844</line>
+          <option name="timeStamp" value="109" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -1165,7 +1153,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="109" />
+      <option name="time" value="110" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1182,6 +1170,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="562">
           <caret line="114" column="21" lean-forward="false" selection-start-line="114" selection-start-column="21" selection-end-line="114" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1297,14 +1286,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visitor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -1387,19 +1368,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples_output/t.s">
+    <entry file="file://$PROJECT_DIR$/cool_examples/exampleCase.cl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="1031" column="14" lean-forward="true" selection-start-line="1031" selection-start-column="14" selection-end-line="1031" selection-end-column="14" />
+        <state relative-caret-position="360">
+          <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
+    <entry file="file://$PROJECT_DIR$/coolex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="-226">
+          <caret line="81" column="16" lean-forward="false" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1419,36 +1402,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cool_examples/exampleCase.cl">
+    <entry file="file://$PROJECT_DIR$/visitor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+        <state relative-caret-position="166">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coolex.py">
+    <entry file="file://$PROJECT_DIR$/examples_output/t.s">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-226">
-          <caret line="81" column="16" lean-forward="false" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="235">
+          <caret line="1000" column="9" lean-forward="true" selection-start-line="1000" selection-start-column="9" selection-end-line="1000" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cool_examples/test2.cl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+        <state relative-caret-position="400">
+          <caret line="20" column="25" lean-forward="false" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="745" column="20" lean-forward="true" selection-start-line="745" selection-start-column="20" selection-end-line="745" selection-end-column="20" />
+        <state relative-caret-position="266">
+          <caret line="675" column="38" lean-forward="true" selection-start-line="675" selection-start-column="38" selection-end-line="675" selection-end-column="38" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
