@@ -10,13 +10,20 @@
         };
     };
     class A {
+       attr1:Int<-22;
        funk():Int {
             let x:Int in x + 1
        };
     };
     class B inherits A {
-        attr1: Int <- 0;
         funk():Int {
-            42
+            attr1 + 21
         };
     };
+    class C {
+        attr1:Int<-0;
+        funk():Int {
+            32
+        };
+    };
+

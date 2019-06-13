@@ -115,13 +115,13 @@ class CILDivNode(CILArithmeticNode):
 
 
 class CILGetAttributeNode(CILInstructionNode):
-    def __init__(self, attrName, localv):
+    def __init__(self, attrName, localv='self'):
         self.attrName = attrName
         self.localv = localv
 
 
 class CILSetAttributeNode(CILInstructionNode):
-    def __init__(self, attrName, localv, value):
+    def __init__(self, attrName, localv='self', value=None):
         self.attrName = attrName
         self.value = value
         self.localv = localv

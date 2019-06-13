@@ -419,9 +419,9 @@ def p_implication(p):
     p[0] = (p[1],p[3])
 
 
-
-
 def p_error(p):
+    if p is None:
+        throw_exception(SyntacticError, -1, -1, 'Last file \';\' not founded')
     throw_exception(SyntacticError,p.lineno, p.lexpos,str(p))
 
 # precedence = (

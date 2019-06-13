@@ -1,7 +1,7 @@
 from coolex import lexer
 from coolyacc import parser
 from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
-from utils import Scope
+from cool_utils import Scope
 import fileinput
 from cool_errors import CoolErrorLogger
 from tqdm import tqdm
@@ -24,15 +24,8 @@ def main():
 
 def check_semantic(ast):
     scope = Scope()
-    tcv = TypeCollectorVisitor(scope)
-    tcv.visit(ast)
-
-    tbv = TypeBuilderVisitor(scope)
-    tbv.visit(ast)
 
     tchecv = TypeCheckerVisitor()
-    tchecv.check_class_hierarchy(scope)
-    tchecv.look_for_Main_Class(scope)
     tchecv.visit(ast, scope)
 
 

@@ -3,21 +3,14 @@ from coolyacc import parser
 from .tools_for_testing import verify_asts
 from coolex import lexer
 from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
-from utils import Scope
+from cool_utils import Scope
 
 
 def check_semantic(ast):
 
     scope = Scope()
-    tcv = TypeCollectorVisitor(scope)
-    tcv.visit(ast)
-
-    tbv = TypeBuilderVisitor(scope)
-    tbv.visit(ast)
 
     tchecv = TypeCheckerVisitor()
-    tchecv.check_class_hierarchy(scope)
-    tchecv.look_for_Main_Class(scope)
     tchecv.visit(ast, scope)
 
 
@@ -29,6 +22,7 @@ def test_hello_world():
     
     class Main inherits IO {
          main(): IO {
+            --Hola afafaf--
 	        out_string("Hello, World")
     };
 };
@@ -229,8 +223,13 @@ def test_case():
                             DispatchNode('method3',[MinusNode(ObjectNode('index'),IntNode(1))])
                         ]))
                 )
-                ])
-             ])
+                ]),
+         ClassNode('B', inherit='A',features=[
+             MethodNode('method2', [], 'Int',
+                        DispatchNode('attr1')
+                        )
+         ])
+         ])
 
     program_code = '''
         class Main {
@@ -264,6 +263,9 @@ def test_case():
                     }
                 fi
             };
+        };
+        class B inherits A {
+            method2():Int {attr1()};
         };
     '''
     parser_result = parser.parse(program_code, lexer=lexer)

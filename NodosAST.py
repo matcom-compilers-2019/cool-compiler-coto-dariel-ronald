@@ -4,22 +4,25 @@ class Node:
 
 
 class ProgramNode(Node):
-    def __init__(self, classes=[]):
+    def __init__(self, classes=None):
         self.classes = classes
+        if classes is None:
+            self.classes = []
 
 
 class ClassNode(Node):
-    def __init__(self, type, inherit="Object", features=[]):
+    def __init__(self, type, inherit="Object", features=None):
         self.name = type
         self.inherit = inherit
         self.methods = []
         self.attributes = []
 
-        for feature in features:
-            if isinstance(feature,MethodNode):
-                self.methods.append(feature)
-            else:
-                self.attributes.append(feature)
+        if features is not None:
+            for feature in features:
+                if isinstance(feature, MethodNode):
+                    self.methods.append(feature)
+                else:
+                    self.attributes.append(feature)
 
 
 class FeatureNode(Node):
@@ -48,7 +51,7 @@ class AttributeNode(FeatureNode):
 
     def __eq__(self, other):
         return isinstance(other,AttributeNode) and \
-        other.id == self.id and other.type == self.type
+        other.id == self.id #and other.type == self.type
 
 
 class ExpressionNode(Node):

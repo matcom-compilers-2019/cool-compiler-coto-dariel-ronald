@@ -1,5 +1,5 @@
 import ply.lex as lex
-
+from ply.lex import TOKEN
 tokens = [
     'TYPE',
     'SEMICOLON',
@@ -45,9 +45,8 @@ t_LETHAN = r'<='
 t_LTHAN = r'<'
 t_EQUALS = r'='
 t_DISP = r'@'
-# TODO: buscar una expresion regular responsable
 # t_STRING = r'\"[a-zA-Z_][a-zA-Z_0-9]*\"'
-t_STRING = r'\"(.)*\"'
+# t_STRING = r'\"(.)*\"'
 t_TYPE = r'[A-Z][a-zA-Z_0-9]*'
 
 reserved = {
@@ -73,10 +72,118 @@ reserved = {
     'esac':'ESAC'
 }
 
+
+# LEXER STATES
+def states():
+    return (
+        ("STRING", "exclusive"),
+        ("COMMENT", "exclusive")
+    )
+states = states()
+
+###
+# THE STRING STATE
+@TOKEN(r"\"")
+def t_start_string(token):
+    token.lexer.push_state("STRING")
+    token.lexer.string_backslashed = False
+    token.lexer.stringbuf = ""
+
+
+@TOKEN(r"\n")
+def t_STRING_newline(token):
+    token.lexer.lineno += 1
+    if not token.lexer.string_backslashed:
+        print("String newline not escaped")
+        token.lexer.skip(1)
+    else:
+        token.lexer.string_backslashed = False
+
+
+@TOKEN(r"\"")
+def t_STRING_end(token):
+    if not token.lexer.string_backslashed:
+        token.lexer.pop_state()
+        token.value = token.lexer.stringbuf
+        token.type = "STRING"
+        return token
+    else:
+        token.lexer.stringbuf += '"'
+        token.lexer.string_backslashed = False
+
+
+@TOKEN(r"[^\n]")
+def t_STRING_anything(token):
+    if token.lexer.string_backslashed:
+        if token.value == 'b':
+            token.lexer.stringbuf += '\b'
+        elif token.value == 't':
+            token.lexer.stringbuf += '\t'
+        elif token.value == 'n':
+            token.lexer.stringbuf += '\n'
+        elif token.value == 'f':
+            token.lexer.stringbuf += '\f'
+        elif token.value == '\\':
+            token.lexer.stringbuf += '\\'
+        else:
+            token.lexer.stringbuf += token.value
+        token.lexer.string_backslashed = False
+    else:
+        if token.value != '\\':
+            token.lexer.stringbuf += token.value
+        else:
+            token.lexer.string_backslashed = True
+
+
+# STRING ignored characters
+t_STRING_ignore = ''
+
+
+# STRING error handler
+def t_STRING_error(token):
+    print("Illegal character! Line: {0}, character: {1}".format(token.lineno, token.value[0]))
+    token.lexer.skip(1)
+
+
+###
+# THE COMMENT STATE
+@TOKEN(r"\(\*")
+def t_start_comment(token):
+    token.lexer.push_state("COMMENT")
+    token.lexer.comment_count = 0
+
+
+@TOKEN(r"\(\*")
+def t_COMMENT_startanother(t):
+    t.lexer.comment_count += 1
+
+
+@TOKEN(r"\*\)")
+def t_COMMENT_end(token):
+    if token.lexer.comment_count == 0:
+        token.lexer.pop_state()
+    else:
+        token.lexer.comment_count -= 1
+
+
+# COMMENT ignored characters
+t_COMMENT_ignore = ''
+
+
+# COMMENT error handler
+def t_COMMENT_error(token):
+    token.lexer.skip(1)
+
+# def t_COMMENT(t):
+#     r'(--(.)*--)'
+#     return ''
+
+
 def t_ID(t):
     r'[a-z][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'ID')
     return t
+
 
 def t_INTEGER(t):
     r'\d+'
@@ -96,77 +203,3 @@ def t_error(t):
 tokens = tokens + list(reserved.values())
 
 lexer = lex.lex()
-#
-# data = '''
-# class Cons inherits List {
-#     xcar : Int;
-#     xcdr : List;
-#     isNil() : Bool { false };
-#     init(hd : Int, tl : List) : Cons {
-#     {
-#         xcar <- hd;
-#         xcdr <- tl;
-#         self;
-#         }
-#     }
-# };
-#     '''
-
-
-# data = '''
-#
-# class B  {
-#     xcar2 : Int;
-# };
-# class A inherits B{
-#     xcar1 : Int;
-# };
-# class Cons inherits A{
-#     xcar : Int;
-#     xcdr : String;
-#     isNil() : Bool { false };
-#     init(hd : Int, tl : String) : Cons {
-#         {
-#             xcar <- hd;
-#             xcdr <- tl;
-#             self;
-#         }
-#     };
-# };
-# '''
-data = '''
-class B {
-s : String <- "Hello";
-g (y:String) : Int {
-y.concat(s)
-};
-f (x:Int) : Int {
-x+1
-};
-};
-class A inherits B {
-a : Int;
-b : B <- new B;
-f(x:Int) : Int {
-{
-self <- new B;
-x+a;
-}
-};
-};
-'''
-# data = '''
-# class A {
-#        funk(): Int {
-#             case 1 of
-#                 x:Int => 10;
-#                 x:String => "s";
-#                 x:Bool => true;
-#             esac
-#        };
-#     };
-# '''
-
-# lexer.input(data)
-# for tok in lexer:
-#     print(tok)

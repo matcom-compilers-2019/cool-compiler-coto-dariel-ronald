@@ -2,12 +2,11 @@ import itertools as itl
 
 import NodosAST as ast
 import visitor
-from utils import *
+from cool_utils import *
 from cool_errors import *
 
 ERROR = 0
 INTEGER = 1
-
 
 
 class TypeCollectorVisitor:
@@ -34,7 +33,7 @@ class TypeCollectorVisitor:
             throw_exception(TypeError, node.line, node.index, "Builtin type %s can't not be inherited" % node.inherit)
         if node.inherit == 'Main':
             throw_exception(TypeError, node.line, node.index, "Main class can't be inherited")
-        self.context.create_type(node.name, node.inherit, node.line, node.index)
+        self.context.create_type(node.name, node.inherit, node.line, node.index,node)
 
 
 class TypeBuilderVisitor:
@@ -84,6 +83,8 @@ class TypeBuilderVisitor:
         params = []
         param_names = set()
         for id, type_name in node.parameters:
+            if id == 'self':
+                throw_exception(TypeError, node.line, node.index, 'Params can not be named self')
             type_class = self.context.get_type(type_name)
             if type_class is None:
                 throw_exception(TypeError, node.line,node.index,'Param Type %s not defined' % type_name)
@@ -95,23 +96,24 @@ class TypeBuilderVisitor:
         self._current_type.define_method(node.id,return_type,params)
 
     @visitor.when(ast.AttributeNode)
-    def visit(self, node):
+    def visit(self, node: ast.AttributeNode):
+        if node.id == 'self':
+            throw_exception(TypeError, node.line, node.index, 'Attributes can not be named self')
         attr_type = self.context.get_type(node.type)
         if attr_type is None:
             throw_exception(TypeError, node.line, node.index, 'Type %s not defined' % attr_type)
         self._current_type.define_attr(node.id, attr_type)
 
 
-#Todo: tengo que verificar que el ProgramNode tiene una claseMain la cual tiene un metodo main()
 class TypeCheckerVisitor:
     def __init__(self):
         self.current_class_name = ''
 
-    def look_for_Main_Class(self,context):
+    def look_for_Main_Class(self, context):
         main_type = context.type_is_defined('Main')
         if main_type is None:
             throw_exception(
-                NameError,0, 0, "Can not find Main class")
+                NameError, 0, 0, "Can not find Main class")
 
         # if main_type._parent_type_name != 'IO':
         #     throw_exception(TypeError, 0, 0, "Class Main can't inherits from other class")
@@ -123,8 +125,6 @@ class TypeCheckerVisitor:
         if len(main_method.arguments) > 0:
             throw_exception(TypeError, 0, 0, "Class Main does't receive params")
 
-
-
     def check_class_hierarchy(self,context):
         classes = context._classes_global_field()
 
@@ -135,7 +135,7 @@ class TypeCheckerVisitor:
             for current_type in class_.get_hierarchy_iterator():
                 if current_type._checking_for_cycle:
                     throw_exception(SemanticError,current_type.line,current_type.index,
-                                    'Ciclo en la jerarquía de %s' % current_type.name)
+                                    'Detected cycle inheritence in %s' % current_type.name)
                 current_type._checking_for_cycle = True
 
             for current_type in class_.get_hierarchy_iterator():
@@ -148,10 +148,44 @@ class TypeCheckerVisitor:
     def visit(self, node, scope):
         pass
 
+    def update_classes_attrs(self,scope:Scope):
+        for cls in scope.scope_classes_dictionary.values():
+            if cls.updated_attrs_inheritence:
+                continue
+            clss = [i for i in cls.get_hierarchy_iterator() if not i.updated_attrs_inheritence]
+            for i in range(len(clss)-2,-1,-1):
+                type_d = clss[i]
+                ast_node = type_d.node_ast_ref
+                parent_name = type_d._parent_type_name
+                parent_attrs = type_d.parent_type.node_ast_ref.attributes
+                for parent_attr in parent_attrs:
+                    if parent_attr in ast_node.attributes:
+                        throw_exception(TypeError, ast_node.line, ast_node.index, f'Attribute {parent_attr.id} from type '
+                                                                                  f'{type_d.name} '
+                                                                                  f'already defined on parent '
+                                                                                  f'{parent_name}')
+                    ast_node.attributes.append(parent_attr)
+                type_d.updated_attrs_inheritence = True
+
     @visitor.when(ast.ProgramNode)
-    def visit(self, node,scope):
+    def visit(self, node: ast.ProgramNode, scope: Scope):
+
+        tcv = TypeCollectorVisitor(scope)
+        tcv.visit(node)
+
+        tbv = TypeBuilderVisitor(scope)
+        tbv.visit(node)
+
+        self.check_class_hierarchy(scope)
+        self.look_for_Main_Class(scope)
+
+        self.update_classes_attrs(scope)
+
         for cool_class in node.classes:
-            self.visit(cool_class,scope)
+            child_scope = scope.create_child_scope()
+            self.visit(cool_class, child_scope)
+
+
 
     @visitor.when(ast.ClassNode)
     def visit(self, node,scope):
@@ -169,8 +203,8 @@ class TypeCheckerVisitor:
     def visit(self, node, scope):
 
         # Añadimos los parametros como variables locales
-        for param_name,param_type_name in node.parameters:
-            vinfo = scope.define_variable(param_name,param_type_name)
+        for param_name, param_type_name in node.parameters:
+            vinfo = scope.define_variable(param_name, param_type_name)
             if vinfo is None:
                 throw_exception(NameError, node.line,node.index,"Error in method {}: parameter {}".format(node.id,param_name))
 
@@ -196,7 +230,7 @@ class TypeCheckerVisitor:
             self.visit(node.value, scope)
 
     @visitor.when(ast.AssignNode)
-    def visit(self, node,scope):
+    def visit(self, node: ast.AssignNode, scope):
         # Verificamos si existe este símbolo
         vinfo = scope.get_variable_info(node.variable.id)
         if vinfo is None:
@@ -305,6 +339,8 @@ class TypeCheckerVisitor:
         id_s_types = set()
         branches_types = []
         for id_typeName, expr in node.implications:
+            if id_typeName[0] == 'self':
+                throw_exception(TypeError, node.line, node.index, 'case local variables can not be named self')
             implication_id_type = scope.get_type(id_typeName[1])
             if implication_id_type is None:
                 throw_exception(TypeError, node.line, node.index,
@@ -549,7 +585,6 @@ class TypeCheckerVisitor:
 
         node.computed_type = node.expressions[-1].computed_type
 
-
     @visitor.when(ast.LetVarNode)
     def visit(self, node, scope):
         '''
@@ -562,6 +597,8 @@ class TypeCheckerVisitor:
 
         child_scope = scope.create_child_scope()
         for id_type, expr in node.declarations:
+            if id_type[0] == 'self':
+                throw_exception(TypeError, node.line, node.index, 'Let\' locals variables can not be named self')
             vtype = scope.get_type(id_type[1])
             if vtype is None:
                 throw_exception(TypeError, node.line,node.index,'Error in let. Type %s not defined'% id_type[1])

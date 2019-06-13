@@ -58,9 +58,7 @@ class Type:
             the_highest = the_highest.parent_type
         return False
 
-
-
-    def __init__(self,name:str,line:int,index:int,parent_type_name='Object'):
+    def __init__(self,name:str,line:int,index:int,parent_type_name='Object', node_ast_ref=None):
         '''
 
         :param name: Nombre de la clase
@@ -77,8 +75,9 @@ class Type:
         self.parent_type = None
         self._checking_for_cycle = False
         self._checked_for_cycle = False
-
         self.height = 0
+        self.updated_attrs_inheritence = False
+        self.node_ast_ref = node_ast_ref
 
     def __eq__(self, other):
         return isinstance(other,Type) and other.name == self.name
@@ -179,7 +178,9 @@ class Methodinfo:
 
 Str_Class = Type('String',line=0,index=0)
 Bool_Class = Type("Bool",line=0,index=0)
+Bool_Class.updated_attrs_inheritence = True
 Int_Class = Type("Int",line=0,index=0)
+Int_Class.updated_attrs_inheritence = True
 Object_Class = Type('Object',parent_type_name=None,line=0,index=0)
 IO_Class = Type("IO", line=0, index=0)
 
@@ -191,20 +192,23 @@ Bool_Class.parent_type = Object_Class
 Int_Class.parent_type = Object_Class
 IO_Class.parent_type = Object_Class
 
+
 Str_Class.define_method('length',Int_Class)
 Str_Class.define_method('concat',Str_Class, [('s',Str_Class)])
 Str_Class.define_method('substr',Str_Class, [('i',Int_Class),('l',Int_Class)])
-
-Object_Class.define_method('abort',Object_Class)
-Object_Class.define_method('type_name',Str_Class)
+Str_Class.updated_attrs_inheritence = True
 
 IO_Class.define_method('out_string',IO_Class,[('x',Str_Class)])
 IO_Class.define_method('out_int',IO_Class,[('x',Int_Class)])
 IO_Class.define_method('in_string',Str_Class)
 IO_Class.define_method('in_int',Int_Class)
+IO_Class.updated_attrs_inheritence = True
 
 # el metodo copy oficialmente devuelve un SELF_TYPE pero devolveremos un object type
 Object_Class.define_method('copy',Object_Class)
+Object_Class.define_method('abort',Object_Class)
+Object_Class.define_method('type_name',Object_Class)
+Object_Class.updated_attrs_inheritence = True
 # en este diccionario se va a mapear el nombre del tipo
 # a la instancia del mismo que contendrá todos sus metodos y attributos
 classes_dictionary = {'Int': Int_Class,
@@ -298,8 +302,8 @@ class Scope:
         '''
         pass
 
-    def create_type(self, name, inherit_type_name, line, index):
-        new_type = Type(name, line=line, index=index, parent_type_name=inherit_type_name)
+    def create_type(self, name, inherit_type_name, line, index,node_ast_ref):
+        new_type = Type(name, line=line, index=index, parent_type_name=inherit_type_name,node_ast_ref=node_ast_ref)
         self.scope_classes_dictionary[name] = new_type
 
     def get_params_from_method(self, type_name, method_name):

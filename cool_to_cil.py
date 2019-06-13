@@ -13,6 +13,7 @@ class COOLToCILVisitor:
         self.dottypes = []
         self.dotcode = []
         self.static_functions = []
+        self.current_type_attrs = []
         self.current_function_name = ""
         self.internal_count = 0
         self.label_count = 0
@@ -69,13 +70,13 @@ class COOLToCILVisitor:
         self.label_count += 1
         return "L"+str(self.label_count)
 
-    def add_parent_attr(self):
-        parent = self.dottypes[-1].parent_name
-        for x in self.dottypes:
-            if x.name == parent:
-                for attr in x.attributes:
-                    if attr not in self.dottypes[-1].attributes:
-                        self.dottypes[-1].attributes.append(attr)
+    # def add_parent_attr(self):
+    #     parent = self.dottypes[-1].parent_name
+    #     for x in self.dottypes:
+    #         if x.name == parent:
+    #             for attr in x.attributes:
+    #                 if attr not in self.dottypes[-1].attributes:
+    #                     self.dottypes[-1].attributes.append(attr)
 
     def get_full_local_name(self, name):
         for x in self.dotcode[-1].functions[-1].localvars:
@@ -127,6 +128,8 @@ class COOLToCILVisitor:
         self.dottypes.append(CILTypeNode(node.name, node.inherit))
         self.dotcode.append(CILCodeNode())
 
+        self.current_type_attrs = set([n.id for n in node.attributes])
+
         constructor_method_name = f'{node.name}_cil_attributes_initializer'
         self.dottypes[-1].methods.append(constructor_method_name)
         self.current_function_name = constructor_method_name
@@ -151,7 +154,7 @@ class COOLToCILVisitor:
         for method in node.methods:
             self.visit(method)
         
-        self.add_parent_attr()
+        # self.add_parent_attr()
 
     @visitor.when(ast.MethodNode)
     def visit(self, node: ast.MethodNode):
@@ -506,7 +509,13 @@ class COOLToCILVisitor:
         node.holder = local_dest
 
     @visitor.when(ast.ObjectNode)
-    def visit(self, node:ast.ObjectNode):
+    def visit(self, node: ast.ObjectNode):
+        if node.id in self.current_type_attrs:
+            self.define_internal_local()
+            local_dest = self.dotcode[-1].functions[-1].localvars[-1]
+            self.register_instruction(CILAssignNode, local_dest, CILGetAttributeNode(node.id))
+            node.holder = local_dest
+            return
         name = f'{self.internal_count}_{self.current_function_name}_user_defined_{node.id}'
         for x in self.dotcode[-1].functions[-1].localvars:
             splitted = x.split("_")
