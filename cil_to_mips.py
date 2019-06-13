@@ -143,6 +143,7 @@ class CILtoMIPSVisitor:
     def __init__(self):
         self.output = []
         self.currentfuncv = None
+        self.current_type = None
 
     def set_mips_main(self):
         self.emit('main: ')
@@ -206,7 +207,9 @@ class CILtoMIPSVisitor:
 
         self.emit('.text')
         for i in range(len(node.dottypes)):
+            self.current_type = node.dottypes[i]
             self.visit(node.dotcode[i])
+
         for i in node.static_functions:
             self.visit(i)
 
@@ -744,6 +747,12 @@ class CILtoMIPSVisitor:
         :return:
         '''
         if node.value is not None:
+            if node.value in self.current_type.attributes:
+                a = cil_hierarchy.CILGetAttributeNode(node.value)
+                self._find_attr(a)
+                self.emit(f'lw $v0, 0($v0)')
+                self.emit('jr $ra')
+                return
             try:
                 local_index = self.get_local_var_or_param_index(node.value)
                 self.emit(f'lw $v0, {-4*local_index}($fp)')

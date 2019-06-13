@@ -179,13 +179,21 @@ class COOLToCILVisitor:
     def visit(self, node:ast.AttributeNode):
         self.dottypes[-1].attributes.append(node.id)
 
+    # Todo
     @visitor.when(ast.AssignNode)
     def visit(self, node: ast.AssignNode):
+
+        self.visit(node.expression)
+        if node.variable.id in self.current_type_attrs:
+            self.register_instruction(CILSetAttributeNode, node.variable.id,'self',node.expression.holder)
+            node.holder = node.variable.id
+            return
         if not (node.variable in self.dotcode[-1].functions[-1].localvars):
             self.define_ud_internal_local(node.variable)
-        self.visit(node.expression)
-        self.register_instruction(CILAssignNode, node.variable, node.expression.holder)
-        
+
+        self.register_instruction(CILAssignNode, node.variable.id, node.expression.holder)
+        node.holder = node.variable.id
+
     @visitor.when(ast.DispatchNode)
     def visit(self, node: ast.DispatchNode):
         self.visit(node.left_expression)

@@ -1,11 +1,12 @@
    class Main {
     main() : Int {
             {
-                let io: IO <- new IO in io.out_string("Hello World\n");
+                let io: IO <- new IO in io.out_string("Hello \
+                                                        World\n");
                 let a:A <- new B, b: Int in
                                         let i:Int <- a.funk() + b, io: IO <- new IO in io.out_int(i);
                 0;
-
+                (*asasdadadad*)
             }
         };
     };
@@ -17,7 +18,7 @@
     };
     class B inherits A {
         funk():Int {
-            attr1 + 21
+            attr1 <- 21
         };
     };
     class C {

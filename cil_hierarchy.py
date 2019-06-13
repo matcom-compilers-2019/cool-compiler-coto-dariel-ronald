@@ -266,7 +266,7 @@ class CILIntegerComplementNode(CILInstructionNode):
 
 
 class CILNewTypeNode(CILInstructionNode):
-    def __init__(self,type):
+    def __init__(self, type):
         self.type = type
 
 
