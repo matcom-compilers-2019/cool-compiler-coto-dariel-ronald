@@ -611,8 +611,8 @@ class TypeCheckerVisitor:
                 self.visit(expr,child_scope)
 
                 if not expr.computed_type.lower_equals(vtype):
-                    throw_exception(TypeError(node.line,node.index,"Error in let. Type %s isn't lower than %s"
-                                              % (expr.computed_type.name, vtype.name)))
+                    throw_exception(TypeError,node.line,node.index,"Error in let. Type %s isn't lower than %s"
+                                              % (expr.computed_type.name, vtype.name))
 
             child_scope.define_variable(id_type[0], id_type[1])
 

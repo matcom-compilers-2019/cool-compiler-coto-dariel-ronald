@@ -147,9 +147,12 @@ class CILtoMIPSVisitor:
 
     def set_mips_main(self):
         self.emit('main: ')
+        self.visit(cil_hierarchy.CILBuiltInCallNode('Main_cil_attributes_initializer'))
+
         self.macro_push('$ra')
         self.macro_push('$fp')
         self.emit('move $fp, $sp')
+        self.macro_push('$v0')
         self.emit('jal Main_main')
         self.emit('move $sp, $fp')
         self.macro_pop('$fp')
@@ -301,7 +304,16 @@ class CILtoMIPSVisitor:
                 local_index = self.get_local_var_or_param_index(node.source)
                 self.emit(f'lw $v0, {-4*local_index}($fp)')
             except ValueError:
-                self.visit(node.source)
+                if node.source == 'void':
+                    self.emit('la $v0, __void')
+                elif node.source == "":
+                    self.emit(''' li $v0, 9
+                                  li $a0, 1
+                                  syscall
+                                  sb $0, 0($v0)
+                             ''')
+                else:
+                    self.visit(node.source)
         v = self.get_local_var_or_param_index(node.dest)
         self.emit(f'sw $v0, {-4*v}($fp)')
 
@@ -871,7 +883,7 @@ class CILtoMIPSVisitor:
         self.emit(f'lw $a0, {-4*local_index}($fp)')
         # cargamos la direccion del tipo
         self.emit('lw $a0, 0($a0)')
-        self.emit('add $v0, $a0, 9')
+        self.emit('lw $v0, 8($a0)')
 
     @visitor.when(cil_hierarchy.CILLowerEqualThanNode)
     def visit(self, node: cil_hierarchy.CILLowerEqualThanNode):

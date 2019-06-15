@@ -51,12 +51,9 @@ class Type:
 
         while the_highest.parent_type is not None:
             if the_highest.height == the_lowest.height:
-                if the_highest != the_lowest:
-                    return False
-                else:
-                    return True
+                return the_highest == the_lowest
             the_highest = the_highest.parent_type
-        return False
+        return the_highest == the_lowest
 
     def __init__(self,name:str,line:int,index:int,parent_type_name='Object', node_ast_ref=None):
         '''
@@ -174,13 +171,13 @@ class Methodinfo:
                len(other.arguments) == len(self.arguments)
 
 
-Str_Class = Type('String',line=0,index=0)
-Bool_Class = Type("Bool",line=0,index=0)
+Str_Class = Type('String',line=0,index=0,parent_type_name='Object')
+Bool_Class = Type("Bool",line=0,index=0,parent_type_name='Object')
 Bool_Class.updated_attrs_inheritence = True
-Int_Class = Type("Int",line=0,index=0)
+Int_Class = Type("Int",line=0,index=0,parent_type_name='Object')
 Int_Class.updated_attrs_inheritence = True
 Object_Class = Type('Object',parent_type_name=None,line=0,index=0)
-IO_Class = Type("IO", line=0, index=0)
+IO_Class = Type("IO", line=0, index=0,parent_type_name='Object')
 
 builtins_classes = {Str_Class, Bool_Class, Int_Class, Object_Class, IO_Class}
 

@@ -197,7 +197,12 @@ class COOLToCILVisitor:
 
         # si la asignacion es sobre un attr
         if node.variable.id in self.current_type_attrs:
-            self.register_instruction(CILSetAttributeNode, node.variable.id,'self',node.expression.holder)
+            temp_local = node.expression.holder
+            if expression_type_name in value_bultin_types and \
+                            node.computed_type.name not in value_bultin_types:
+                temp_local = self.define_internal_local()
+                self.make_boxing(temp_local,expression_type_name,node.expression.holder)
+            self.register_instruction(CILSetAttributeNode, node.variable.id,'self',temp_local)
             node.holder = node.variable.id
             return
 
@@ -210,7 +215,7 @@ class COOLToCILVisitor:
             return
 
         if not (node.variable in self.dotcode[-1].functions[-1].localvars):
-            self.define_ud_internal_local(node.variable)
+            self.define_ud_internal_local(node.variable.id)
 
         self.register_instruction(CILAssignNode, node.variable.id, node.expression.holder)
         node.holder = node.variable.id
@@ -320,15 +325,30 @@ class COOLToCILVisitor:
         node.holder = 0
 
     @visitor.when(ast.LetVarNode)
-    def visit(self, node:ast.LetVarNode):
+    def visit(self, node: ast.LetVarNode):
         for dec in node.declarations:
+            declaration_type_name = dec[0][1]
+            user_local = self.define_ud_internal_local(dec[0][0])
+            default_value = 'void'
+            user_local_is_bultin = False
+            if declaration_type_name in value_bultin_types:
+                user_local_is_bultin = True
+                if declaration_type_name == "Int" or declaration_type_name == "Bool":
+                    default_value = 0
+                else:
+                    default_value = ''
             if dec[1] is not None:
                 self.visit(dec[1])
-                self.define_ud_internal_local(dec[0][0])
-                self.register_instruction(CILAssignNode,self.dotcode[-1].functions[-1].localvars[-1], dec[1].holder)
+                rigth_expr_type_name = dec[1].computed_type.name
+
+                # verificamos si hay que hacer boxing
+                if not user_local_is_bultin and rigth_expr_type_name in value_bultin_types:
+                    self.make_boxing(user_local,rigth_expr_type_name,dec[1].holder)
+                    continue
+                self.register_instruction(CILAssignNode,user_local, dec[1].holder)
             else:
-                self.define_ud_internal_local(dec[0][0])
-                self.register_instruction(CILAssignNode,self.dotcode[-1].functions[-1].localvars[-1], 0)
+                self.register_instruction(CILAssignNode, user_local, default_value)
+
         self.visit(node.in_expression)
         node.holder = node.in_expression.holder
 
