@@ -260,10 +260,7 @@ class CILtoMIPSVisitor:
         self.emit(f'lw $a0, {-4*local_var_index}($fp)')
         # accedemos al tipo
         self.emit('lw $a1, 0($a0)')
-        # # guardamos en $t3 el tamaño del nombre del tipo para poder saltarlo
-        # self.emit('li $t3, 0')
-        # self.emit('lb $t3, 8($a1)')
-        # self.emit('addu $t3, $t3, 9')
+
 
         # nos movemos hasta el campo que contiene el tamaño de cada instancia
         self.emit('addu $a1, $a1, 12')
@@ -292,7 +289,7 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILArrayNode)
     def visit(self, node: cil_hierarchy.CILArrayNode):
         self.emit('li $v0, 9')
-        self.emit(f'li $a0, {node.size}')
+        self.emit(f'li $a0, {4*node.size}')
         self.emit('syscall')
 
     @visitor.when(cil_hierarchy.CILAssignNode)
@@ -456,12 +453,13 @@ class CILtoMIPSVisitor:
         self.macro_push('$ra')
         self.macro_push('$fp')
 
+        self.emit('move $t0, $fp')
         self.emit('move $fp, $sp')
 
         # pasamos los parametros del metodo
         for param in node.params:
             param_index = self.get_local_var_or_param_index(param)
-            self.emit(f'lw $a0, {4*param_index}($t0)')
+            self.emit(f'lw $a0, {-4*param_index}($t0)')
             self.macro_push('$a0')
 
         self.emit(f'jal {node.fid}')
@@ -820,7 +818,7 @@ class CILtoMIPSVisitor:
         else:
             local_index = self.get_local_var_or_param_index(node.index)
             self.emit(f'lw $t1, {-4*local_index}($fp)')
-
+        self.emit('mul $t1, $t1, 4')
         self.emit(f'addu $t0, $t0, $t1')
 
         self.emit(f'la $t1, {node.value}')
@@ -997,7 +995,12 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILGotoNode)
     def visit(self, node: cil_hierarchy.CILGotoNode):
-        self.emit(f'b {node.label}')
+        try:
+            local = self.get_local_var_or_param_index(node.label)
+            self.emit(f'lw $t0, {-4*local}($fp)')
+            self.emit('jr $t0')
+        except ValueError:
+            self.emit(f'b {node.label}')
 
             # @visitor.when(cil_hierarchy.CILNegationNode)
     # def visit(self, node: cil_hierarchy.CILNegationNode):

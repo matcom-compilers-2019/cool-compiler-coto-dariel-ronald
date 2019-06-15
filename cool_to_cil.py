@@ -5,6 +5,7 @@ from built_in import *
 from static_functions import *
 from strings_visitor import StringVisitor
 from cil_writer import *
+from cool_utils import value_bultin_types
 
 
 class COOLToCILVisitor:
@@ -20,6 +21,10 @@ class COOLToCILVisitor:
 
         self.types_index = []
         self.functions_index = []
+        self.data_bultins_labels = {'Int':self.register_data('Int'),
+                                    'Bool': self.register_data('Bool'),
+                                    'String': self.register_data('String')
+                                    }
 
     # ======================================================================
     # =[ UTILS ]============================================================
@@ -109,7 +114,6 @@ class COOLToCILVisitor:
         self.dotcode.remove(self.dotcode[-1])
 
         add_built_in(self)
-
         for program_class in node.classes:
             self.visit(program_class)
         
@@ -161,7 +165,8 @@ class COOLToCILVisitor:
         self.dottypes[-1].methods.append(name)
         self.dotcode[-1].functions.append(CILFunctionNode(name,["self"]))
         for x,_ in node.parameters:
-            self.dotcode[-1].functions[-1].params.append(x)
+            vinfo = self.build_user_defined_vname(x)
+            self.dotcode[-1].functions[-1].params.append(vinfo)
             
         if type(node.expression) is ast.BlockNode:
             for expr in node.expression.expressions:
@@ -177,15 +182,33 @@ class COOLToCILVisitor:
     def visit(self, node:ast.AttributeNode):
         self.dottypes[-1].attributes.append(node.id)
 
-    # Todo
+    def make_boxing(self, variable, type_name, value):
+        self.register_instruction(CILAssignNode, variable, CILAllocateNode(type_name))
+        self.register_instruction(CILSetAttributeNode, 'attr_value', variable, value)
+
+    def make_unboxing(self, variable, instance):
+        self.register_instruction(CILAssignNode, variable, CILGetAttributeNode('attr_value', instance))
+
     @visitor.when(ast.AssignNode)
     def visit(self, node: ast.AssignNode):
 
         self.visit(node.expression)
+        expression_type_name = node.expression.computed_type.name
+
+        # si la asignacion es sobre un attr
         if node.variable.id in self.current_type_attrs:
             self.register_instruction(CILSetAttributeNode, node.variable.id,'self',node.expression.holder)
             node.holder = node.variable.id
             return
+
+        # si se le asigna a un objeto por referencia un objeto por valor
+        # hacer boxing
+        if expression_type_name in value_bultin_types and \
+                node.computed_type.name not in value_bultin_types:
+            self.make_boxing(node.variable.id, node.variable.computed_type.name,
+                             node.expression.holder)
+            return
+
         if not (node.variable in self.dotcode[-1].functions[-1].localvars):
             self.define_ud_internal_local(node.variable)
 
@@ -195,15 +218,23 @@ class COOLToCILVisitor:
     @visitor.when(ast.DispatchNode)
     def visit(self, node: ast.DispatchNode):
         self.visit(node.left_expression)
+        left_expression = 'self'
+
         for exp in node.parameters:
             self.visit(exp)
 
-        left_expression = self.dottypes[-1].name 
         if node.left_expression is not None:
             left_expression = node.left_expression.holder
+            left_expression_type_name = node.left_expression.computed_type.name
+
+            # si es un tipo por valor la expresion izquierda, entonces hacemos boxing
+            if left_expression_type_name == 'Int' or left_expression_type_name == 'Bool':
+                vinfo = self.define_internal_local()
+                self.make_boxing(vinfo, left_expression_type_name, left_expression)
+                left_expression = vinfo
 
         # Se obtiene el tipo de la expresion izquierda
-        self.define_internal_local()
+        # self.define_internal_local()
         if node.func_id == 'concat':
             my_call = CILBuiltInCallNode('String_concat')
         elif node.func_id == 'length':
@@ -302,16 +333,22 @@ class COOLToCILVisitor:
         node.holder = node.in_expression.holder
 
     @visitor.when(ast.CaseNode)
-    def visit(self, node:ast.CaseNode):
+    def visit(self, node: ast.CaseNode):
         # Se genera el codigo de la expresion inicial del case
         self.visit(node.case_expression)
-        # self.define_ud_internal_local(node.) todo: Preguntarle a dariel que qiso hacer aca
-        self.define_internal_local() # yo puse esto
-        expr0_value = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, expr0_value, node.case_expression.holder)
+        expr0_value = node.case_expression.holder
+        end_case_label = self.next_label()
+
+        # verificamos si hay q hacer boxing
+        expr0_type_name = node.case_expression.computed_type.name
+        if expr0_type_name in value_bultin_types:
+            vinfo = self.define_internal_local()
+            self.make_boxing(vinfo,expr0_type_name,expr0_value)
+            expr0_value = vinfo
 
         #Aqui se crea un array que tendra todos los tipos correpondientes a las variables de las implicaciones
         #en orden
+
         self.define_internal_local()
         arr = self.dotcode[-1].functions[-1].localvars[-1]
         self.register_instruction(CILAssignNode, arr, CILArrayNode(len(node.implications)))
@@ -321,25 +358,24 @@ class COOLToCILVisitor:
         #Aqui se obtiene el tipo del resultado de evaluar la expresion inicial del case
         self.define_internal_local()
         expr0_type_name = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, expr0_type_name, CILTypeOfNode(node.case_expression.holder))
+        self.register_instruction(CILAssignNode, expr0_type_name, CILTypeOfNode(expr0_value))
 
         #Se realiza un llamado a la funcion estatica "get_closest_type", cuyo retorno se le asigna a closest_type_index
-        self.define_internal_local()
-        closest_type_index = self.dotcode[-1].functions[-1].localvars[-1]
-        # self.register_instruction(CILParamNode, expr0_type_name)
-        # self.register_instruction(CILParamNode, arr)
+        closest_type_index = self.define_internal_local()
         bcall = CILBuiltInCallNode("__get_closest_type")
-        bcall.params = [expr0_type_name,arr]
+        bcall.params = [expr0_type_name, arr]
         self.register_instruction(CILAssignNode, closest_type_index, bcall)
 
         #Se crea un array que contendra los labels de las expresiones a visitar
-        self.define_internal_local()
-        array_labels = self.dotcode[-1].functions[-1].localvars[-1]
+        array_labels = self.define_internal_local()
         self.register_instruction(CILAssignNode, array_labels, CILArrayNode(len(node.implications)))
         labels = []
-
+        local_user_vars = []
         for i in range(len(node.implications)):
             l_next = self.next_label()
+            user_local = self.define_ud_internal_local(node.implications[i][0][0])
+            # temp_local = self.dotcode[-1].functions[-1].localvars[-1]
+            local_user_vars.append(user_local)
             labels.append(l_next)
             self.register_instruction(CILSetIndexNode, array_labels, i, l_next)
 
@@ -353,10 +389,21 @@ class COOLToCILVisitor:
         final_holder = self.dotcode[-1].functions[-1].localvars[-1]
 
         #Es generado el codigo de las expresiones de las implicaciones y se les asignan sus respectivos labels////
-        for i in range(0,len(node.implications)):
+        for i in range(0, len(node.implications)):
             self.register_instruction(CILLabelNode, labels[i])
+            implication = node.implications[i]
+            # si el tipo de la rama es es por valor entonces hacemos unboxing
+            if implication[0][1] in value_bultin_types:
+                self.make_unboxing(local_user_vars[i], expr0_value)
+                self.visit(node.implications[i][1])
+                self.register_instruction(CILAssignNode, final_holder, node.implications[i][1].holder)
+                self.register_instruction(CILGotoNode, end_case_label)
+                continue
+            self.register_instruction(CILAssignNode, local_user_vars[i], expr0_value)
             self.visit(node.implications[i][1])
             self.register_instruction(CILAssignNode, final_holder, node.implications[i][1].holder)
+            self.register_instruction(CILGotoNode,end_case_label)
+        self.register_instruction(CILLabelNode, end_case_label)
         node.holder = final_holder
 
     @visitor.when(ast.NewTypeNode)
@@ -522,8 +569,9 @@ class COOLToCILVisitor:
             self.register_instruction(CILAssignNode, local_dest, CILGetAttributeNode(node.id))
             node.holder = local_dest
             return
+
         name = f'{self.internal_count}_{self.current_function_name}_user_defined_{node.id}'
-        for x in self.dotcode[-1].functions[-1].localvars:
+        for x in self.dotcode[-1].functions[-1].localvars + self.dotcode[-1].functions[-1].params:
             splitted = x.split("_")
             if splitted[-1] == node.id:
                 name = x
@@ -568,8 +616,8 @@ class COOLToCILVisitor:
         node.holder = load
     
     @visitor.when(ast.BoolNode)
-    def visit(self, node:ast.BoolNode):
-        if node.value is 'true':
+    def visit(self, node: ast.BoolNode):
+        if node.value == 'true':
             node.holder = 1
         else:
             node.holder = 0

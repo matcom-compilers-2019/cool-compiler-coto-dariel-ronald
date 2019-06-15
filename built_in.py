@@ -329,12 +329,12 @@ def add_built_in(cool_to_cil):
         cool_to_cil.register_instruction(CILAssignNode, dest, CILReadIntNode())
         cool_to_cil.register_instruction(CILReturnNode, dest)
 
-        # #Int
-        # cool_to_cil.dottypes.append(CILTypeNode("Int", "None"))
-        # cool_to_cil.dotcode.append(CILCodeNode())
+        #Int
+        cool_to_cil.dottypes.append(CILTypeNode("Int", "Object",['attr_value']))
+        cool_to_cil.dotcode.append(CILCodeNode())
 
         #String
-        cool_to_cil.dottypes.append(CILTypeNode("String", "None", [], ["String_length","String_concat",
+        cool_to_cil.dottypes.append(CILTypeNode("String", "Object", ['attr_value'], ["String_length","String_concat",
                                                                        "String_substr"]))
         cool_to_cil.dotcode.append(CILCodeNode())
 
@@ -363,5 +363,5 @@ def add_built_in(cool_to_cil):
         cool_to_cil.register_instruction(CILReturnNode, dest)
 
         #Bool
-        cool_to_cil.dottypes.append(CILTypeNode("Bool", "None"))
+        cool_to_cil.dottypes.append(CILTypeNode("Bool", "Object",['attr_value']))
         cool_to_cil.dotcode.append(CILCodeNode())

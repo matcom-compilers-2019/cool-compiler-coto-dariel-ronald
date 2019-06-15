@@ -186,6 +186,8 @@ builtins_classes = {Str_Class, Bool_Class, Int_Class, Object_Class, IO_Class}
 
 builtins_classes_names = {Str_Class.name, Bool_Class.name, Int_Class.name, Object_Class.name, IO_Class.name}
 
+value_bultin_types = {Str_Class.name, Bool_Class.name, Int_Class.name}
+
 Str_Class.parent_type = Object_Class
 Bool_Class.parent_type = Object_Class
 Int_Class.parent_type = Object_Class

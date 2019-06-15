@@ -38,7 +38,8 @@ def test_new_type_node_and_let_node():
                    BlockNode([
                         LetVarNode([(('io','IO'),NewTypeNode('IO'))],
                                    DispatchNode('out_string',
-                                                [StrNode('"Hello World"')],ObjectNode('io'))),
+                                                [StrNode('Hello World')],ObjectNode('io'))),
+                        LetVarNode([(('i','Int'), IntNode(0))], AssignNode(ObjectNode('i'),IntNode(4))),
                         IntNode(0)
         ]))
     ])])
@@ -47,6 +48,7 @@ def test_new_type_node_and_let_node():
     main() : Int {
 	{
 	    let io: IO <- new IO in io.out_string("Hello World");
+	    let i: Int <- 0 in i <- 4;
 	    0;
 	}
     };
