@@ -136,8 +136,8 @@ class COOLToCILVisitor:
         self.dottypes[-1].methods.append(constructor_method_name)
         self.current_function_name = constructor_method_name
         self.dotcode[-1].functions.append(CILFunctionNode(constructor_method_name))
-        self.define_internal_local()
-        index = self.dotcode[-1].functions[-1].localvars[-1]
+        index = 'self'
+        self.dotcode[-1].functions[-1].localvars.append(index)
         self.register_instruction(CILAssignNode, index, CILAllocateNode(node.name))
         for attr in node.attributes:
             self.visit(attr)
@@ -233,7 +233,9 @@ class COOLToCILVisitor:
             left_expression_type_name = node.left_expression.computed_type.name
 
             # si es un tipo por valor la expresion izquierda, entonces hacemos boxing
-            if left_expression_type_name == 'Int' or left_expression_type_name == 'Bool':
+            if left_expression_type_name == 'Int' or left_expression_type_name == 'Bool'\
+                    or (left_expression_type_name == "String" and
+                            (node.func_id != 'concat' or node.func_id != 'length' or node.func_id != 'substr')):
                 vinfo = self.define_internal_local()
                 self.make_boxing(vinfo, left_expression_type_name, left_expression)
                 left_expression = vinfo
@@ -606,7 +608,7 @@ class COOLToCILVisitor:
         node.holder = holder
 
     @visitor.when(ast.BlockNode)
-    def visit(self, node:ast.BlockNode):
+    def visit(self, node: ast.BlockNode):
         for exp in node.expressions:
             self.visit(exp)
         node.holder = node.expressions[-1].holder
