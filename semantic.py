@@ -307,7 +307,7 @@ class TypeCheckerVisitor:
         if not dispatch_type.lower_equals(parent_type):
             throw_exception(TypeError, node.line,node.index,"Parent %s type defined is not lower than %s" % parent_type.name)
 
-        method = scope.get_params_from_method(parent_type,node.func_id)
+        method = scope.get_params_from_method(parent_type.name,node.func_id)
         for i, param in enumerate(node.parameters):
             self.visit(param, scope)
 

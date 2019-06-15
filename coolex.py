@@ -168,6 +168,8 @@ def t_COMMENT_end(token):
 
 # COMMENT ignored characters
 t_COMMENT_ignore = ''
+t_ignore_COMMENT_LINE = r'\-\-[^\n]*'
+t_ignore = ' \t\r\f'
 
 
 # COMMENT error handler
@@ -193,7 +195,6 @@ def t_INTEGER(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-t_ignore = ' \t'
 
 from cool_errors import throw_exception, LexicographicError
 

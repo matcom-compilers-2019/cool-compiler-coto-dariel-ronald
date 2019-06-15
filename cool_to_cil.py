@@ -586,17 +586,19 @@ class COOLToCILVisitor:
     @visitor.when(ast.ObjectNode)
     def visit(self, node: ast.ObjectNode):
         if node.id in self.current_type_attrs:
-            self.define_internal_local()
-            local_dest = self.dotcode[-1].functions[-1].localvars[-1]
+            local_dest = self.define_internal_local()
             self.register_instruction(CILAssignNode, local_dest, CILGetAttributeNode(node.id))
             node.holder = local_dest
             return
 
-        name = f'{self.internal_count}_{self.current_function_name}_user_defined_{node.id}'
-        for x in self.dotcode[-1].functions[-1].localvars + self.dotcode[-1].functions[-1].params:
-            splitted = x.split("_")
-            if splitted[-1] == node.id:
+        # name = f'{self.internal_count}_{self.current_function_name}_user_defined_{node.id}'
+        name = ''
+        localvars = self.dotcode[-1].functions[-1].localvars
+        params = self.dotcode[-1].functions[-1].params
+        for x in localvars + params:
+            if x.endswith(node.id):
                 name = x
+                break
         node.holder = name
 
     @visitor.when(ast.IsVoidNode)
