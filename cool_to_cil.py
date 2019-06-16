@@ -218,7 +218,7 @@ class COOLToCILVisitor:
 
     @visitor.when(ast.DispatchNode)
     def visit(self, node: ast.DispatchNode, scope: CILScope):
-        self.visit(node.left_expression,scope)
+        self.visit(node.left_expression, scope)
         left_expression = 'self'
 
         for exp in node.parameters:
@@ -591,7 +591,7 @@ class COOLToCILVisitor:
         # name = f'{self.internal_count}_{self.current_function_name}_user_defined_{node.id}'
         name = scope.get_variable_alias(node.id) if scope.is_defined(node.id) else None
         params = self.dotcode[-1].functions[-1].params
-        if name == '':
+        if name is None:
             for x in params:
                 if x.endswith(node.id):
                     name = x
@@ -609,7 +609,7 @@ class COOLToCILVisitor:
     @visitor.when(ast.BlockNode)
     def visit(self, node: ast.BlockNode,scope:CILScope):
         for exp in node.expressions:
-            self.visit(exp)
+            self.visit(exp,scope)
         node.holder = node.expressions[-1].holder
 
     @visitor.when(ast.IntegerComplementNode)

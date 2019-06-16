@@ -55,7 +55,7 @@ class CILScope:
     def get_variable_alias(self, vname):
         current = self
         while current is not None:
-            alias = self.locals[vname] if vname in self.locals else None
+            alias = current.locals[vname] if vname in current.locals else None
             if alias is not None:
                 return alias
             current = current.parent
