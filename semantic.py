@@ -476,7 +476,8 @@ class TypeCheckerVisitor:
             node.computed_type = scope.get_type('Int')
             return
 
-        throw_exception(TypeError, node.line,node.index,"Error while checking_type")
+        throw_exception(TypeError, node.line,node.index,f"Error in negation instruction. Expected type Int, "
+                                                        f"founded {node.expression.computed_type.name}")
 
     @visitor.when(ast.IsVoidNode)
     def visit(self, node, scope):
@@ -500,10 +501,11 @@ class TypeCheckerVisitor:
         if node.expression.computed_type == scope.get_type("Bool"):
             node.computed_type = scope.get_type('Bool')
             return
-        throw_exception(TypeError, node.line,node.index,"Error while checking_type")
+        throw_exception(TypeError, node.line,node.index,f"Error in Not instruction. Expected type Bool, "
+                                                        f"founded {node.expression.computed_type.name}")
 
     @visitor.when(ast.LowerThanNode)
-    def visit(self, node, scope):
+    def visit(self, node: ast.LowerThanNode, scope):
         '''
         <expr1> y <expr2> tienen que tener tipo Int
         :param node:
@@ -511,11 +513,12 @@ class TypeCheckerVisitor:
         :return: el resultado es bool
         '''
         self.visit(node.left_expression,scope)
-
-        if node.left_expression.computed_type == scope.get_type("Int"):
+        self.visit(node.right_expression,scope)
+        if node.left_expression.computed_type == scope.get_type("Int") and \
+                        node.right_expression.computed_type == scope.get_type("Int"):
             node.computed_type = scope.get_type('Bool')
             return
-        throw_exception(TypeError, node.line,node.index,"Error while checking_type")
+        throw_exception(TypeError, node.line,node.index,f"Error in < comparison instruction. Expected type Int ")
 
     @visitor.when(ast.LowerEqualThanNode)
     def visit(self, node, scope):
@@ -526,11 +529,12 @@ class TypeCheckerVisitor:
         :return: el resultado es bool
         '''
         self.visit(node.left_expression, scope)
-
-        if node.left_expression.computed_type == scope.get_type("Int"):
+        self.visit(node.right_expression,scope)
+        if node.left_expression.computed_type == scope.get_type("Int") and \
+                        node.right_expression.computed_type == scope.get_type("Int"):
             node.computed_type = scope.get_type('Bool')
             return
-        throw_exception(TypeError, node.line, node.index, "Error while checking_type")
+        throw_exception(TypeError, node.line,node.index,f"Error in < comparison instruction. Expected type Int ")
 
     @visitor.when(ast.EqualThanNode)
     def visit(self, node, scope):
@@ -554,7 +558,7 @@ class TypeCheckerVisitor:
             if node.left_expression.computed_type == node.right_expression.computed_type:
                 node.computed_type = scope.get_type('Bool')
                 return
-            throw_exception(TypeError(node.line, node.index, "Error while checking_type"))
+            throw_exception(TypeError(node.line, node.index, "Error in = instruction"))
         else:
             # Si se comparan dos clases no basicas hay que comparar los punteros
             pass

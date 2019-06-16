@@ -89,5 +89,5 @@ _lr_productions = [
   ('implications -> implication SEMICOLON implications','implications',3,'p_implications','coolyacc2.py',344),
   ('implications -> implication SEMICOLON','implications',2,'p_implications','coolyacc2.py',345),
   ('implication -> id_type IMPLY expression','implication',3,'p_implication','coolyacc2.py',354),
-  ('expression -> ID ASSIGN expression','expression',3,'p_expression_assign','coolyacc2.py',362),
+  ('expression -> ID ASSIGN expression','expression',3,'p_expression_assign','coolyacc2.py',363),
 ]

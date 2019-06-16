@@ -276,7 +276,7 @@ def add_built_in(cool_to_cil):
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_abort",["self"]))
         cool_to_cil.current_function_name = "Object_abort"
-        cool_to_cil.register_data("EXECUTION ABORTED")
+        cool_to_cil.register_data("EXECUTION ABORTED\n")
         cool_to_cil.register_instruction(CILErrorMessageNode, cool_to_cil.dotdata.data[-1].vname)
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("Object_type_name",["self"]))

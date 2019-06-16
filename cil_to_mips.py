@@ -517,8 +517,11 @@ class CILtoMIPSVisitor:
         self.emit(f'move $fp, $sp')
         # pasamos los parametros del metodo
         for param in node.params:
-            param_index = self.get_local_var_or_param_index(param)
-            self.emit(f'lw $a0, {-4*param_index}($t0)')
+            if type(param) is int:
+                self.emit(f'li $a0, {param}')
+            else:
+                param_index = self.get_local_var_or_param_index(param)
+                self.emit(f'lw $a0, {-4*param_index}($t0)')
             self.macro_push('$a0')
 
         # llamamos al metodo
@@ -559,8 +562,11 @@ class CILtoMIPSVisitor:
         self.emit(f'move $fp, $sp')
         # pasamos los parametros del metodo
         for param in node.params:
-            param_index = self.get_local_var_or_param_index(param)
-            self.emit(f'lw $a0, {-4*param_index}($t0)')
+            if type(param) is int:
+                self.emit(f'li $a0, {param}')
+            else:
+                param_index = self.get_local_var_or_param_index(param)
+                self.emit(f'lw $a0, {-4*param_index}($t0)')
             self.macro_push('$a0')
         # llamamos al metodo
         self.emit(f'jalr $v0')
