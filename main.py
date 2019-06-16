@@ -9,6 +9,7 @@ from cool_to_cil import *
 from cil_to_mips import *
 import logging
 from hashlib import sha256
+from cil_utils import CILScope
 logging.basicConfig()
 
 
@@ -36,11 +37,14 @@ def compile_cool(data):
     check_semantic(cool_ast)
 
     logging.info('Generating IL code')
+
     ctcv = COOLToCILVisitor()
-    cil_ast = ctcv.visit(cool_ast)
+    cilScope = CILScope()
+    cil_ast = ctcv.visit(cool_ast,cilScope)
 
     logging.info('Generating to mips')
     mips_visitor = CILtoMIPSVisitor()
+
     mips_visitor.visit(cil_ast)
 
     program = mips_visitor.get_mips_program_code()

@@ -217,6 +217,19 @@ classes_dictionary = {'Int': Int_Class,
                       }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Scope:
 
     scope_classes_dictionary = classes_dictionary
@@ -330,4 +343,3 @@ class Scope:
         if type is None:
             return None
         return type.get_method(method_name)
-
