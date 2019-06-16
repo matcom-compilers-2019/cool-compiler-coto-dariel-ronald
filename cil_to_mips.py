@@ -292,8 +292,11 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILArrayNode)
     def visit(self, node: cil_hierarchy.CILArrayNode):
         self.emit('li $v0, 9')
-        self.emit(f'li $a0, {4*node.size}')
+        self.emit(f'li $a0, {4*(node.size+1)}')
         self.emit('syscall')
+        self.emit('# guardamos la longitud del array')
+        self.emit(f'li $t0, {node.size}')
+        self.emit('sw $t0, 0($v0)')
 
     @visitor.when(cil_hierarchy.CILAssignNode)
     def visit(self, node: cil_hierarchy.CILAssignNode):
@@ -620,7 +623,7 @@ class CILtoMIPSVisitor:
             self.emit(f'lw $t1, {-4*index}($fp)')
 
         self.emit(f'mul $t1,$t1, 4')
-        self.emit('add $t0, $t0, $t1')
+        self.emit('addu $t0, $t0, $t1')
         self.emit(f'lw $v0, 0($t0)')
 
     @visitor.when(cil_hierarchy.CILGetParentNode)
@@ -654,6 +657,12 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILLabelNode)
     def visit(self, node: cil_hierarchy.CILLabelNode):
         self.emit(f'{node.label}:')
+
+    @visitor.when(cil_hierarchy.CILArrayLengthNode)
+    def visit(self, node: cil_hierarchy.CILArrayLengthNode):
+        local_index = self.get_local_var_or_param_index(node.localv)
+        self.emit(f'lw $t0, {-4*local_index}($fp)')
+        self.emit('lw $v0, 0($t0)')
 
     @visitor.when(cil_hierarchy.CILLengthNode)
     def visit(self,node:cil_hierarchy.CILLengthNode):
@@ -991,6 +1000,7 @@ class CILtoMIPSVisitor:
     def visit(self, node: cil_hierarchy.CILTypeOfNode):
         local_index = self.get_local_var_or_param_index(node.source)
         # cargamos la direccion de la instancia
+        self.emit('# calculemos el typeof')
         self.emit(f'lw $a0, {-4*local_index}($fp)')
         # cargamos la direccion del tipo
         self.emit('lw $v0, 0($a0)')

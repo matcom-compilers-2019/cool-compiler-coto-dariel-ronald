@@ -148,7 +148,7 @@ class COOLToCILVisitor:
                 if attr.type == "Int" or attr.type == "Bool":
                     self.register_instruction(CILSetAttributeNode, attr.id, index, 0)
                 elif attr.type == "String":
-                    self.register_instruction(CILSetAttributeNode, attr.id, index, '__void')
+                    self.register_instruction(CILSetAttributeNode, attr.id, index, 'void')
                 else:
                     self.register_instruction(CILSetAttributeNode, attr.id, index, "")
         self.register_instruction(CILReturnNode, index)
@@ -371,21 +371,19 @@ class COOLToCILVisitor:
         #Aqui se crea un array que tendra todos los tipos correpondientes a las variables de las implicaciones
         #en orden
 
-        self.define_internal_local()
-        arr = self.dotcode[-1].functions[-1].localvars[-1]
+        arr = self.define_internal_local()
         self.register_instruction(CILAssignNode, arr, CILArrayNode(len(node.implications)))
         for i in range(0, len(node.implications)):
-            self.register_instruction(CILSetIndexNode, arr, i, 'type_'+node.implications[i][0][1])
+            self.register_instruction(CILSetIndexNode, arr, i + 1, 'type_' + node.implications[i][0][1])
 
         #Aqui se obtiene el tipo del resultado de evaluar la expresion inicial del case
-        self.define_internal_local()
-        expr0_type_name = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, expr0_type_name, CILTypeOfNode(expr0_value))
+        expr0_type = self.define_internal_local()
+        self.register_instruction(CILAssignNode, expr0_type, CILTypeOfNode(expr0_value))
 
         #Se realiza un llamado a la funcion estatica "get_closest_type", cuyo retorno se le asigna a closest_type_index
         closest_type_index = self.define_internal_local()
         bcall = CILBuiltInCallNode("__get_closest_type")
-        bcall.params = [expr0_type_name, arr]
+        bcall.params = [expr0_type, arr]
         self.register_instruction(CILAssignNode, closest_type_index, bcall)
 
         #Se crea un array que contendra los labels de las expresiones a visitar
@@ -399,7 +397,7 @@ class COOLToCILVisitor:
             # temp_local = self.dotcode[-1].functions[-1].localvars[-1]
             local_user_vars.append(user_local)
             labels.append(l_next)
-            self.register_instruction(CILSetIndexNode, array_labels, i, l_next)
+            self.register_instruction(CILSetIndexNode, array_labels, i + 1, l_next)
 
         #Se define en un goto a que label correspondiente a una de las expr se realizara el salto
         self.define_internal_local()
@@ -595,6 +593,7 @@ class COOLToCILVisitor:
         name = ''
         localvars = self.dotcode[-1].functions[-1].localvars
         params = self.dotcode[-1].functions[-1].params
+
         for x in localvars + params:
             if x.endswith(node.id):
                 name = x

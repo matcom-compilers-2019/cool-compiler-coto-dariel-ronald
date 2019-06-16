@@ -4,11 +4,19 @@
     <bookmark url="file://$PROJECT_DIR$/cool_utils.py" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="Arreglamos el type_name">
+    <list default="true" id="714784ac-9571-4cca-9e50-dd96afe37e2b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coolyacc2.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cil_hierarchy.py" afterPath="$PROJECT_DIR$/cil_hierarchy.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cil_to_mips.py" afterPath="$PROJECT_DIR$/cil_to_mips.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cool_examples/exampleCase.cl" afterPath="$PROJECT_DIR$/cool_examples/exampleCase.cl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cool_examples/test2.cl" afterPath="$PROJECT_DIR$/cool_examples/test2.cl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cool_to_cil.py" afterPath="$PROJECT_DIR$/cool_to_cil.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coolyacc.py" afterPath="$PROJECT_DIR$/coolyacc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser.out" afterPath="$PROJECT_DIR$/parser.out" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parsetab.py" afterPath="$PROJECT_DIR$/parsetab.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static_functions.py" afterPath="$PROJECT_DIR$/static_functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_checkSemantic.py" afterPath="$PROJECT_DIR$/tests/test_checkSemantic.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,187 +28,126 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Playing_with_PLY$Nosetests_for_test_parser_test_empty_class_definition.coverage" NAME="Nosetests for test_parser.test_empty_class_definition Coverage Results" MODIFIED="1549053869959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_checkSemantic_test_new_type_node_and_let_node.coverage" NAME="Nosetests for test_checkSemantic.test_new_type_node_and_let_node Coverage Results" MODIFIED="1560573135164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/project_Implementation$main.coverage" NAME="main Coverage Results" MODIFIED="1560629796621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_parser_test_let_statement_with_three_vars.coverage" NAME="Nosetests for test_parser.test_let_statement_with_three_vars Coverage Results" MODIFIED="1560361724195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/project_Implementation$main.coverage" NAME="main Coverage Results" MODIFIED="1560697025859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CurrentProjectComp$Nosetests_in_test_parser_py.coverage" NAME="Nosetests in test_parser.py Coverage Results" MODIFIED="1557636233171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/CurrentProjectComp$prueba.coverage" NAME="prueba Coverage Results" MODIFIED="1557282966514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/CurrentProjectComp$main.coverage" NAME="main Coverage Results" MODIFIED="1551715850414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_in_test_checkSemantic_py.coverage" NAME="Nosetests in test_checkSemantic.py Coverage Results" MODIFIED="1560636729700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/Playing_with_PLY$Nosetests_in_test_parser_py.coverage" NAME="Nosetests in test_parser.py Coverage Results" MODIFIED="1549157375967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/CurrentProjectComp$Nosetests_for_test_checkSemantic_test_first.coverage" NAME="Nosetests for test_checkSemantic.test_first Coverage Results" MODIFIED="1557636768069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_checkSemantic_test_new_type_node_and_let_node2.coverage" NAME="Nosetests for test_checkSemantic.test_new_type_node_and_let_node2 Coverage Results" MODIFIED="1560361716960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_checkSemantic_test_first.coverage" NAME="Nosetests for test_checkSemantic.test_first Coverage Results" MODIFIED="1560376227980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_checkSemantic_test_case.coverage" NAME="Nosetests for test_checkSemantic.test_case Coverage Results" MODIFIED="1560556070328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/project_Implementation$Nosetests_for_test_parser_test_let_statement_with_three_vars.coverage" NAME="Nosetests for test_parser.test_let_statement_with_three_vars Coverage Results" MODIFIED="1560361724195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/CurrentProjectComp$prueba.coverage" NAME="prueba Coverage Results" MODIFIED="1557282966514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/CurrentProjectComp$main.coverage" NAME="main Coverage Results" MODIFIED="1551715850414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.47017765">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="cil_to_mips.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="158">
-                  <caret line="484" column="0" lean-forward="false" selection-start-line="484" selection-start-column="0" selection-end-line="484" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#14#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="built_in.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/built_in.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="398">
-                  <caret line="343" column="20" lean-forward="true" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="20" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="visitor.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/visitor.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/main.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="166">
-                  <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#24#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test2.cl" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cool_examples/test2.cl">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="340">
-                  <caret line="17" column="6" lean-forward="true" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="primes.cl" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/cool_examples/primes.cl">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="549">
-                  <caret line="47" column="22" lean-forward="false" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="exampleCase.cl" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cool_examples/exampleCase.cl">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="coolex.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/coolex.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-589">
-                  <caret line="154" column="0" lean-forward="true" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="cool_errors.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cool_errors.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="80">
-                  <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="cil_hierarchy.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="168">
-                  <caret line="184" column="8" lean-forward="false" selection-start-line="184" selection-start-column="8" selection-end-line="184" selection-end-column="8" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="cool_to_cil.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/cool_to_cil.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="277">
-                  <caret line="237" column="40" lean-forward="true" selection-start-line="237" selection-start-column="40" selection-end-line="237" selection-end-column="40" />
-                  <folding>
-                    <element signature="e#0#22#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="cool_utils.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cool_utils.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="155">
-                  <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="semantic.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/semantic.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="218">
-                  <caret line="244" column="32" lean-forward="true" selection-start-line="244" selection-start-column="32" selection-end-line="244" selection-end-column="32" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="cil_to_mips.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="186">
-                  <caret line="485" column="37" lean-forward="true" selection-start-line="485" selection-start-column="37" selection-end-line="485" selection-end-column="37" />
-                  <folding>
-                    <element signature="e#0#14#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="t.s" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples_output/t.s">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="196">
-                  <caret line="1991" column="9" lean-forward="true" selection-start-line="1991" selection-start-column="9" selection-end-line="1991" selection-end-column="9" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="cil_to_mips.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="999" column="48" lean-forward="false" selection-start-line="999" selection-start-column="43" selection-end-line="999" selection-end-column="48" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parser.out" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/parser.out">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="58860">
+              <caret line="2943" column="49" lean-forward="false" selection-start-line="2943" selection-start-column="49" selection-end-line="2943" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="built_in.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/built_in.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="900">
+              <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="t.s" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples_output/t.s">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="143">
+              <caret line="925" column="16" lean-forward="true" selection-start-line="925" selection-start-column="16" selection-end-line="925" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="static_functions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1880">
+              <caret line="94" column="75" lean-forward="false" selection-start-line="94" selection-start-column="60" selection-end-line="94" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exampleCase.cl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cool_examples/exampleCase.cl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="32" column="39" lean-forward="false" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_checkSemantic.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/test_checkSemantic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3120">
+              <caret line="161" column="20" lean-forward="false" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cil_hierarchy.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4360">
+              <caret line="218" column="0" lean-forward="false" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cool_to_cil.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cool_to_cil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="382" column="39" lean-forward="false" selection-start-line="382" selection-start-column="39" selection-end-line="382" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -211,36 +158,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>__void</find>
-      <find>LetVar</find>
-      <find>AttributeNode</find>
-      <find>AssignNode)</find>
-      <find>AssignNo</find>
-      <find>void</find>
-      <find>t</find>
-      <find>ty</find>
-      <find>typr</find>
-      <find>typ</find>
-      <find>type</find>
-      <find>type_</find>
-      <find>type_nam</find>
-      <find>type_name</find>
-      <find>&quot;&quot;</find>
-      <find>T</find>
-      <find>Ty[e</find>
-      <find>Ty[</find>
-      <find>Ty</find>
-      <find>Typ</find>
-      <find>Type</find>
-      <find>TypeNam</find>
-      <find>Let</find>
+      <find>__get_str</find>
+      <find>__get_str_</find>
+      <find>__get_str_l</find>
+      <find>__get_str_le</find>
+      <find>__get_str_len</find>
+      <find>xcar</find>
+      <find>_</find>
+      <find>6____get_closest_type</find>
+      <find>get_clos</find>
+      <find>li $t0,</find>
+      <find>Main_main</find>
+      <find>CILLen</find>
+      <find>Len</find>
+      <find>GetINde</find>
+      <find>93</find>
+      <find>s</find>
+      <find>sl3</find>
+      <find>sl</find>
+      <find>sle</find>
       <find>type_Int</find>
-      <find>TypeName</find>
-      <find>builtins_classes</find>
-      <find>Object_type_name</find>
-      <find>BlockNode</find>
-      <find>stop</find>
-      <find>Main_ma</find>
+      <find>GetInde</find>
+      <find>SetInde</find>
+      <find>Le</find>
+      <find>Array</find>
+      <find>Arra</find>
+      <find>TypeO</find>
+      <find>e</find>
+      <find>ends</find>
+      <find>arra</find>
+      <find>Case</find>
     </findStrings>
     <replaceStrings>
       <replace>ClassNode(</replace>
@@ -270,6 +217,7 @@
       <replace>GroupExpression</replace>
       <replace>&quot;self&quot;</replace>
       <replace>addu</replace>
+      <replace>class</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -304,23 +252,26 @@
         <option value="$PROJECT_DIR$/TODO" />
         <option value="$PROJECT_DIR$/tests/tools_for_testing.py" />
         <option value="$PROJECT_DIR$/mips_utils.py" />
-        <option value="$PROJECT_DIR$/static_functions.py" />
         <option value="$PROJECT_DIR$/cil_writer.py" />
         <option value="$PROJECT_DIR$/cool_examples/helloWorld.cl" />
         <option value="$PROJECT_DIR$/cool_examples/test2" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/NodosAST.py" />
-        <option value="$PROJECT_DIR$/cil_hierarchy.py" />
-        <option value="$PROJECT_DIR$/coolyacc.py" />
-        <option value="$PROJECT_DIR$/tests/test_checkSemantic.py" />
         <option value="$PROJECT_DIR$/built_in.py" />
-        <option value="$PROJECT_DIR$/semantic.py" />
         <option value="$PROJECT_DIR$/cool_utils.py" />
-        <option value="$PROJECT_DIR$/cil_to_mips.py" />
-        <option value="$PROJECT_DIR$/cool_examples/exampleCase.cl" />
         <option value="$PROJECT_DIR$/cool_examples/test2.cl" />
         <option value="$PROJECT_DIR$/coolex.py" />
         <option value="$PROJECT_DIR$/cool_examples/primes.cl" />
+        <option value="$PROJECT_DIR$/cool_examples/book_list.cl" />
+        <option value="$PROJECT_DIR$/semantic.py" />
+        <option value="$PROJECT_DIR$/coolyacc.py" />
+        <option value="$PROJECT_DIR$/tests/test_checkSemantic.py" />
+        <option value="$PROJECT_DIR$/coolyacc2.py" />
+        <option value="$PROJECT_DIR$/examples_output/t.s" />
+        <option value="$PROJECT_DIR$/cil_hierarchy.py" />
+        <option value="$PROJECT_DIR$/cool_examples/exampleCase.cl" />
+        <option value="$PROJECT_DIR$/static_functions.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/cil_to_mips.py" />
         <option value="$PROJECT_DIR$/cool_to_cil.py" />
       </list>
     </option>
@@ -353,6 +304,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -410,13 +362,17 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="/media/ariel/ARIEL96CS/COMPOOPOOOPOPOPO/CurrentProjectComp" />
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -445,23 +401,6 @@
       <option name="_new_regexPattern" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_checkSemantic.test_first&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Nosetests for test_parser.test_let_statement_with_three_vars" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Playing with PLY" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="_new_regexPattern" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_parser.test_let_statement_with_three_vars&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method />
     </configuration>
@@ -499,6 +438,23 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method />
     </configuration>
+    <configuration default="false" name="Nosetests in test_checkSemantic.py" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Playing with PLY" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_checkSemantic.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method />
+    </configuration>
     <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -513,7 +469,7 @@
       <module name="Playing with PLY" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="./cool_examples/primes.cl" />
+      <option name="PARAMETERS" value="./cool_examples/exampleCase.cl" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <method />
@@ -669,18 +625,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_first" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests for test_parser.test_let_statement_with_three_vars" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_case" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_new_type_node_and_let_node" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_case" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_new_type_node_and_let_node" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests in test_checkSemantic.py" />
       <item index="4" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_new_type_node_and_let_node" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_case" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_first" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Nosetests for test_parser.test_let_statement_with_three_vars" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests in test_checkSemantic.py" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_new_type_node_and_let_node" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_case" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Nosetests for test_checkSemantic.test_first" />
       </list>
     </recent_temporary>
   </component>
@@ -694,20 +650,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1548113060198</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Chequeamos el error detectar que no este definido el tipo padre">
-      <created>1551672712604</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1551672712604</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Agregamos en el scope de cada método una variable self de tipo current_class">
-      <created>1551713962640</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1551713962640</updated>
     </task>
     <task id="LOCAL-00026" summary="Arreglamos una cosita que tenia el dispatch">
       <created>1551714976079</created>
@@ -1038,28 +980,24 @@
       <option name="project" value="LOCAL" />
       <updated>1560621111969</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Arreglamos el el boxing en el dispatch para los strings">
+      <created>1560629835433</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1560629835434</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Algunas cositas">
+      <created>1560634483108</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1560634483108</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Nosetests_for_test_checkSemantic_test_case - 2019.06.13 at 18h 15m 40s.xml">
-      <configuration name="Nosetests for test_checkSemantic.test_case" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_for_test_checkSemantic_test_case - 2019.06.13 at 18h 17m 06s.xml">
-      <configuration name="Nosetests for test_checkSemantic.test_case" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_for_test_checkSemantic_test_case - 2019.06.14 at 19h 46m 41s.xml">
-      <configuration name="Nosetests for test_checkSemantic.test_case" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_for_test_checkSemantic_test_case - 2019.06.14 at 19h 47m 50s.xml">
-      <configuration name="Nosetests for test_checkSemantic.test_case" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_for_test_checkSemantic_test_new_type_node_and_let_node - 2019.06.14 at 19h 48m 06s.xml">
-      <configuration name="Nosetests for test_checkSemantic.test_new_type_node_and_let_node" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_for_test_checkSemantic_test_new_type_node_and_let_node - 2019.06.14 at 19h 53m 25s.xml">
-      <configuration name="Nosetests for test_checkSemantic.test_new_type_node_and_let_node" configurationId="tests" />
-    </history-entry>
     <history-entry file="Nosetests_for_test_checkSemantic_test_new_type_node_and_let_node - 2019.06.14 at 19h 53m 44s.xml">
       <configuration name="Nosetests for test_checkSemantic.test_new_type_node_and_let_node" configurationId="tests" />
     </history-entry>
@@ -1071,6 +1009,24 @@
     </history-entry>
     <history-entry file="Nosetests_for_test_checkSemantic_test_new_type_node_and_let_node - 2019.06.15 at 00h 32m 15s.xml">
       <configuration name="Nosetests for test_checkSemantic.test_new_type_node_and_let_node" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_checkSemantic_py - 2019.06.15 at 18h 08m 15s.xml">
+      <configuration name="Nosetests in test_checkSemantic.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_checkSemantic_py - 2019.06.15 at 18h 09m 13s.xml">
+      <configuration name="Nosetests in test_checkSemantic.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_checkSemantic_py - 2019.06.15 at 18h 09m 29s.xml">
+      <configuration name="Nosetests in test_checkSemantic.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_checkSemantic_py - 2019.06.15 at 18h 10m 22s.xml">
+      <configuration name="Nosetests in test_checkSemantic.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_checkSemantic_py - 2019.06.15 at 18h 11m 43s.xml">
+      <configuration name="Nosetests in test_checkSemantic.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_checkSemantic_py - 2019.06.15 at 18h 12m 10s.xml">
+      <configuration name="Nosetests in test_checkSemantic.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -1084,14 +1040,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10140237" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31391585" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.394822" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2038835" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1278362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40992448" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41639698" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26508024" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4548976" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1117,13 +1074,13 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10140237" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31391585" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.394822" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3656958" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1278362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40992448" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41639698" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26508024" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45516458" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4548976" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901832" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1164,8 +1121,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Agregamos el nombre de la del tipo a la definicion en mips" />
-    <MESSAGE value="Added cil work" />
     <MESSAGE value="updating mips work" />
     <MESSAGE value="Implemented Integer complement" />
     <MESSAGE value="Updated_CIl writer" />
@@ -1189,20 +1144,17 @@
     <MESSAGE value="Arreglamos el while" />
     <MESSAGE value="Tenemos una primera version de case" />
     <MESSAGE value="Arreglamos el type_name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arreglamos el type_name" />
+    <MESSAGE value="Arreglamos el el boxing en el dispatch para los strings" />
+    <MESSAGE value="Algunas cositas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Algunas cositas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/coolyacc.py</url>
-          <line>423</line>
+          <line>425</line>
           <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/semantic.py</url>
-          <line>292</line>
-          <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tests/test_parser.py</url>
@@ -1216,63 +1168,53 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>762</line>
+          <line>771</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>854</line>
+          <line>863</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>986</line>
+          <line>995</line>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>953</line>
+          <line>962</line>
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>932</line>
-          <option name="timeStamp" value="121" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>908</line>
+          <line>917</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>676</line>
+          <line>685</line>
           <option name="timeStamp" value="130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>1014</line>
-          <option name="timeStamp" value="131" />
+          <line>641</line>
+          <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>774</line>
-          <option name="timeStamp" value="135" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cool_to_cil.py</url>
-          <line>359</line>
-          <option name="timeStamp" value="137" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/semantic.py</url>
-          <line>612</line>
-          <option name="timeStamp" value="138" />
+          <line>742</line>
+          <option name="timeStamp" value="154" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
-          <line>484</line>
-          <option name="timeStamp" value="140" />
+          <line>828</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/cil_to_mips.py</url>
+          <line>1010</line>
+          <option name="timeStamp" value="157" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -1282,32 +1224,15 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="141" />
+      <option name="time" value="158" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Case_impl" />
-    <entry file="file://$PROJECT_DIR$/cool_first.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="114" column="21" lean-forward="false" selection-start-line="114" selection-start-column="21" selection-end-line="114" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/tools_for_testing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python3.6/logging/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="1899" column="0" lean-forward="false" selection-start-line="1899" selection-start-column="0" selection-end-line="1899" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1317,7 +1242,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1340,7 +1264,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3660">
           <caret line="184" column="0" lean-forward="false" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1364,7 +1287,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="23" column="11" lean-forward="false" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1380,7 +1302,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
           <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1388,7 +1309,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="460">
           <caret line="23" column="8" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1396,7 +1316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1404,7 +1323,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
           <caret line="915" column="0" lean-forward="false" selection-start-line="915" selection-start-column="0" selection-end-line="915" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1412,23 +1330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-362">
           <caret line="12" column="6" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coolyacc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="381" column="56" lean-forward="true" selection-start-line="381" selection-start-column="56" selection-end-line="381" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="48" column="17" lean-forward="true" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1436,15 +1337,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_checkSemantic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="38" column="30" lean-forward="true" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1452,57 +1344,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/visitor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="184" column="8" lean-forward="false" selection-start-line="184" selection-start-column="8" selection-end-line="184" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/built_in.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="343" column="20" lean-forward="true" selection-start-line="343" selection-start-column="20" selection-end-line="343" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/semantic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="244" column="32" lean-forward="true" selection-start-line="244" selection-start-column="32" selection-end-line="244" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cool_examples/exampleCase.cl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1510,30 +1351,120 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="17" column="6" lean-forward="true" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/coolex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-589">
-          <caret line="154" column="0" lean-forward="true" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="851">
+          <caret line="197" column="0" lean-forward="true" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cool_examples/primes.cl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visitor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cool_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="155">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <caret line="308" column="45" lean-forward="true" selection-start-line="308" selection-start-column="45" selection-end-line="308" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/semantic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="297" column="0" lean-forward="false" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coolyacc2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="311" column="0" lean-forward="false" selection-start-line="311" selection-start-column="0" selection-end-line="311" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coolyacc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/built_in.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_checkSemantic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3120">
+          <caret line="161" column="20" lean-forward="false" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cool_examples/book_list.cl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1290">
+          <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cil_hierarchy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4360">
+          <caret line="218" column="0" lean-forward="false" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser.out">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58860">
+          <caret line="2943" column="49" lean-forward="false" selection-start-line="2943" selection-start-column="49" selection-end-line="2943" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1880">
+          <caret line="94" column="75" lean-forward="false" selection-start-line="94" selection-start-column="60" selection-end-line="94" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="32" column="39" lean-forward="false" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cil_to_mips.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="485" column="37" lean-forward="true" selection-start-line="485" selection-start-column="37" selection-end-line="485" selection-end-column="37" />
+        <state relative-caret-position="153">
+          <caret line="999" column="48" lean-forward="false" selection-start-line="999" selection-start-column="43" selection-end-line="999" selection-end-column="48" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -1542,27 +1473,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples_output/t.s">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="1991" column="9" lean-forward="true" selection-start-line="1991" selection-start-column="9" selection-end-line="1991" selection-end-column="9" />
+        <state relative-caret-position="143">
+          <caret line="925" column="16" lean-forward="true" selection-start-line="925" selection-start-column="16" selection-end-line="925" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cool_examples/primes.cl">
+    <entry file="file://$PROJECT_DIR$/cool_examples/exampleCase.cl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="47" column="22" lean-forward="false" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
+        <state relative-caret-position="280">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cool_to_cil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="237" column="40" lean-forward="true" selection-start-line="237" selection-start-column="40" selection-end-line="237" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="540">
+          <caret line="382" column="39" lean-forward="false" selection-start-line="382" selection-start-column="39" selection-end-line="382" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>

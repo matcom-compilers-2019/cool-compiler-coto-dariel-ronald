@@ -1,13 +1,14 @@
 class Main {
+            attr1: A <- new B;
             main() : Int {
                 {
-                    case 1+2 of
-                        id1:Int => let io: IO <- new IO in io.out_int(id1);
-                        id2:Object => let io: IO <- new IO in io.out_string("Es Object");
-                        id3:String => let io: IO <- new IO in io.out_string(id3);
+                    case attr1 of
+                        id1:A => let io: IO <- new IO in io.out_string("Es A");
+                        id2:B => let io: IO <- new IO in io.out_string("Es B");
                     esac;
-                    let a:Object <- 42, io: IO <- new IO in io.out_string(a.type_name());
                    5;
                }
             };
         };
+class A {};
+class B inherits A {};

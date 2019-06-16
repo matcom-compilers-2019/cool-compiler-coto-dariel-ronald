@@ -55,74 +55,64 @@ def get_closest_type(cool_to_cil):
     # la distancia actual calculada entre my_type y my_types_array[index], el min_value que es la menor distancia
     # calculada en cada momento, el current_value que representa el elemento de la posicion index del array
     #y el min_index que representa el indice del valor de menor distancia hasta el momento)
-    cool_to_cil.define_internal_local()
-    index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.define_internal_local()
-    min_index = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.define_internal_local()
-    current_value = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.define_internal_local()
-    min_value = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.define_internal_local()
-    dist = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
+
+    # Locals
+    index = cool_to_cil.define_internal_local()
+    min_index = cool_to_cil.define_internal_local()
+    temp_dist = cool_to_cil.define_internal_local()
+    min_dist = cool_to_cil.define_internal_local()
+    type_i = cool_to_cil.define_internal_local()
+    check_not_in_range = cool_to_cil.define_internal_local()
+    array_length = cool_to_cil.define_internal_local()
+    check_update_min_dist = cool_to_cil.define_internal_local()
 
     #Labels
     l_base = cool_to_cil.next_label()
-    l_min = cool_to_cil.next_label()
+    update = cool_to_cil.next_label()
+    increment = cool_to_cil.next_label()
     l_end = cool_to_cil.next_label()
 
-    #Inicializacion del current_value, index y min_index
-    cool_to_cil.register_instruction(CILAssignNode, index, 0)
-    cool_to_cil.register_instruction(CILAssignNode, min_index, 0)
-    cool_to_cil.register_instruction(CILAssignNode, current_value, CILGetIndexNode("my_types_array", index))
+
+    #Inicializacion locales
+    cool_to_cil.register_instruction(CILAssignNode, index, 1)
+    cool_to_cil.register_instruction(CILAssignNode, min_index, 1)
+    cool_to_cil.register_instruction(CILAssignNode, type_i, CILGetIndexNode("my_types_array", index))
+    cool_to_cil.register_instruction(CILAssignNode, array_length, CILArrayLengthNode("my_types_array"))
 
     #Se inicializa el min_value con la 1ra distancia
     my_call = CILBuiltInCallNode("__get_distance")
     my_call.params.append("my_type")
-    my_call.params.append(current_value)
-    cool_to_cil.register_instruction(CILAssignNode, min_value, my_call)
+    my_call.params.append(type_i)
+    cool_to_cil.register_instruction(CILAssignNode, min_dist, my_call)
+    cool_to_cil.register_instruction(CILAssignNode, index, CILPlusNode(index,1))
 
     cool_to_cil.register_instruction(CILLabelNode, l_base)
 
-    #Aqui se analiza si el indice no se ha pasado de length(my_types_array
-    #En caso de haberse pasado se realiza un salto a la etiqueta l_end
-    cool_to_cil.define_internal_local()
-    aux1 = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.define_internal_local()
-    aux2 = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.register_instruction(CILAssignNode, aux1, CILLengthNode("my_types_array"))
-    cool_to_cil.register_instruction(CILAssignNode, aux2, CILLowerEqualThanNode(aux1, index))
-    cool_to_cil.register_instruction(CILGotoIfNode, aux2, l_end)
+    #Aqui se analiza si el indice no se ha pasado de length(my_types_array)
+    cool_to_cil.register_instruction(CILAssignNode, check_not_in_range, CILLowerThanNode(array_length,index))
+    cool_to_cil.register_instruction(CILGotoIfNode, check_not_in_range, l_end)
 
-    #Aqui se analiza si la distancia entre my_type y el tipo que se encuentra en el array[index] es menor
-    #que la menor distancia encontrada hasta el momento
-    #En caso de ser menor se salta al label l_min que se encarga de actualizar el minimo
+    cool_to_cil.register_instruction(CILAssignNode, type_i, CILGetIndexNode("my_types_array", index))
     my_call = CILBuiltInCallNode("__get_distance")
     my_call.params.append("my_type")
-    my_call.params.append(current_value)
+    my_call.params.append(type_i)
+    cool_to_cil.register_instruction(CILAssignNode, temp_dist, my_call)
 
-    cool_to_cil.register_instruction(CILAssignNode, dist, my_call)
-    cool_to_cil.define_internal_local()
-    aux3 = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
-    cool_to_cil.register_instruction(CILAssignNode, aux3, CILLowerThanNode(dist, min_value))
-    cool_to_cil.register_instruction(CILGotoIfNode, aux3, l_min)
+    cool_to_cil.register_instruction(CILAssignNode, check_update_min_dist, CILLowerThanNode(temp_dist, min_dist))
+    cool_to_cil.register_instruction(CILGotoIfNode, check_update_min_dist, update)
+    cool_to_cil.register_instruction(CILGotoNode, increment)
 
-    #Se actualizan los valores del index y del current_value para la siguiente iteracion del ciclo
-    cool_to_cil.register_instruction(CILAssignNode, index, CILPlusNode(index, 1))
-    cool_to_cil.register_instruction(CILAssignNode, current_value, CILGetIndexNode("my_types_array", index))
-
-    cool_to_cil.register_instruction(CILGotoNode, l_base)
-    
-    #Esta es la parte donde se actualiza el valor minimo de ser requerido
-    cool_to_cil.register_instruction(CILLabelNode, l_min)
-    cool_to_cil.register_instruction(CILAssignNode, min_value, dist)
+    cool_to_cil.register_instruction(CILLabelNode, update)
+    cool_to_cil.register_instruction(CILAssignNode, min_dist, temp_dist)
     cool_to_cil.register_instruction(CILAssignNode, min_index, index)
 
+    cool_to_cil.register_instruction(CILLabelNode, increment)
+    cool_to_cil.register_instruction(CILAssignNode, index, CILPlusNode(index,1))
     cool_to_cil.register_instruction(CILGotoNode, l_base)
 
     cool_to_cil.register_instruction(CILLabelNode, l_end)
     cool_to_cil.register_instruction(CILReturnNode, min_index)
 
-    #Aqui se se anade la funcion creada a la lista de funciones estaticas y se elimina de la lista del dotcode
+    # Aqui se se anade la funcion creada a la lista de funciones estaticas y se elimina de la lista del dotcode
     cool_to_cil.static_functions.append(cool_to_cil.dotcode[-1].functions[-1])
     cool_to_cil.dotcode[-1].functions.remove(cool_to_cil.dotcode[-1].functions[-1])

@@ -108,102 +108,67 @@ def p_expression_list(p):
         p[0] = [p[1]]
 
 
-def p_expression(p):
-    '''expression : assign
-                    | upper_non'''
-    p[0] = p[1]
-
-
-def p_upper_non(p):
-    '''upper_non : NOT upper_non
-                | operator_non'''
-    if len(p) == 3:
-        p[0] = NotNode(p[2])
-        p[0].line = p.lineno(1)
-        p[0].index = p.lexpos(1)
-    else:
-        p[0] = p[1]
-
-
-def p_operator_non(p):
-    '''operator_non : k_arith LTHAN k_arith
-                    | k_arith LETHAN k_arith
-                    | k_arith EQUALS k_arith
-                    | k_arith'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        if p[2] == '<':
-            p[0] = LowerThanNode(p[1], p[3])
-        elif p[2] == '<=':
-            p[0] = LowerEqualThanNode(p[1], p[3])
-        elif p[2] == '=':
-            p[0] = EqualThanNode(p[1], p[3])
-
-        p[0].line = p.lineno(2)
-        p[0].index = p.lexpos(2)
-
-
-def p_k_arith(p):
-    '''k_arith : arith
-                | e_arith'''
-    p[0] = p[1]
-
-
-def p_assign(p):
-    'assign : ID ASSIGN expression'
-    p[0] = AssignNode(ObjectNode(p[1]), p[3])
+def p_expression_not(p):
+    '''expression : NOT expression'''
+    p[0] = NotNode(p[2])
     p[0].line = p.lineno(1)
     p[0].index = p.lexpos(1)
 
 
-def p_arith(p):
-    '''arith : arith PLUS term
-            | arith MINUS term
-            | term'''
+def p_expression_cmp(p):
+    '''expression : expression LTHAN expression
+                    | expression LETHAN expression
+                    | expression EQUALS expression'''
+    if p[2] == '<':
+        p[0] = LowerThanNode(p[1], p[3])
+    elif p[2] == '<=':
+        p[0] = LowerEqualThanNode(p[1], p[3])
+    elif p[2] == '=':
+        p[0] = EqualThanNode(p[1], p[3])
 
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        if p[2] == '+':
-            p[0] = PlusNode(p[1], p[3])
-        elif p[2] == '-':
-            p[0] = MinusNode(p[1], p[3])
-
-        p[0].line = p.lineno(2)
-        p[0].index = p.lexpos(2)
-
-
-def p_term(p):
-    '''term : term TIMES factor
-            | term DIVIDE factor
-            | factor'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        if p[2] == '*':
-            p[0] = StarNode(p[1], p[3])
-        elif p[2] == '/':
-            p[0] = DivNode(p[1], p[3])
-
-        p[0].line = p.lineno(2)
-        p[0].index = p.lexpos(2)
+    p[0].line = p.lineno(2)
+    p[0].index = p.lexpos(2)
 
 
 
-def p_factor(p):
-    '''factor : MINUS factor %prec UMINUS
-                | atom'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = NegationNode(p[2])
-        p[0].line = p.lineno(1)
-        p[0].index = p.lexpos(1)
+
+def p_expression_plus_minus(p):
+    '''expression : expression PLUS expression
+            | expression MINUS expression
+            '''
+
+    if p[2] == '+':
+        p[0] = PlusNode(p[1], p[3])
+    elif p[2] == '-':
+        p[0] = MinusNode(p[1], p[3])
+
+    p[0].line = p.lineno(2)
+    p[0].index = p.lexpos(2)
 
 
-def p_atom(p):
-    '''atom : LBRACKET expression RBRACKET
+def p_expression_mult_div(p):
+    '''expression : expression TIMES expression
+            | expression DIVIDE expression
+            '''
+    if p[2] == '*':
+        p[0] = StarNode(p[1], p[3])
+    elif p[2] == '/':
+        p[0] = DivNode(p[1], p[3])
+
+    p[0].line = p.lineno(2)
+    p[0].index = p.lexpos(2)
+
+
+def p_expression_uminus(p):
+    '''expression : MINUS expression %prec UMINUS
+                '''
+    p[0] = NegationNode(p[2])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
+
+
+def p_expression_g(p):
+    '''expression : LBRACKET expression RBRACKET
             | ISVOID expression
             | block
             | conditional
@@ -225,7 +190,6 @@ def p_atom(p):
         p[0] = p[1]
 
 
-
 def p_block(p):
     'block : LBRACE expression_list RBRACE'
     p[0] = BlockNode(p[2])
@@ -233,26 +197,29 @@ def p_block(p):
     p[0].index = p.lexpos(1)
 
 
-def p_atom_variable(p):
-    '''atom : ID'''
+def p_expression_variable(p):
+    '''expression : ID'''
     p[0] = ObjectNode(p[1])
     p[0].line = p.lineno(1)
     p[0].index = p.lexpos(1)
 
-def p_atom_type_int(p):
-    '''atom : INTEGER '''
+
+def p_expression_type_int(p):
+    '''expression : INTEGER '''
     p[0] = IntNode(p[1])
     p[0].line = p.lineno(1)
     p[0].index = p.lexpos(1)
 
-def p_atom_type_str(p):
-    '''atom : STRING'''
+
+def p_expression_type_str(p):
+    '''expression : STRING'''
     p[0] = StrNode(p[1])
     p[0].line = p.lineno(1)
     p[0].index = p.lexpos(1)
 
-def p_atom_type_bool(p):
-    '''atom : TRUE
+
+def p_expression_type_bool(p):
+    '''expression : TRUE
             | FALSE'''
     p[0] = BoolNode(p[1])
     p[0].line = p.lineno(1)
@@ -262,46 +229,17 @@ def p_atom_type_bool(p):
 #     'atom : error'
 #     print("Error con el atom types")
 
-def p_atom_newtype(p):
-    '''atom : NEW TYPE'''
+
+def p_expression_newtype(p):
+    '''expression : NEW TYPE'''
     p[0] = NewTypeNode(p[2])
     p[0].line = p.lineno(1)
     p[0].index = p.lexpos(1)
 
 
-def p_e_arith(p):
-    '''e_arith : arith PLUS e_term
-                | arith MINUS e_term
-                | e_term'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        if p[2] == '+':
-            p[0] = PlusNode(p[1], p[3])
-        elif p[2] == '-':
-            p[0] = MinusNode(p[1], p[3])
-        p[0].line = p.lineno(2)
-        p[0].index = p.lexpos(2)
-
-
-def p_e_term(p):
-    '''e_term : e_term TIMES e_factor
-                | e_term DIVIDE e_factor
-                | e_factor'''
-    if len(p) == 2:
-        p[0] = p[1]
-    else:
-        if p[2] == '*':
-            p[0] = StarNode(p[1], p[3])
-        elif p[2] == '/':
-            p[0] = DivNode(p[1], p[3])
-        p[0].line = p.lineno(2)
-        p[0].index = p.lexpos(2)
-
-
-def p_e_factor(p):
-    '''e_factor : MINUS e_factor %prec UMINUS
-                | let_expression'''
+def p_expression_l(p):
+    '''expression : MINUS let_expression %prec UMINUS
+                | let_expression '''
     if len(p) == 2:
         p[0] = p[1]
     else:
@@ -366,6 +304,7 @@ def p_let_expression(p):
     p[0].line = p.lineno(1)
     p[0].index = p.lexpos(1)
 
+
 def p_declaration_list(p):
     '''declaration_list : attribute COMMA declaration_list
                         | attribute'''
@@ -418,6 +357,13 @@ def p_implication(p):
     # new_implication.expression = p[3]
     # p[0] = new_implication
     p[0] = (p[1],p[3])
+
+
+def p_expression_assign(p):
+    'expression : ID ASSIGN expression'
+    p[0] = AssignNode(ObjectNode(p[1]), p[3])
+    p[0].line = p.lineno(1)
+    p[0].index = p.lexpos(1)
 
 
 def p_error(p):

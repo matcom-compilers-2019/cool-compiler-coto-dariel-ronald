@@ -212,6 +212,11 @@ class CILLengthNode(CILInstructionNode):
         self.localv = localv
 
 
+class CILArrayLengthNode(CILInstructionNode):
+    def __init__(self, localv):
+        self.localv = localv
+
+
 class CILConcatNode(CILInstructionNode):
     def __init__(self, s1, s2):
         self.str1 = s1

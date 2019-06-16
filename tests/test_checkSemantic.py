@@ -16,7 +16,7 @@ def check_semantic(ast):
 
 def test_hello_world():
     program_ast = ProgramNode([ClassNode('Main', features=[
-        MethodNode('main', [], 'IO',DispatchNode('out_string', [StrNode('"Hello, World"')], None))
+        MethodNode('main', [], 'IO',DispatchNode('out_string', [StrNode('Hello, World')], None))
     ], inherit='IO')])
     program_code = '''
     
@@ -107,10 +107,10 @@ def test_conditional():
                        ConditionalNode(LowerEqualThanNode(IntNode(2),IntNode(3)),
                            LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                       DispatchNode('out_string',
-                                                   [StrNode('"True"')], ObjectNode('io'))),
+                                                   [StrNode('True')], ObjectNode('io'))),
                            LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                       DispatchNode('out_string',
-                                                   [StrNode('"False"')], ObjectNode('io')))
+                                                   [StrNode('False')], ObjectNode('io')))
                        )
                    ]))
             ])
@@ -136,29 +136,31 @@ def test_loop_check():
     program_ast = ProgramNode(
         [ClassNode('Main', features=[
             MethodNode('main', [], 'Object',
+                       BlockNode([
+
+
                 LoopNode(BoolNode('true'),
                      BlockNode([
                          ConditionalNode(LowerEqualThanNode(IntNode(2), IntNode(3)),
                              BlockNode([
                                  LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                             DispatchNode('out_string',
-                                                         [StrNode('"True"')], ObjectNode('io'))),
+                                                         [StrNode('True')], ObjectNode('io'))),
                              ]),
                              BlockNode([
                                  LetVarNode([(('io', 'IO'), NewTypeNode('IO'))],
                                             DispatchNode('out_string',
-                                                         [StrNode('"False"')], ObjectNode('io')))
+                                                         [StrNode('False')], ObjectNode('io')))
                              ]))
-
                      ])
-                 )
+                 ), IntNode(0)])
                )
             ])
          ])
 
     program_code = '''
         class Main {
-            main() : Object {
+            main() : Object {{
                 while true loop
                {
                     if 2<=3 then 
@@ -169,7 +171,8 @@ def test_loop_check():
                         let io: IO <- new IO in io.out_string("False");
                     } 
                     fi;
-               } pool
+               } pool;
+               0;}
             };
         };
     '''

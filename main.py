@@ -1,6 +1,6 @@
 from coolex import lexer
-from coolyacc import parser
-from semantic import TypeCollectorVisitor, TypeBuilderVisitor, TypeCheckerVisitor
+from coolyacc2 import parser
+from semantic import TypeCheckerVisitor
 from cool_utils import Scope
 import fileinput
 from cool_errors import CoolErrorLogger
