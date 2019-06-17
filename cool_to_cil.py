@@ -231,7 +231,7 @@ class COOLToCILVisitor:
             # si es un tipo por valor la expresion izquierda, entonces hacemos boxing
             if left_expression_type_name == 'Int' or left_expression_type_name == 'Bool'\
                     or (left_expression_type_name == "String" and
-                            (node.func_id != 'concat' or node.func_id != 'length' or node.func_id != 'substr')):
+                            (node.func_id != 'concat' and node.func_id != 'length' and node.func_id != 'substr')):
                 vinfo = self.define_internal_local()
                 self.make_boxing(vinfo, left_expression_type_name, left_expression)
                 left_expression = vinfo
@@ -240,10 +240,13 @@ class COOLToCILVisitor:
         # self.define_internal_local()
         if node.func_id == 'concat':
             my_call = CILBuiltInCallNode('String_concat')
+            left_expression = node.left_expression.holder
         elif node.func_id == 'length':
             my_call = CILBuiltInCallNode('String_length')
+            left_expression = node.left_expression.holder
         elif node.func_id == 'substr':
             my_call = CILBuiltInCallNode('String_substr')
+            left_expression = node.left_expression.holder
         else:
             my_call = CILDynamicCallNode(node.func_id, left_expression)
         # aqui se ponen los params
@@ -252,8 +255,8 @@ class COOLToCILVisitor:
             my_call.params.append(exp.holder)
 
         # Llamado a la funcion
-        self.define_internal_local()
-        holder = self.dotcode[-1].functions[-1].localvars[-1]
+
+        holder = self.define_internal_local()
         self.register_instruction(CILAssignNode, holder, my_call)
         node.holder = holder
 
@@ -613,12 +616,11 @@ class COOLToCILVisitor:
         node.holder = node.expressions[-1].holder
 
     @visitor.when(ast.IntegerComplementNode)
-    def visit(self, node:ast.IntegerComplementNode,scope:CILScope):
-        self.visit(node.expression,scope)
-        self.define_internal_local()
-        holder = self.dotcode[-1].functions[-1].localvars[-1]
-        self.register_instruction(CILAssignNode, holder, CILIntegerComplementNode(node.holder))
+    def visit(self, node: ast.IntegerComplementNode, scope: CILScope):
+        self.visit(node.expression, scope)
+        holder = self.define_internal_local()
         node.holder = holder
+        self.register_instruction(CILAssignNode, holder, CILIntegerComplementNode(node.expression.holder))
 
     @visitor.when(ast.IntNode)
     def visit(self, node:ast.IntNode,scope:CILScope):

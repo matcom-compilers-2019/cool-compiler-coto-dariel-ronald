@@ -193,9 +193,8 @@ class CILtoMIPSVisitor:
     @visitor.when(cil_hierarchy.CILProgramNode)
     def visit(self, node: cil_hierarchy.CILProgramNode):
         self.emit('.data')
-        self.emit('ior_msg_error: .asciiz "RuntimeError: Index out of range Error"')
+        self.emit('ior_msg_error: .asciiz "RuntimeError: Index out of range Error\n"')
         self.emit('__void: .byte 0')
-        self.emit('std_in_data: .space 100')
         self.visit(node.dotdata)
         type_definition_creator = CollectMipsTypesDefinitionsVisitor()
         type_definition_creator.visit(node)
@@ -473,8 +472,11 @@ class CILtoMIPSVisitor:
 
         # pasamos los parametros del metodo
         for param in node.params:
-            param_index = self.get_local_var_or_param_index(param)
-            self.emit(f'lw $a0, {-4*param_index}($t0)')
+            if type(param) is int:
+                self.emit(f'li $a0, {param}')
+            else:
+                param_index = self.get_local_var_or_param_index(param)
+                self.emit(f'lw $a0, {-4*param_index}($t0)')
             self.macro_push('$a0')
 
         self.emit(f'jal {node.fid}')
@@ -753,10 +755,23 @@ class CILtoMIPSVisitor:
 
     @visitor.when(cil_hierarchy.CILReadStringNode)
     def visit(self, node:cil_hierarchy.CILReadStringNode):
+        self.emit('li $v0, 9')
+        self.emit('li $a0, 100')
+        self.emit('syscall')
+        self.emit('move $a0, $v0')
         self.emit('li $v0, 8')
-        self.emit('la $a0, std_in_data')
+        # self.emit('la $a0, std_in_data')
         self.emit('la $a1, 100')
         self.emit('syscall')
+        self.emit('move $t5, $a0')
+    #     removamos el salto de linea
+        self.macro_push('$ra')
+        self.emit('jal __get_str_len')
+        self.macro_pop('$ra')
+        self.emit('subu $v0, $v0, 1')
+        self.emit('addu $v1, $v0, $t5')
+        self.emit('sb $0, 0($v1)')
+        self.emit('move $v0, $t5')
     
     @visitor.when(cil_hierarchy.CILReadIntNode)
     def visit(self, node:cil_hierarchy.CILReadIntNode):

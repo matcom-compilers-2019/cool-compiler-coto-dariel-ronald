@@ -91,62 +91,64 @@ def mips_substring(output):
     #a0 string original
     #a1 pos inicial que se va a tomar
     #a2 length del substr
-    
+
     __get_substring:
             # load arguments
             move $t5, $a0
             move $t3, $a1
             li $t4, 0
             move $t2, $a2
-            
+
             # check for index out of range (IOR Error)
-            move $a0, $a2
-            
+            #move $a0, $a2
+
             move $a3, $ra
             jal __get_str_len
             move $ra, $a3
-            
-            bge $t2, $v0, __abort_substrig_with_IOR_error
+
             addu $t6, $t3, $t2
-            bge $t6, $v0, __abort_substrig_with_IOR_error
-            
+            bgt $t6, $v0, __abort_substrig_with_IOR_error
+
             # create substring
             move $a0, $t2
+            addu $a0, $a0, 1
             li $v0, 9
             syscall
             # tenemos en $v0 la direccion del nuevo string
-            
+
             addu $t5, $t5, $t3
-            
-            
+
+
             subu $sp, $sp, 4
             sw $ra, 0($sp)
             subu $sp, $sp, 4
             sw $fp, 0($sp)
             move $fp,$sp
             subu $sp, $sp, 4
-            sw $v0, 0($sp)                        
+            sw $v0, 0($sp)
             subu $sp, $sp, 4
             sw $t5, 0($sp)
             subu $sp, $sp, 4
             sw $t2, 0($sp)
-            
+
             jal __copy_byte_by_byte
             move $sp,$fp
-            
+
             lw $fp, 0($sp)
             addu $sp, 4
 
             lw $ra, 0($sp)
             addu $sp, 4
-            
+
             addu $t9, $v0, $t2
-            sw $0, 0($t9)            
+            sb $0, 0($t9)
             jr $ra
-                        
+
             __abort_substrig_with_IOR_error:
-            li $v0, 10
+            li $v0, 4
             la $a0, ior_msg_error
+            syscall
+            li $v0, 10
             syscall
             jr $ra
     ''')
@@ -160,33 +162,34 @@ def mips_concat(output):
     '''
     output.append('''
     __concat_strings:
-    
+        # Recibe en $a0 str1 y en $a1 str2
+
         move $a3, $ra
         jal __get_str_len
         move $ra, $a3
-        
+
         # guardamos en $t4, la longitud de str1
         move $t4, $v0
         # el str1
         move $t5, $a0
         move $a0, $a1
         move $t8, $a1
-        
+
         move $a3, $ra
         jal __get_str_len
         move $ra, $a3
-    
+
         # reservamos espacio para el nuevo string
         # guardamos en $t7 la longitud de str2
         move $t7, $v0
         addu $v0, $t4, $v0
         addu $v0, $v0, 1
-        move $t6, $v0
-        li $a0, 9
+        move $a0, $v0
+        li $v0, 9
         syscall
-        
+
         # en $t5 esta str1, y en $t8, str2-------------------------
-        
+
         # save str1 part------------------------------------------
         # push $ra
         subu $sp, $sp, 4
@@ -194,70 +197,70 @@ def mips_concat(output):
         # push $fp
         subu $sp, $sp, 4
         sw $fp, 0($sp)
-        
+
         move $fp, $sp
-        
+
         # push dest to copy pointer
         subu $sp, $sp, 4
         sw $v0, 0($sp)
-        
+
         # push copy from
         subu $sp, $sp, 4
         sw $t5, 0($sp)
-        
-        # push how much to copy 
+
+        # push how much to copy
         subu $sp, $sp, 4
         sw $t4, 0($sp)
-        
+
         jal __copy_byte_by_byte
-        
+
         move $sp, $fp
-        
+
         lw $fp, 0($sp)
         addu $sp, $sp, 4
-        
+
         lw $ra, 0($sp)
         addu $sp, $sp, 4
-        
+
         # save str2 part-------------
         # push $ra
         subu $sp, $sp, 4
         sw $ra, 0($sp)
-        
+
         # push $fp
         subu $sp, $sp, 4
         sw $fp, 0($sp)
-        
+
         move $fp, $sp
-        
+
         # push where to copy
         move $t9, $v0
         addu $t0, $v0, $t4
         subu $sp, $sp, 4
         sw $t0, 0($sp)
-        
-        # push copy from 
+
+        # push copy from
         subu $sp, $sp, 4
         sw $t8, 0($sp)
-        
+
         subu $sp, $sp, 4
         sw $t7, 0($sp)
-        
+
         jal __copy_byte_by_byte
-        
+
         move $sp, $fp
-        
+
         lw $fp, 0($sp)
         addu $sp, $sp, 4
-        
+
         lw $ra, 0($sp)
         addu $sp, $sp, 4
-        
+
         addu $v0, $t7, $v0
-        addu $v0, $v0, 1
-        sw $0, 0($v0)
-        
-        move $v0, $t9       
+        sb $0, 0($v0)
+
+        move $v0, $t9
+        jr $ra       
     ''')
 
 
@@ -317,15 +320,13 @@ def add_built_in(cool_to_cil):
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_string", ["self"]))
         cool_to_cil.current_function_name = "IO_in_string"
-        cool_to_cil.define_internal_local()
-        dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
+        dest = cool_to_cil.define_internal_local()
         cool_to_cil.register_instruction(CILAssignNode, dest, CILReadStringNode())
         cool_to_cil.register_instruction(CILReturnNode, dest)
 
         cool_to_cil.dotcode[-1].functions.append(CILFunctionNode("IO_in_int",["self"]))
         cool_to_cil.current_function_name = "IO_in_int"
-        cool_to_cil.define_internal_local()
-        dest = cool_to_cil.dotcode[-1].functions[-1].localvars[-1]
+        dest = cool_to_cil.define_internal_local()
         cool_to_cil.register_instruction(CILAssignNode, dest, CILReadIntNode())
         cool_to_cil.register_instruction(CILReturnNode, dest)
 

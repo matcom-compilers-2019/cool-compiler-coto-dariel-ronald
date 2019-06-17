@@ -115,19 +115,6 @@ def p_expression_not(p):
     p[0].index = p.lexpos(1)
 
 
-def p_expression_cmp(p):
-    '''expression : expression LTHAN expression
-                    | expression LETHAN expression
-                    | expression EQUALS expression'''
-    if p[2] == '<':
-        p[0] = LowerThanNode(p[1], p[3])
-    elif p[2] == '<=':
-        p[0] = LowerEqualThanNode(p[1], p[3])
-    elif p[2] == '=':
-        p[0] = EqualThanNode(p[1], p[3])
-
-    p[0].line = p.lineno(2)
-    p[0].index = p.lexpos(2)
 
 
 
@@ -359,6 +346,20 @@ def p_implication(p):
     p[0] = (p[1],p[3])
 
 
+def p_expression_cmp(p):
+    '''expression : expression LTHAN expression
+                    | expression LETHAN expression
+                    | expression EQUALS expression'''
+    if p[2] == '<':
+        p[0] = LowerThanNode(p[1], p[3])
+    elif p[2] == '<=':
+        p[0] = LowerEqualThanNode(p[1], p[3])
+    elif p[2] == '=':
+        p[0] = EqualThanNode(p[1], p[3])
+
+    p[0].line = p.lineno(2)
+    p[0].index = p.lexpos(2)
+
 def p_expression_assign(p):
     'expression : ID ASSIGN expression'
     p[0] = AssignNode(ObjectNode(p[1]), p[3])
@@ -371,17 +372,7 @@ def p_error(p):
         throw_exception(SyntacticError, -1, -1, 'Last file \';\' not founded')
     throw_exception(SyntacticError,p.lineno, p.lexpos,str(p))
 
-# precedence = (
-#     ('right','ASSIGN'),
-#     ('left','NOT'),
-#     ('right','BCOMPLEMENT'),
-#     ('right','ISVOID'),
-#     ('nonassoc','LTHAN','LETHAN','EQUALS'),
-#     ('left','PLUS','MINUS'),
-#     ('left','TIMES','DIVIDE'),
-#     ('left','DISP'),
-#     ('left','DOT')
-# )
+
 
 precedence = (
     ('right','ASSIGN'),

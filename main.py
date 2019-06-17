@@ -31,7 +31,7 @@ def check_semantic(ast):
 
 
 def compile_cool(data):
-    cool_ast = parser.parse(data, lexer)
+    cool_ast = parser.parse(data, lexer,debug=True)
 
     logging.info('Checking semantic...')
     check_semantic(cool_ast)
