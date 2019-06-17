@@ -48,9 +48,8 @@ def compile_cool(data):
     mips_visitor.visit(cil_ast)
 
     program = mips_visitor.get_mips_program_code()
-    program_name = sha256(b'program').hexdigest()
-    name_output = f'./examples_output/{program_name}.s'
-    with open('./examples_output/t.s', 'w') as file:
+    program_name = sha256(program.encode()).hexdigest()
+    with open(f'{program_name}.s', 'w') as file:
         file.writelines(program)
 
 if __name__ == '__main__':

@@ -211,9 +211,9 @@ class COOLToCILVisitor:
             return
 
         if not (node.variable in self.dotcode[-1].functions[-1].localvars):
-            self.define_ud_internal_local(node.variable.id,scope)
+            self.visit(node.variable,scope)
 
-        self.register_instruction(CILAssignNode, node.variable.id, node.expression.holder)
+        self.register_instruction(CILAssignNode, node.variable.holder, node.expression.holder)
         node.holder = node.variable.id
 
     @visitor.when(ast.DispatchNode)
@@ -315,7 +315,7 @@ class COOLToCILVisitor:
         l_loop = self.next_label()
         l_end = self.next_label()
         self.register_instruction(CILLabelNode, l_condition)
-        self.visit(node.while_expression,scope)
+        self.visit(node.while_expression, scope)
 
         self.register_instruction(CILGotoIfNode, node.while_expression.holder, l_loop)
         self.register_instruction(CILGotoNode, l_end)
@@ -342,7 +342,7 @@ class COOLToCILVisitor:
                 else:
                     default_value = ''
             if dec[1] is not None:
-                self.visit(dec[1],scope)
+                self.visit(dec[1], scope)
                 rigth_expr_type_name = dec[1].computed_type.name
 
                 # verificamos si hay que hacer boxing
