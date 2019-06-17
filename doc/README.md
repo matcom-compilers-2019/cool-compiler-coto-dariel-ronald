@@ -1,1 +1,0 @@
-### Welcome to GCC, the Greatest Cool Compilator
