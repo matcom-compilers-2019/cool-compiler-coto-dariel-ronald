@@ -255,7 +255,7 @@ class TypeCheckerVisitor:
 
         if not node.expression.computed_type.lower_equals(node.computed_type):
             throw_exception(TypeError, node.line, node.index, 'Error between lvalue {} and rvalue {}'.format(vinfo.vtype.name,
-                                                                                                        node.expression.computed_type))
+                                                                                                        node.expression.computed_type.name))
 
     @visitor.when(ast.DispatchNode)
     def visit(self, node,scope):
