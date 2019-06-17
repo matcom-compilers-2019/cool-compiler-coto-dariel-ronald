@@ -79,5 +79,4 @@ class Main inherits IO {
 
       }
     pool;
-
 }; (* end of Main *)

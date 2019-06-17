@@ -85,7 +85,10 @@ class TypeBuilderVisitor:
         for id, type_name in node.parameters:
             if id == 'self':
                 throw_exception(TypeError, node.line, node.index, 'Params can not be named self')
-            type_class = self.context.get_type(type_name)
+            if type_name == "SELF_TYPE":
+                type_class = self._current_type
+            else:
+                type_class = self.context.get_type(type_name)
             if type_class is None:
                 throw_exception(TypeError, node.line,node.index,'Param Type %s not defined' % type_name)
             if id in param_names:
@@ -99,7 +102,10 @@ class TypeBuilderVisitor:
     def visit(self, node: ast.AttributeNode):
         if node.id == 'self':
             throw_exception(TypeError, node.line, node.index, 'Attributes can not be named self')
-        attr_type = self.context.get_type(node.type)
+        if node.type == "SELF_TYPE":
+            attr_type = self._current_type
+        else:
+            attr_type = self.context.get_type(node.type)
         if attr_type is None:
             throw_exception(TypeError, node.line, node.index, 'Type %s not defined' % attr_type)
         self._current_type.define_attr(node.id, attr_type)
@@ -185,14 +191,16 @@ class TypeCheckerVisitor:
             child_scope = scope.create_child_scope()
             self.visit(cool_class, child_scope)
 
-
-
     @visitor.when(ast.ClassNode)
     def visit(self, node,scope):
 
         self.current_class_name = node.name
 
+        # Añadimos el objeto self del tipo current type
+        scope.define_variable('self', self.current_class_name)
+
         for attr in node.attributes:
+            # child_scope = scope.create_child_scope()
             self.visit(attr,scope)
 
         for method in node.methods:
@@ -207,9 +215,6 @@ class TypeCheckerVisitor:
             vinfo = scope.define_variable(param_name, param_type_name)
             if vinfo is None:
                 throw_exception(NameError, node.line,node.index,"Error in method {}: parameter {}".format(node.id,param_name))
-
-        # Añadimos el objeto self del tipo current type
-        scope.define_variable('self', self.current_class_name)
 
         self.visit(node.expression, scope)
 
@@ -227,11 +232,15 @@ class TypeCheckerVisitor:
 
     @visitor.when(ast.AttributeNode)
     def visit(self, node, scope):
-        vinfo = scope.define_variable(node.id, node.type)
-        if vinfo is None:
-            throw_exception(NameError, node.line, node.index, 'Variable already defined %s' % node.id)
+        node.computed_type = scope.get_type(node.type)
         if node.value is not None:
             self.visit(node.value, scope)
+            if not node.value.computed_type.lower_equals(node.computed_type):
+                throw_exception(TypeError, node.line, node.index, f'Type {node.value.computed_type.name} is not lower or equals to'
+                                                                  f' type {node.computed_type.name}')
+        vinfo = scope.define_variable(node.id, node.type)
+        if vinfo is None:
+            throw_exception(NameError, node.line, node.index, 'Attribute already defined %s' % node.id)
 
     @visitor.when(ast.AssignNode)
     def visit(self, node: ast.AssignNode, scope):
@@ -379,8 +388,7 @@ class TypeCheckerVisitor:
         child_scope = scope.create_child_scope()
         self.visit(node.loop_expression, child_scope)
 
-        node.computed_type = None
-
+        node.computed_type = scope.get_type("Object")
 
     @visitor.when(ast.NewTypeNode)
     def visit(self, node,scope):
@@ -484,8 +492,8 @@ class TypeCheckerVisitor:
         self.visit(node.expression,scope)
 
         boolean = scope.get_type('Bool')
-        if node.expression.computed_type is not boolean:
-            throw_exception(TypeError, node.line,node.index,'Error, is void argument must be boolean')
+        # if node.expression.computed_type is not boolean:
+        #     throw_exception(TypeError, node.line,node.index,'Error, is void argument must be boolean')
         node.computed_type = boolean
 
     @visitor.when(ast.NotNode)
